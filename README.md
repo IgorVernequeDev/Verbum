@@ -18,4 +18,4 @@ Node.js (versão 14 ou superior)
 MySQL (versão 5.7 ou superior)
 Git<br>
 
-Agradecemos a todos os membros da equipe de desenvolvimento e ao professor pelo suporte durante o desenvolvimento deste projeto.
+Agradecemos a todos os membros da equipe de desenvolvimento e aos professor pelo suporte durante o desenvolvimento deste projeto.
