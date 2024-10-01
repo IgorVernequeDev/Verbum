@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/static/login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/logo.png')}}" type="image/x-icon">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100;1,100&display=swap"
+        rel="stylesheet">
+    <title>Login</title>
+</head>
+
+<body>
+
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form action="/" method="get">
+                <h1>Crie sua conta</h1>
+                <span>Use seu e-mail para realizar o cadastro</span>
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Senha">
+                <button type="submit">Inscreva-se</button>
+            </form>
+        </div>
+        <div class="form-container sign-in">
+            <form action="/login" method="post">
+                <h1>Entre na sua conta</h1>
+                <span>Use seu E-mail e Senha</span>
+                <input name="email" id="email" type="email" placeholder="Email">
+                <input name="senha" id="senha" type="password" placeholder="Senha">
+                <p style="color: red;"id="msg">{{ msg }}</p>
+                <a href="/recuperarsenha">Esqueceu a sua senha?</a>
+                <button type="submit" onclick="entrar()">Entrar</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-painel toggle-left">
+                    <h1>Bem-vindo de volta!</h1>
+                    <p>insira seus dados pessoais para usar todos os recursos do site</p>
+                    <button class="hidden" id="login">Entrar</button>
+                </div>
+                <div class="toggle-painel toggle-right">
+                    <h1>Seja Bem-Vindo!</h1>
+                    <p>Registre seus dados pessoais para usar todos os recursos do nosso site</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/login.js"></script>
+
+</body>
+
+</html>
