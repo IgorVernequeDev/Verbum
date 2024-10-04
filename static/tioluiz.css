@@ -15,13 +15,6 @@ header {
   color: white;
 }
 
-main {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  height: auto;
-  min-height: 0;
-}
-
 .search-container {
   background-color: #0b60b3;
   display: flex;
@@ -75,30 +68,23 @@ input::placeholder {
 
 nav {
   background-color: #333;
-  padding: 60px 0 0 0;
-  display: flex;
-  font-family: "Oswald",sans-serif;
+  padding: 10px 0;
+  
 }
 
 nav ul {
   display: flex;
   justify-content: center;
   text-align: center;
-  align-items: end;
   list-style: none;
-  margin-bottom: -2px;
 }
 
 #notificacoes {
-  cursor: pointer;
-  width: 6%;
-  background-color: #bbb;
-  border-radius: 100px;
+  width: 7%;
 }
 
 nav ul li {
   margin: 0 20px;
-  
 }
 
 nav ul li a {
@@ -106,18 +92,12 @@ nav ul li a {
   text-decoration: none;
   font-size: 16px;
   text-shadow: 0 2px 4px linear-gradient(to right, #255EAF, #21559E, #21549D, #205298, #205198, #0F2749);
-  position: relative; 
-  
 }
 
-nav ul li a:hover::after {
-  content: '';
-  position: absolute;
-  left: -15px; 
-  bottom: -5px; 
-  width: calc(100% + 30px);
-  height: 4px; 
-  background-color: #255EAF; 
+nav ul li a:hover {
+  text-decoration: underline;
+  text-decoration-color: #255EAF;
+  text-underline-position:under;
 }
 
 h1 {
@@ -125,11 +105,6 @@ h1 {
   font-optical-sizing: auto;
   font-weight: 700;
   font-style: normal;
-}
-
-h6 {
-  font-family: "Oswald", sans-serif;
-  font-weight: 300;
 }
 
 p {
@@ -153,31 +128,32 @@ button {
 
 #userImage {
   cursor: pointer;
-  width: 54%;
 }
 
-#notificacoesImage {
-  width: 15%;
-}
-
-#botoesUsuario {
+#buttonsUser {
   border-radius: 5px;
   width: 10em;
 }
 
-#botoesUsuario button {
+#buttonsUser button {
   background: linear-gradient(to right, #255eaf, #023377);
   font-weight: 300;
   height: 3em;
   border-top: 3px solid white;
 }
 
-#usuarioInterface {
+#userInterface {
+  display: none;
   position: absolute;
   background-color: #fff;
-  right: 120px;
-  top: 80px;
+  right: 110px;
+  top: 74px;
   z-index: 2;
+}
+
+#buttonsUser {
+  border-radius: 5px;
+  width: 10em;
 }
 
 #botoesNotificacao button {
@@ -185,16 +161,14 @@ button {
   font-weight: 300;
   height: 3em;
   border-top: 3px solid white;
-  font-size: 17px;
 }
 
 #notificacoesInterface {
   position: absolute;
   background-color: #fff;
-  right: 50px;
-  top: 80px;
+  right: 110px;
+  top: 74px;
   z-index: 2;
-  width: 20%;
 }
 
 #Entrar {
@@ -217,54 +191,38 @@ button {
 }
 
 .contact-info {
-  display: flex;
-  flex-direction: row;
-  align-items: center; 
-  justify-content: space-between; 
-  margin-left: 4%;
-  
-}
-
-.contact-info h1 {
-  font-size: 2rem;
-  font-weight: 300;
-  font-family: "Oswald", sans-serif;
-
-}
-
-.contact-info p {
-  font-size: 1.3rem;
-  font-weight: 300;
-  font-family: "Oswald", sans-serif;
-}
-
-.title-cont{
-  position: relative;
-  top: -105px;
-}
-
-.contact-methods {
   flex: 1;
 }
 
-.contact-info img {
-  height: 600px;
-  flex-shrink:1; 
+.contact-info h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.contact-info p {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.contact-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .method {
   display: flex;
   align-items: center;
-  position: relative;
-  top: -50px;
-  margin: 2%;
+  gap: 10px;
 }
 
 .method img {
-  height: 50px;
-  margin-right: 2%;
-  position: relative;
-  top: -8px;
+  height: 30px;
+}
+
+.contact-image img {
+  height: 300px;
+  object-fit: cover;
 }
 
 footer {
@@ -275,7 +233,7 @@ footer {
   justify-content: space-between;
   align-items: center; 
   height: 20%;
-  
+  margin-top: 3%;
   
 }
 
@@ -300,10 +258,9 @@ footer h3 {
   text-transform: uppercase;
   align-items: center;
   text-align: center;
-  font-family: "Oswald",sans-serif;
 }
 
-footer>ul {
+footer ul {
   list-style: none;
   padding: 0;
 }
@@ -378,3 +335,6 @@ footer .copyright {
   color: yellow;
   font-size: 1.2rem;
 }
+
+
+
