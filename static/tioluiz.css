@@ -1,0 +1,45 @@
+body {
+    background-image: url("path/to/your/background_image.jpg"); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;   
+
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family:   
+sans-serif;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+  }
+
+  .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;   
+
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .button:hover {
+    background-color: #45a049;
+  }

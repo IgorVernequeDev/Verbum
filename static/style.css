@@ -34,6 +34,25 @@ header {
   font-weight: 100;
   color: white;
 }
+.search-container {
+  background-color: #0b60b3;
+  display: flex;
+  align-items: center;
+  border: 1px solid white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.search-container input {
+  border: none;
+  width: 200px;
+  background-color: transparent;
+  border: t;
+  font-size: 15px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 100;
+  color: white;
+}
 
 input:focus {
   outline: none;
