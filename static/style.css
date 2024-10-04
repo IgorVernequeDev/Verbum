@@ -49,15 +49,19 @@ input::placeholder {
 
 nav {
   background-color: #333;
-  padding: 10px 0;
-  
+  padding: 60px 0 0 0;
+  display: flex;
+  font-family: "Oswald",sans-serif;
+
 }
 
 nav ul {
   display: flex;
   justify-content: center;
   text-align: center;
+  align-items: end;
   list-style: none;
+  margin-bottom: -2px;
 }
 
 #notificacoes {
@@ -66,6 +70,7 @@ nav ul {
 
 nav ul li {
   margin: 0 20px;
+  
 }
 
 nav ul li a {
@@ -73,12 +78,18 @@ nav ul li a {
   text-decoration: none;
   font-size: 16px;
   text-shadow: 0 2px 4px linear-gradient(to right, #255EAF, #21559E, #21549D, #205298, #205198, #0F2749);
+  position: relative; 
+  
 }
 
-nav ul li a:hover {
-  text-decoration: underline;
-  text-decoration-color: #255EAF;
-  text-underline-position:under;
+nav ul li a:hover::after {
+  content: '';
+  position: absolute;
+  left: -15px; 
+  bottom: -5px; 
+  width: calc(100% + 30px);
+  height: 4px; 
+  background-color: #255EAF; 
 }
 
 h1 {
@@ -239,9 +250,10 @@ footer h3 {
   text-transform: uppercase;
   align-items: center;
   text-align: center;
+  font-family: "Oswald",sans-serif;
 }
 
-footer ul {
+footer>ul {
   list-style: none;
   padding: 0;
 }
@@ -316,6 +328,3 @@ footer .copyright {
   color: yellow;
   font-size: 1.2rem;
 }
-
-
-
