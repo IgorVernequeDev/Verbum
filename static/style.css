@@ -378,3 +378,75 @@ footer .copyright {
   color: yellow;
   font-size: 1.2rem;
 }
+/* Cadastro de livros */
+
+.container{
+  background-color: #fff;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  max-width: 100%;
+  min-height: 480px;
+  margin-top: 4%;
+  margin-bottom: 4%;
+  flex-direction: column;
+  align-content: space-evenly;
+}
+
+.container h2{
+  font-size: 12px;
+}
+
+.container button{
+  background-color: #255eaf;
+  color: #fff;
+  font-size: 12px;
+  padding: 10px 45px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.container button.hidden{
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.container form{
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.container input {
+  
+  background-color: #eee;
+  border: none;
+  margin: 8px 0;
+  padding: 10px 8px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: 50%;
+  outline: none;
+}
+
+.container input::placeholder {
+  color: #787878;
+  font-weight: 800;
+  font-family: "Oswald", sans-serif;
+}
+
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
