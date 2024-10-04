@@ -26,15 +26,15 @@
       <div class="logo-container w-50 d-flex justify-content-start">
         <img src="/static/img/verbumbook.png" class="w-25 m-4" alt="Verbum Logo">
       </div>
-      <div class="d-flex align-items-center justify-content-end w-50">
+      <div class="d-flex align-items-center justify-content-end w-50 me-3">
         <div class="d-flex flex-column">
           {% if logado %}
           <div class="search-container">
             <input type="text" placeholder="Título, Autor, Palavra Chave...">
             <i class="bi bi-search"></i>
           </div>
-          <div id="userInterface">
-            <div class="d-flex flex-column" id="buttonsUser">
+          <div id="usuarioInterface">
+            <div class="d-flex flex-column" id="botoesUsuario">
               <button class="w-100 border-0">Informações Pessoais</button>
               <button class="w-100">Reservas de livros</button>
               <a href="/logout"><button class="w-100">Sair</button></a>
@@ -42,21 +42,25 @@
           </div>
           <div id="notificacoesInterface">
             <div class="d-flex flex-column" id="botoesNotificacoes">
-              <div style="background-color: white;">
-                <img src="/static/img/notificacoes.png" alt="">
-                SUAS NOTIFICAÇÕES
+              <div class="d-flex text-center p-2 align-items-end w-100">
+                <img src="/static/img/notificacoesP.png" id="notificacoesImage" alt="Imagem de notificações">
+                <div class="d-flex w-75 justify-content-center">
+                  <h6 class="text-dark fs-5">SUAS NOTIFICAÇÕES</h6>
+                </div>
               </div>
-              <button class="w-100 border-0">Informações Pessoais</button>
-              <button class="w-100">Reservas de livros</button>
-              <a href="/logout"><button class="w-100">Sair</button></a>
+              <div id="botoesNotificacao">
+                <button class="w-100 border-0">LIVRO DISPONÍVEL!</button>
+                <button class="w-100">LIVRO DISPONÍVEL!</button>
+                <a href="/logout"><button class="w-100">LIVRO DISPONÍVEL!</button></a>
+              </div>
             </div>
           </div>
         </div>
         <div class="user-icon d-flex justify-content-center">
-          <img src="/static/img/user.png" class="w-50" id="userImage" alt="Imagem do usuário"
+          <img src="/static/img/user.png" id="userImage" alt="Imagem do usuário"
             onclick="toggleUserMenu()">
         </div>
-        <img src="/static/img/notificacoes.png" id="notificacoes" alt="Notificações">
+          <img src="/static/img/notificacoes.png" id="notificacoes" alt="Notificações" onclick="toggleNotifications()">
       </div>
     </div>
     <nav class="d-flex justify-content-start align-items-end h-100">
