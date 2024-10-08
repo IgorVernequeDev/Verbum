@@ -42,6 +42,10 @@ main {
   color: white;
 }
 
+.alunos {
+  font-weight: 300;
+}
+
 input:focus {
   outline: none;
   /* Remove o contorno padrão */
@@ -114,7 +118,7 @@ h6 {
 }
 
 p {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Oswald', sans-serif;
 }
 
 #textoIntroducao {
@@ -336,7 +340,14 @@ footer .copyright {
   border-radius: 5px;
   overflow: hidden;
   transition: transform 0.2s;
-  background-color: white;
+  background-color: white;  
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .book-card {
+    margin-right: 45px;
+  }
 }
 
 .book-card:hover {
