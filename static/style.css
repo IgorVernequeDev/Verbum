@@ -41,6 +41,7 @@ main {
   font-weight: 100;
   color: white;
 }
+
 .search-container {
   background-color: #0b60b3;
   display: flex;
@@ -75,9 +76,9 @@ input::placeholder {
 
 nav {
   background-color: #333;
-  padding: 60px 0 0 0;
+  padding: 30px 0 0 0;
   display: flex;
-  font-family: "Oswald",sans-serif;
+  font-family: "Oswald", sans-serif;
 }
 
 nav ul {
@@ -98,7 +99,7 @@ nav ul {
 
 nav ul li {
   margin: 0 20px;
-  
+
 }
 
 nav ul li a {
@@ -106,18 +107,18 @@ nav ul li a {
   text-decoration: none;
   font-size: 16px;
   text-shadow: 0 2px 4px linear-gradient(to right, #255EAF, #21559E, #21549D, #205298, #205198, #0F2749);
-  position: relative; 
-  
+  position: relative;
+
 }
 
 nav ul li a:hover::after {
   content: '';
   position: absolute;
-  left: -15px; 
-  bottom: -5px; 
+  left: -15px;
+  bottom: -5px;
   width: calc(100% + 30px);
-  height: 4px; 
-  background-color: #255EAF; 
+  height: 4px;
+  background-color: #255EAF;
 }
 
 h1 {
@@ -133,12 +134,18 @@ h6 {
 }
 
 p {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Oswald", sans-serif;
+}
+
+a {
+  font-family: "Oswald", sans-serif;
+  font-weight: 200;
 }
 
 #textoIntroducao {
   font-size: 26px;
 }
+
 .user-icon img {
   background-color: #bbb;
   border-radius: 100px;
@@ -219,10 +226,10 @@ button {
 .contact-info {
   display: flex;
   flex-direction: row;
-  align-items: center; 
-  justify-content: space-between; 
+  align-items: center;
+  justify-content: space-between;
   margin-left: 4%;
-  
+
 }
 
 .contact-info h1 {
@@ -238,7 +245,7 @@ button {
   font-family: "Oswald", sans-serif;
 }
 
-.title-cont{
+.title-cont {
   position: relative;
   top: -105px;
 }
@@ -249,7 +256,7 @@ button {
 
 .contact-info img {
   height: 600px;
-  flex-shrink:1; 
+  flex-shrink: 1;
 }
 
 .method {
@@ -273,26 +280,13 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
   height: 20%;
-  
-  
 }
 
-footer .logo-section {
-  flex: 1;
-  max-width: 10%;
-  margin-right: auto;
-  margin-top: 1%;
-  
-}
-
-footer .column {
-  min-width: 200px;
-  margin-top: 4%;
-  margin-right: 10%;
-  text-align: center;
-
+footer .column a {
+  text-decoration: none;
+  color: white;
 }
 
 footer h3 {
@@ -300,55 +294,22 @@ footer h3 {
   text-transform: uppercase;
   align-items: center;
   text-align: center;
-  font-family: "Oswald",sans-serif;
+  font-family: "Oswald", sans-serif;
 }
 
-footer>ul {
-  list-style: none;
-  padding: 0;
-}
-
-footer ul li {
-  margin: 5px 0;
-}
-
-footer ul li a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-footer .social-icons {
-  display: flex;
-  justify-content: center;
-
-}
-
-footer .social-icons a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 24px;
+footer img {
+  width: 10%;
 }
 
 footer .copyright {
   width: 100%;
-  font-size: 14px;
+  font-size: 15px;
   color: #ffffff;
   text-align: center;
   margin-bottom: 1%;
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
 }
-
-@media (max-width: 768px) {
-  footer {
-    flex-direction: column;
-  }
-
-  footer .column,
-  footer .logo-section {
-    max-width: 100%;
-  }
-}
-
 
 .book-card {
   border: 1px solid #ddd;
@@ -356,6 +317,13 @@ footer .copyright {
   overflow: hidden;
   transition: transform 0.2s;
   background-color: white;
+  border-left: 4px solid #255EAF;
+  margin: 5%;
+}
+
+#bookicon {
+  width: 3%;
+  height: 3%;
 }
 
 .book-card:hover {
@@ -378,28 +346,14 @@ footer .copyright {
   color: yellow;
   font-size: 1.2rem;
 }
+
 /* Cadastro de livros */
 
-.container{
-  background-color: #fff;
-  border-radius: 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-  position: relative;
-  overflow: hidden;
-  width: 768px;
-  max-width: 100%;
-  min-height: 480px;
-  margin-top: 4%;
-  margin-bottom: 4%;
-  flex-direction: column;
-  align-content: space-evenly;
-}
-
-.container h2{
+.container h2 {
   font-size: 12px;
 }
 
-.container button{
+.container button {
   background-color: #255eaf;
   color: #fff;
   font-size: 12px;
@@ -413,12 +367,12 @@ footer .copyright {
   cursor: pointer;
 }
 
-.container button.hidden{
+.container button.hidden {
   background-color: transparent;
   border-color: #fff;
 }
 
-.container form{
+.container form {
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -428,7 +382,7 @@ footer .copyright {
 }
 
 .container input {
-  
+
   background-color: #eee;
   border: none;
   margin: 8px 0;
@@ -449,4 +403,49 @@ footer .copyright {
   position: absolute;
   top: 0;
   height: 100%;
+}
+
+/* --- RESPONSIVIDADE --- */
+
+/* Ajuste de margens em telas menores */
+@media (max-width: 768px) {
+  .search-container {
+    margin: 10px 0;
+  }
+
+  .user-icon img {
+    width: 80px; /* Diminuir o tamanho do ícone do usuário */
+  }
+
+  footer {
+    padding: 20px;
+  }
+
+  footer .column {
+    padding: 10px 0;
+  }
+}
+
+/* Estilo para telas pequenas */
+@media (max-width: 768px) {
+  .logo-container img {
+    width: 40%;
+  }
+
+  nav ul {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  .contact-info h1 {
+    font-size: 1.5rem;
+  }
+
+  .contact-info p {
+    font-size: 1.2rem;
+  }
 }
