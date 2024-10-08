@@ -63,6 +63,11 @@ def livros():
 def contato():
     return render_template('contato.html')
 
+@app.route('/modelo')
+def modelo():
+    logado = session.get('logado', True)
+    return render_template('modelo.html', logado=logado)
+
 @app.route('/login', methods=['POST'])
 def logar():
     email = request.form['email']

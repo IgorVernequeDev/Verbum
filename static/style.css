@@ -60,9 +60,9 @@ input::placeholder {
 
 nav {
   background-color: #333;
-  padding: 60px 0 0 0;
+  padding: 30px 0 0 0;
   display: flex;
-  font-family: "Oswald",sans-serif;
+  font-family: "Oswald", sans-serif;
 }
 
 nav ul {
@@ -83,7 +83,7 @@ nav ul {
 
 nav ul li {
   margin: 0 20px;
-  
+
 }
 
 nav ul li a {
@@ -91,18 +91,18 @@ nav ul li a {
   text-decoration: none;
   font-size: 16px;
   text-shadow: 0 2px 4px linear-gradient(to right, #255EAF, #21559E, #21549D, #205298, #205198, #0F2749);
-  position: relative; 
-  
+  position: relative;
+
 }
 
 nav ul li a:hover::after {
   content: '';
   position: absolute;
-  left: -15px; 
-  bottom: -5px; 
+  left: -15px;
+  bottom: -5px;
   width: calc(100% + 30px);
-  height: 4px; 
-  background-color: #255EAF; 
+  height: 4px;
+  background-color: #255EAF;
 }
 
 h1 {
@@ -124,6 +124,7 @@ p {
 #textoIntroducao {
   font-size: 26px;
 }
+
 .user-icon img {
   background-color: #bbb;
   border-radius: 100px;
@@ -204,10 +205,10 @@ button {
 .contact-info {
   display: flex;
   flex-direction: row;
-  align-items: center; 
-  justify-content: space-between; 
+  align-items: center;
+  justify-content: space-between;
   margin-left: 4%;
-  
+
 }
 
 .contact-info h1 {
@@ -223,7 +224,7 @@ button {
   font-family: "Oswald", sans-serif;
 }
 
-.title-cont{
+.title-cont {
   position: relative;
   top: -105px;
 }
@@ -234,7 +235,7 @@ button {
 
 .contact-info img {
   height: 600px;
-  flex-shrink:1; 
+  flex-shrink: 1;
 }
 
 .method {
@@ -258,26 +259,13 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
   height: 20%;
-  
-  
 }
 
-footer .logo-section {
-  flex: 1;
-  max-width: 10%;
-  margin-right: auto;
-  margin-top: 1%;
-  
-}
-
-footer .column {
-  min-width: 200px;
-  margin-top: 4%;
-  margin-right: 10%;
-  text-align: center;
-
+footer .column a {
+  text-decoration: none;
+  color: white;
 }
 
 footer h3 {
@@ -285,61 +273,36 @@ footer h3 {
   text-transform: uppercase;
   align-items: center;
   text-align: center;
-  font-family: "Oswald",sans-serif;
+  font-family: "Oswald", sans-serif;
 }
 
-footer>ul {
-  list-style: none;
-  padding: 0;
-}
-
-footer ul li {
-  margin: 5px 0;
-}
-
-footer ul li a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-footer .social-icons {
-  display: flex;
-  justify-content: center;
-
-}
-
-footer .social-icons a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 24px;
+footer img {
+  width: 10%;
 }
 
 footer .copyright {
   width: 100%;
-  font-size: 14px;
+  font-size: 15px;
   color: #ffffff;
   text-align: center;
   margin-bottom: 1%;
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
 }
-
-@media (max-width: 768px) {
-  footer {
-    flex-direction: column;
-  }
-
-  footer .column,
-  footer .logo-section {
-    max-width: 100%;
-  }
-}
-
 
 .book-card {
   border: 1px solid #ddd;
   border-radius: 5px;
   overflow: hidden;
   transition: transform 0.2s;
+  background-color: white;
+  border-left: 4px solid #255EAF;
+  margin: 5%;
+}
+
+#bookicon {
+  width: 3%;
+  height: 3%;
   background-color: white;  
   margin-bottom: 20px;
 }
@@ -369,4 +332,107 @@ footer .copyright {
 .stars {
   color: yellow;
   font-size: 1.2rem;
+}
+
+/* Cadastro de livros */
+
+.container h2 {
+  font-size: 12px;
+}
+
+.container button {
+  background-color: #255eaf;
+  color: #fff;
+  font-size: 12px;
+  padding: 10px 45px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.container button.hidden {
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.container form {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.container input {
+
+  background-color: #eee;
+  border: none;
+  margin: 8px 0;
+  padding: 10px 8px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: 50%;
+  outline: none;
+}
+
+.container input::placeholder {
+  color: #787878;
+  font-weight: 800;
+  font-family: "Oswald", sans-serif;
+}
+
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+
+/* --- RESPONSIVIDADE --- */
+
+/* Ajuste de margens em telas menores */
+@media (max-width: 768px) {
+  .search-container {
+    margin: 10px 0;
+  }
+
+  .user-icon img {
+    width: 80px; /* Diminuir o tamanho do ícone do usuário */
+  }
+
+  footer {
+    padding: 20px;
+  }
+
+  footer .column {
+    padding: 10px 0;
+  }
+}
+
+/* Estilo para telas pequenas */
+@media (max-width: 768px) {
+  .logo-container img {
+    width: 40%;
+  }
+
+  nav ul {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  .contact-info h1 {
+    font-size: 1.5rem;
+  }
+
+  .contact-info p {
+    font-size: 1.2rem;
+  }
 }
