@@ -108,7 +108,7 @@ nav ul li a {
   font-size: 16px;
   text-shadow: 0 2px 4px linear-gradient(to right, #255EAF, #21559E, #21549D, #205298, #205198, #0F2749);
   position: relative;
-
+  font-weight: 400;
 }
 
 nav ul li a:hover::after {
@@ -339,7 +339,7 @@ footer .copyright {
   background-color: black;
   color: white;
   padding: 10px;
-  text-align: center;
+  text-align: start;
 }
 
 .stars {
@@ -408,13 +408,14 @@ footer .copyright {
 /* --- RESPONSIVIDADE --- */
 
 /* Ajuste de margens em telas menores */
-@media (max-width: 768px) {
+@media screen and  (max-width: 768px) {
   .search-container {
     margin: 10px 0;
   }
 
   .user-icon img {
-    width: 80px; /* Diminuir o tamanho do ícone do usuário */
+    width: 80px;
+    /* Diminuir o tamanho do ícone do usuário */
   }
 
   footer {
