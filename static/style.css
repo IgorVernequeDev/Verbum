@@ -128,6 +128,12 @@ h1 {
   font-style: normal;
 }
 
+h5 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+}
+
 h6 {
   font-family: "Oswald", sans-serif;
   font-weight: 300;
@@ -312,13 +318,15 @@ footer .copyright {
 }
 
 .book-card {
-  border: 1px solid #ddd;
   border-radius: 5px;
   overflow: hidden;
   transition: transform 0.2s;
   background-color: white;
   border-left: 4px solid #255EAF;
-  margin: 5%;
+}
+
+.livros a {
+  text-decoration: none;
 }
 
 #bookicon {
@@ -326,13 +334,45 @@ footer .copyright {
   height: 3%;
 }
 
+img.img-fluid {
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+}
+
 .book-card:hover {
   transform: scale(1.03);
+}
+
+.book-header {
+  background-color: #222;
+  padding: 20px;
+}
+
+.book-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0;
+}
+
+.book-header p {
+  font-size: 1.2rem;
+  color: #cccccc;
 }
 
 .book-image {
   width: 100%;
   height: auto;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+}
+
+.btn-primary i {
+  margin-right: 8px;
 }
 
 .book-footer {
@@ -406,47 +446,3 @@ footer .copyright {
 }
 
 /* --- RESPONSIVIDADE --- */
-
-/* Ajuste de margens em telas menores */
-@media screen and  (max-width: 768px) {
-  .search-container {
-    margin: 10px 0;
-  }
-
-  .user-icon img {
-    width: 80px;
-    /* Diminuir o tamanho do ícone do usuário */
-  }
-
-  footer {
-    padding: 20px;
-  }
-
-  footer .column {
-    padding: 10px 0;
-  }
-}
-
-/* Estilo para telas pequenas */
-@media (max-width: 768px) {
-  .logo-container img {
-    width: 40%;
-  }
-
-  nav ul {
-    flex-direction: column;
-    padding: 15px;
-  }
-
-  nav ul li {
-    margin: 10px 0;
-  }
-
-  .contact-info h1 {
-    font-size: 1.5rem;
-  }
-
-  .contact-info p {
-    font-size: 1.2rem;
-  }
-}

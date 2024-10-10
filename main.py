@@ -6,6 +6,8 @@ app = Flask(__name__)
 CORS(app)
 app.secret_key = 'verbum'
 
+app.config['DEBUG'] = True
+
 # Conexão com o banco de dados
 db = mysql.connector.connect(
     host="localhost",
@@ -16,26 +18,39 @@ db = mysql.connector.connect(
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', titulo="Verbum - Lista de Espera")
 
 @app.route('/home')
 def home():
     logado = session.get('logado', True)
-    return render_template('index.html', logado=logado)
+    return render_template('index.html', logado=logado, titulo="Verbum - Home")
 
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    return render_template('login.html', titulo="Verbum - Login")
 
 @app.route('/livros')
 def livros():
-    logado = session.get('logado', False) 
-    return render_template('livros.html', logado=logado)
+    logado = session.get('logado', False)
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM livros")
+    livros = cursor.fetchall()
+    cursor.close() 
+    return render_template('livros.html', logado=logado, titulo="Verbum - Livros", livros=livros)
+
+@app.route('/livro/<int:id>')
+def livro(id):
+    logado = session.get('logado', False)
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM livros WHERE idLivro = %s", (id,))
+    livro = cursor.fetchone()
+    cursor.close() 
+    return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro)
 
 @app.route('/contato')
 def contato():
     logado = session.get('logado', False) 
-    return render_template('contato.html', logado=logado)
+    return render_template('contato.html', logado=logado,titulo="Verbum - Contato")
 
 @app.route('/modelo')
 def modelo():
@@ -45,12 +60,12 @@ def modelo():
 @app.route('/adm')
 def adm():
     logado = session.get('logado', True)
-    return render_template('adm_index.html', logado=logado)
+    return render_template('adm_index.html', logado=logado, titulo="Verbum ADM - Home ")
 
 @app.route('/cadlivro')
 def cadlivro():
     logado = session.get('logado', True) 
-    return render_template('cadlivro.html', logado=logado)
+    return render_template('cadlivro.html', logado=logado, titulo="Verbum ADM - Cadastro")
 
 @app.route('/login', methods=['POST'])
 def logar():
@@ -66,14 +81,6 @@ def logar():
     else:
         return render_template("login.html",msg="Usuário/Senha estão incorretos!")
 
-# @app.route('/capa_livro/<int:id>')  
-# def capa_livro(id):
-#     cursor = db.cursor()
-#     cursor.execute("SELECT imagemCapa FROM Livro WHERE idLivro = %s", (id,))
-#     imagem = cursor.fetchone()[0]
-
-#     return Response(imagem, mimetype='image/jpeg')
-
 @app.route('/logout')
 def logout():
     session.pop('logado', None)
@@ -81,4 +88,4 @@ def logout():
     return redirect('/home')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(debug=True)
