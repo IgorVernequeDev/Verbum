@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet');
+
+
+/* Resetando o estilo padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
+}
+
+body {
+    background-color: #ffffff; /* Cor de fundo */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que o body ocupe toda a altura */
+}
+
+
+.container {
+    width: 80%;
+    max-width: 100%;
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 40px; /* Ajustado o padding para um tamanho confortável */
+    margin-top: 40px; /* Espaçamento adicional entre o header e o container */
+}
+
+/* Estilo do título na área de reserva de livros */
+.container h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.grid-livros {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 colunas */
+    gap: 50px; /* Adicione esta linha para espaçamento entre os livros */
+    padding: 20px; /* Adicione esta linha para espaçamento ao redor da grade */
+}
+
+  
+  .livro {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s; /* Adicionando uma transição para o efeito de hover */
+  }
+  
+  .livro:hover {
+    transform: scale(1.05); /* Efeito hover para aumentar levemente o livro */
+  }
+
+  .livro img {
+    width: 200px; /* Aumente o valor para ajustar o tamanho da imagem */
+    height: auto; /* Mantém a proporção da imagem */
+    margin-bottom: 10px;
+}
+
+.livro h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.livro button {
+    background-color: #255eaf;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.livro button:hover {
+    background-color: #1d4c8a;
+}
+
+/* Estilo para o rodapé (footer) */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    margin-top: auto; /* Garante que o footer fique no final da página */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .container h1 {
+        font-size: 28px;
+    }
+
+    .grid-livros {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajusta as colunas para telas menores */
+    }
+
+    .livro img {
+        width: 100px;
+    }
+}
