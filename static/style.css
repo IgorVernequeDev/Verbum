@@ -427,9 +427,13 @@ img.img-fluid {
 }
 
 .form-container {
-  position: absolute;
-  top: 0;
-  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* --- RESPONSIVIDADE --- */
