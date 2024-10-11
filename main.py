@@ -8,7 +8,6 @@ app.secret_key = 'verbum'
 
 app.config['DEBUG'] = True
 
-# Conexão com o banco de dados
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -37,7 +36,7 @@ def livros():
     livros = cursor.fetchall()
     cursor.close() 
     return render_template('livros.html', logado=logado, titulo="Verbum - Livros", livros=livros)
-
+    
 @app.route('/livro/<int:id>')
 def livro(id):
     logado = session.get('logado', False)
@@ -51,6 +50,11 @@ def livro(id):
 def contato():
     logado = session.get('logado', False) 
     return render_template('contato.html', logado=logado,titulo="Verbum - Contato")
+
+@app.route('/livrosReservados')
+def livrosReservados():
+    logado = session.get('logado', False) 
+    return render_template('livrosReservados.html', logado=logado,titulo="Verbum - Contato")
 
 @app.route('/modelo')
 def modelo():
@@ -66,6 +70,16 @@ def adm():
 def cadlivro():
     logado = session.get('logado', True) 
     return render_template('cadlivro.html', logado=logado, titulo="Verbum ADM - Cadastro")
+
+@app.route('/adm_listadeespera')
+def listadeespera():
+    logado = session.get('logado', True)
+    return render_template('adm_listadeespera.html', logado = logado, titulo="Verbum ADM - Cadastro")
+
+@app.route('/informacoespessoais')
+def informacoespessoais():
+    logado = session.get('logado', True)
+    return render_template('informacoespessoais.html', logado = logado, titulo="Verbum ADM - Cadastro")
 
 @app.route('/login', methods=['POST'])
 def logar():
