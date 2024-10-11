@@ -1,0 +1,51 @@
+{% extends 'modelo.html' %}
+
+{% block conteudo %}
+<div class="container">
+    <div class="personal-info mb-5">
+        <img src="/static/img/igor.png" alt="Foto do Usuário" class="user-photo" />
+        <ul class="user-details">
+            <li><strong>Nome Completo:</strong> Igor Verneque</li>
+            <li><strong>Email:</strong> vernequinho_games@gmail.com</li>
+            <li><strong>Série:</strong> 3° Ensino Médio</li>
+            <li><strong>RM:</strong> 9876</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .user-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border: 3px solid black; /* Borda preta ao redor da imagem */
+    }
+    .personal-info {
+        background-color: #f8f9fa; /* Fundo mais claro para destacar a seção */
+        padding: 20px;
+        border-radius: 10px; /* Borda arredondada */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    }
+    .user-details {
+        list-style-type: none;
+        padding: 0;
+        font-family: Arial, sans-serif; /* Fonte profissional */
+        font-size: 16px;
+        line-height: 1.6; /* Espaçamento entre linhas */
+        color: #333; /* Cor mais escura para melhor legibilidade */
+    }
+    .user-details li {
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ddd; /* Linha de separação entre os itens */
+        padding-bottom: 10px;
+    }
+    .user-details li:last-child {
+        border-bottom: none; /* Remove a linha do último item */
+    }
+</style>
+{% endblock %}

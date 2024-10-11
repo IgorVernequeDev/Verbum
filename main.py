@@ -71,6 +71,11 @@ def listadeespera():
     logado = session.get('logado', True)
     return render_template('adm_listadeespera.html', logado = logado, titulo="Verbum ADM - Cadastro")
 
+@app.route('/informacoespessoais')
+def informacoespessoais():
+    logado = session.get('logado', True)
+    return render_template('informacoespessoais.html', logado = logado, titulo="Verbum ADM - Cadastro")
+
 @app.route('/login', methods=['POST'])
 def logar():
     email = request.form['email']
