@@ -67,6 +67,11 @@ def cadlivro():
     logado = session.get('logado', True) 
     return render_template('cadlivro.html', logado=logado, titulo="Verbum ADM - Cadastro")
 
+@app.route('/adm_listadeespera')
+def listadeespera():
+    logado = session.get('logado', True)
+    return render_template('adm_listadeespera.html', logado = logado, titulo="Verbum ADM - Cadastro")
+
 @app.route('/login', methods=['POST'])
 def logar():
     email = request.form['email']
