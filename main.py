@@ -6,6 +6,8 @@ app = Flask(__name__)
 CORS(app)
 app.secret_key = 'verbum'
 
+app.config['DEBUG'] = True
+
 # Conexão com o banco de dados
 db = mysql.connector.connect(
     host="localhost",
@@ -14,59 +16,56 @@ db = mysql.connector.connect(
     database="VERBUM"
 )
 
-# @app.route('/adicionar_livro', methods=['GET', 'POST'])
-# def adicionar_livro():
-#     if request.method == 'POST':
-#         titulo = request.form['titulo']
-#         autor = request.form['autor']
-#         editora = request.form['editora']
-#         ano_publicacao = request.form['ano']
-#         quantidade = request.form['quantidade']
-#         categoria = request.form['categoria']
-#         # Lê a imagem como binário
-#         imagem_capa = request.files['imagem'].read()
-
-#         cursor = db.cursor()
-#         sql = """INSERT INTO Livro (idAutor, idEditora, titulo, anoPublicacao, quantidade, categoria, imagemCapa)
-#                  VALUES (%s, %s, %s, %s, %s, %s, %s)"""
-#         valores = (autor, editora, titulo, ano_publicacao,
-#                    quantidade, categoria, imagem_capa)
-#         cursor.execute(sql, valores)
-#         db.commit()
-
-#         return 'Livro adicionado com sucesso!'
-
-#     return render_template('index.html')
-
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', titulo="Verbum - Lista de Espera")
 
 @app.route('/home')
 def home():
-    logado = session.get('logado', False)
-    return render_template('index.html', logado=logado)
+    logado = session.get('logado', True)
+    return render_template('index.html', logado=logado, titulo="Verbum - Home")
 
 @app.route('/login')
 def login():
-    return render_template('login.html')
-
-@app.route('/recuperarsenha')
-def recuperarsenha():
-    return render_template('recuperarsenha.html')
+    return render_template('login.html', titulo="Verbum - Login")
 
 @app.route('/livros')
 def livros():
-    return render_template('livros.html')
+    logado = session.get('logado', False)
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM livros")
+    livros = cursor.fetchall()
+    cursor.close() 
+    return render_template('livros.html', logado=logado, titulo="Verbum - Livros", livros=livros)
+
+@app.route('/livro/<int:id>')
+def livro(id):
+    logado = session.get('logado', False)
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM livros WHERE idLivro = %s", (id,))
+    livro = cursor.fetchone()
+    cursor.close() 
+    return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro)
 
 @app.route('/contato')
 def contato():
-    return render_template('contato.html')
+    logado = session.get('logado', False) 
+    return render_template('contato.html', logado=logado,titulo="Verbum - Contato")
 
 @app.route('/modelo')
 def modelo():
     logado = session.get('logado', True)
     return render_template('modelo.html', logado=logado)
+
+@app.route('/adm')
+def adm():
+    logado = session.get('logado', True)
+    return render_template('adm_index.html', logado=logado, titulo="Verbum ADM - Home ")
+
+@app.route('/cadlivro')
+def cadlivro():
+    logado = session.get('logado', True) 
+    return render_template('cadlivro.html', logado=logado, titulo="Verbum ADM - Cadastro")
 
 @app.route('/login', methods=['POST'])
 def logar():
@@ -74,18 +73,13 @@ def logar():
     senha = request.form['senha']
 
     if email == 'admin@gmail.com' and senha == '123':
-        session['logado'] = True  # Armazena o estado de login na sessão
+        session['logado'] = True
+        return redirect('/adm')
+    elif email == 'aluno@gmail.com' and senha == '123':
+        session['logado'] = True
         return redirect('/home')
     else:
         return render_template("login.html",msg="Usuário/Senha estão incorretos!")
-
-# @app.route('/capa_livro/<int:id>')  
-# def capa_livro(id):
-#     cursor = db.cursor()
-#     cursor.execute("SELECT imagemCapa FROM Livro WHERE idLivro = %s", (id,))
-#     imagem = cursor.fetchone()[0]
-
-#     return Response(imagem, mimetype='image/jpeg')
 
 @app.route('/logout')
 def logout():
@@ -94,4 +88,4 @@ def logout():
     return redirect('/home')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(debug=True)
