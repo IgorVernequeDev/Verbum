@@ -8,7 +8,6 @@ app.secret_key = 'verbum'
 
 app.config['DEBUG'] = True
 
-# Conexão com o banco de dados
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -51,6 +50,11 @@ def livro(id):
 def contato():
     logado = session.get('logado', False) 
     return render_template('contato.html', logado=logado,titulo="Verbum - Contato")
+
+@app.route('/livrosReservados')
+def livrosReservados():
+    logado = session.get('logado', False) 
+    return render_template('livrosReservados.html', logado=logado,titulo="Verbum - Contato")
 
 @app.route('/modelo')
 def modelo():
