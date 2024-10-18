@@ -343,49 +343,80 @@ footer .copyright {
 
 /* Cadastro de livros */
 
-.container {
+#container {
   background-color: #fff;
   border-radius: 30px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
-  width: 768px;
+  width: 50%;
   max-width: 100%;
   min-height: 480px;
   margin-top: 4%;
   margin-bottom: 4%;
   flex-direction: column;
-  align-content: space-evenly;
+  align-content: center;
 }
 
-.container h2 {
-  font-size: 12px;
-  padding: 2%;
+.titulos {
+  color: #255EAF;
+  font-size: 20px;
+  font-family: "Oswald", sans-serif;
+  margin: 0;
+  padding: 0;
 }
+
+/* Estilizando os selects */
+select {
+  background-color: #eee; 
+  color: #504f4f; 
+  font-weight: 500;
+  font-family: "Oswald", sans-serif; 
+  font-size: 16px; 
+  padding: 5px; 
+  border: none;
+  border-radius: 5px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+select:focus {
+  outline: none; /* Remove o contorno padrão do navegador */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.8); /* Adiciona um destaque ao focar */
+}
+
+/* Opcional: Estilo para as opções dentro do select */
+option {
+  background-color: #eee; /* Cor de fundo das opções */
+  color: #504f4f; /* Cor do texto das opções */
+}
+
 
 .Subir{
   height: 10%;
+  width: 50%;
   background: linear-gradient(to right, #709fe0, #023884);
   color: #ffffff;
   font-size: 12px;
-  padding: 10px 45px;
+  font-family: "Oswald", sans-serif;
   border: none;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.5px;
-  text-transform: uppercase;
   text-align: center;
   cursor: pointer;
-  margin-top: 20%;
+  margin-top: 10%;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.container button.hidden {
+
+.Subir.hidden {
   background-color: transparent;
   border-color: #fff;
 }
 
-.container form {
+#container form {
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -394,18 +425,18 @@ footer .copyright {
   height: 100%;
 }
 
-.container input {
+#container input {
   background-color: #eee;
   border: none;
   margin: 8px 0;
   padding: 10px 8px;
   font-size: 16px;
   border-radius: 8px;
-  width: 50%;
+  width: 90%;
   outline: none;
 }
 
-.container input::placeholder {
+#container input::placeholder {
   color: #504f4f;
   font-weight: 800;
   font-family: "Oswald", sans-serif;
@@ -422,12 +453,14 @@ footer .copyright {
   text-align: center;
   font-family: "Oswald", sans-serif;
   border: none;
-  padding: 3%;
+  width: 90%;
+  padding-top: 5%;
   border-radius: 8px;
   font-weight: 800;
+  resize: none;
+  overflow: hidden;
 }
 
 #Sinopse textarea::placeholder {
   color: #787878;
-
 }
