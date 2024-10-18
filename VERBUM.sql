@@ -24,7 +24,8 @@ CREATE TABLE Livro (
   descricao text not null,
   anoPublicacao YEAR NOT NULL,
   quantidade INT NOT NULL,
-  categoria VARCHAR(50) NOT NULL,
+  numero_paginas INT NOT NULL,
+  genero VARCHAR(50) NOT NULL,
   FOREIGN KEY (idAutor) REFERENCES Autor(idAutor),
   FOREIGN KEY (idEditora) REFERENCES Editora(idEditora)
 );
