@@ -18,12 +18,13 @@ body {
 }
 
 
+
 .container {
     width: 80%;
     max-width: 100%;
     background-color: #ffffff;
     border-radius: 15px;
-    padding: 40px; /* Ajustado o padding para um tamanho confortável */
+    padding: 20px; /* Ajustado o padding para um tamanho confortável */
     margin-top: 40px; /* Espaçamento adicional entre o header e o container */
 }
 
@@ -37,12 +38,10 @@ body {
 
 .grid-livros {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 colunas */
-    gap: 50px; /* Adicione esta linha para espaçamento entre os livros */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px; /* Adicione esta linha para espaçamento entre os livros */
     padding: 20px; /* Adicione esta linha para espaçamento ao redor da grade */
 }
-
-  
   .livro {
     background-color: #ffffff;
     border-radius: 10px;

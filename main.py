@@ -101,5 +101,12 @@ def logout():
     session.clear()
     return redirect('/home')
 
+
+@app.route('/alunos')
+def alunos():
+    logado = session.get('logado', True)
+    return render_template('alunos.html', logado=logado, titulo="Verbum ADM - Alunos")
+
+
 if __name__ == '__main__':
     app.run(debug=True)
