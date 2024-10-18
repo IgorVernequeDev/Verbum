@@ -445,19 +445,18 @@ option {
   height: 100%;
 }
 
-#Sinopse {
+#descricao {
   background-color: #eee;
   text-align: center;
   font-family: "Oswald", sans-serif;
   border: none;
   width: 90%;
-  padding-top: 5%;
   border-radius: 8px;
   font-weight: 800;
   resize: none;
   overflow: hidden;
 }
 
-#Sinopse textarea::placeholder {
+#descricao textarea::placeholder {
   color: #787878;
 }
