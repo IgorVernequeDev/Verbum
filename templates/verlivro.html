@@ -1,0 +1,41 @@
+{% extends 'modelo.html' %}
+
+{% block conteudo %}
+
+<div class="text-white book-header">
+    <h1>{{ livro.titulo }}</h1>
+</div>
+<div class="container">
+    <div class="row my-5">
+        <div class="col-md-3">
+            <img src="/static/img/livros/cortedechamas.png" alt="Don Quijote" class="img-fluid w-75">
+        </div>
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center">
+                <button class="btn btn-primary" id="reservaLivro" onclick="reservarLivro()"><img src="/static/img/" alt="">RESERVAR</button>
+                <p class="stars">{{ livro.avaliacao }}★</p>
+            </div>
+
+            <h5 class="mt-4">DESCRIÇÃO</h5>
+            <p>{{ livro.descricao }}</p>
+
+            <div class="w-100 d-flex justify-content-end">
+                <div class="row mt-4 book-details">
+                    <div class="col-md-6">
+                        <h5>EDITORA:</h5>
+                        <p>
+                        <p>{{ livro.editora }}</p>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>NÚMERO DE PÁGINAS:</h5>
+                        <p>{{ livro.numero_paginas }}</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}
