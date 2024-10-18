@@ -45,28 +45,35 @@
     <main>
         <form action="/adicionar_livro" method="POST" enctype="multipart/form-data">
             <div class="container" id="container">
-                <div class="d-flex">
-                    <div class="flex-column">
-                        <h2>Titulo</h2>
+                <div class="d-flex ms-4">
+                    <div class="flex-column w-50 ">
+                        <h2 class="titulos mb-2">Titulo</h2>
                         <input type="text" placeholder="Insira o título..." />
-                        <h2>Número de páginas</h2>
-                        <input type="number" placeholder="Insira o número de páginas..." />
-                        <h2>Sinopse</h2>
-                        <textarea placeholder="Insira um resumo do livro"></textarea>
-                    </div>
-                    <div class="flex-column">
-                        <h2>Editora</h2>
-                        <select>
+                        <h2 class="titulos mb-2">Sinopse</h2>
+                        <textarea id="Sinopse" placeholder="Insira um resumo do livro"></textarea>
+                        <h2 class="titulos mb-2">Editora</h2>
+                        <select class="ls-custom-select col-md-8 mb-3">
                             <option value="todavia">Todavia</option>
-                            <!-- Outras opções -->
-                        </select>
-                        <h2>Categoria</h2>
-                        <select>
                             <option value="acao">Ação</option>
-                            <!-- Outras opções -->
+                            <option value="acao">Ação</option>
+                        </select>
+                        <h2 class="titulos mb-2" for="imagemCapa">Selecione a imagem da capa:</h2>
+                        <input class="selecionar" type="file" name="imagemCapa" id="imagemCapa">
+                    </div>
+
+                    <div class="flex-column w-50 ms-5">
+                        <h2 class="titulos mb-2">Número de páginas</h2>
+                        <input type="number" placeholder="Insira o número de páginas..." />
+                        <h2 class="titulos mb-2">Categoria</h2>
+                        <select class="ls-custom-select col-md-8">
+                            <option value="acao">Ação</option>
+                            <option value="acao">Ação</option>
+                            <option value="acao">Ação</option>
                         </select>
 
-                        <button class="Subir" type="submit">Subir</button>
+                        <button class="Subir" type="submit">
+                        <img src="/static/img/baixar.png" alt="baixar" style="margin-right: 10px; height: 20px;">SUBIR</button>
+                        
                         
                     </div>
                     
