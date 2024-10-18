@@ -12,7 +12,7 @@ app.config['DEBUG'] = True
 
 @app.route('/')
 def index():
-    return render_template('index.html', titulo="Verbum - Lista de Espera")
+    return render_template('index.html', titulo="Verbum - Reserva de livros")
 
 
 @app.route('/home')
@@ -54,7 +54,7 @@ def contato():
 @app.route('/livrosReservados')
 def livrosReservados():
     logado = session.get('logado', False)
-    return render_template('livrosReservados.html', logado=logado, titulo="Verbum - Contato")
+    return render_template('livrosReservados.html', logado=logado, titulo="Verbum - Livros reservados")
 
 
 @app.route('/modelo')
@@ -72,19 +72,19 @@ def adm():
 @app.route('/cadastrarlivro')
 def cadastrarlivro():
     logado = session.get('logado', True)
-    return render_template('cadastrolivro.html', logado=logado, titulo="Verbum ADM - Cadastro")
+    return render_template('cadastrolivro.html', logado=logado, titulo="Verbum ADM - Cadastro de livros")
 
 
 @app.route('/adm_listadeespera')
 def listadeespera():
     logado = session.get('logado', True)
-    return render_template('adm_listadeespera.html', logado=logado, titulo="Verbum ADM - Cadastro")
+    return render_template('adm_listadeespera.html', logado=logado, titulo="Verbum ADM - Lista de espera")
 
 
 @app.route('/informacoespessoais')
 def informacoespessoais():
     logado = session.get('logado', True)
-    return render_template('informacoespessoais.html', logado=logado, titulo="Verbum ADM - Cadastro")
+    return render_template('informacoespessoais.html', logado=logado, titulo="Verbum - Informações Pessoais")
 
 
 @app.route('/login', methods=['POST'])
@@ -133,8 +133,6 @@ def cadlivro():
     conexao.close()
 
     return render_template('adm_index.html')
-
-
 
 @app.route('/logout')
 def logout():
