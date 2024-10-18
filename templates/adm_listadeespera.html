@@ -1,0 +1,64 @@
+{% extends 'modelo.html' %}
+
+{% block conteudo %}
+<style>
+    /* Aplica gradiente às células da tabela */
+    .table tbody td {
+        background-color: #e0e7ea;
+        color: rgb(0, 0, 0); /* Cor do texto */
+    }
+    
+    /* Define a cor das divisórias da tabela */
+    .table {
+        border-color:#255eaf; /* Cor das bordas da tabela */
+    }
+
+    .table th {
+        background-color: #255eaf; /* Fundo do cabeçalho da tabela */
+        color: white; /* Cor do texto do cabeçalho */
+
+    }
+
+    .table-bordered th, .table-bordered td {
+        border-color: #255eaf; /* Cor das bordas das células */
+    }
+</style>
+<div class="container mt-5 mb-5" style="font-size: 20px;">  
+    <div class="d-flex">
+        <i class="bi bi-card-checklist" style="margin-top: 13px;"></i>
+        <p style="margin:10px;">Lista de Espera</p>
+    </div>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome do Aluno</th>
+                <th>RM</th>
+                <th>Série</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Maria Luísa Marcondes Nunes</td>
+                <td>1234</td>
+                <td>3ª Ensino Médio</td>
+            </tr>
+            <tr>
+                <td>Davi Gabriel Carvalho Nunes Silva</td>
+                <td>7674</td>
+                <td>3ª Ensino Médio</td>
+            </tr>
+            <tr>
+                <td>Igor de Almeida Verneque</td>
+                <td>3456</td>
+                <td>3ª Ensino Médio</td>
+            </tr>
+            <tr>
+                <td>Luiz Henrique Fernandes Yamasaki</td>
+                <td>7654</td>
+                <td>3ª Ensino Médio</td>
+            </tr>
+        </tbody>
+    </table>
+</div> 
+{% endblock %}

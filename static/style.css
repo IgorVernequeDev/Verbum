@@ -42,10 +42,12 @@ main {
   color: white;
 }
 
+.alunos {
+  font-weight: 300;
+}
+
 input:focus {
   outline: none;
-  /* Remove o contorno padrão */
-  /* Define apenas o contorno branco */
 }
 
 
@@ -64,22 +66,24 @@ nav ul {
   display: flex;
   justify-content: center;
   text-align: center;
+  align-items: end;
   list-style: none;
 }
 
 #notificacoes {
-  width: 7%;
-}
-
-nav ul li {
-  margin: 0 20px;
+  cursor: pointer;
+  width: 6%;
+  background-color: #bbb;
+  border-radius: 100px;
 }
 
 nav ul li a {
   color: rgb(255, 255, 255);
   text-decoration: none;
   font-size: 16px;
-  text-shadow: 0 2px 4px linear-gradient(to right, #255EAF, #21559E, #21549D, #205298, #205198, #0F2749);
+  text-shadow: linear-gradient(to right, #255EAF, #21559E, #21549D, #205298, #205198, #0F2749);
+  position: relative;
+  font-weight: 400;
 }
 
 nav ul li a:hover {
@@ -95,13 +99,25 @@ h1 {
   font-style: normal;
 }
 
+h5 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+h6 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+}
+
 p {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Oswald', sans-serif;
 }
 
 #textoIntroducao {
   font-size: 26px;
 }
+
 
 .user-icon img {
   background-color: #bbb;
@@ -117,32 +133,31 @@ button {
 
 #userImage {
   cursor: pointer;
+  width: 54%;
 }
 
-#buttonsUser {
+#notificacoesImage {
+  width: 15%;
+}
+
+#botoesUsuario {
   border-radius: 5px;
   width: 10em;
 }
 
-#buttonsUser button {
+#botoesUsuario button {
   background: linear-gradient(to right, #255eaf, #023377);
   font-weight: 300;
   height: 3em;
   border-top: 3px solid white;
 }
 
-#userInterface {
-  display: none;
+#usuarioInterface {
   position: absolute;
   background-color: #fff;
-  right: 110px;
-  top: 74px;
+  right: 120px;
+  top: 80px;
   z-index: 2;
-}
-
-#buttonsUser {
-  border-radius: 5px;
-  width: 10em;
 }
 
 #botoesNotificacao button {
@@ -150,14 +165,16 @@ button {
   font-weight: 300;
   height: 3em;
   border-top: 3px solid white;
+  font-size: 17px;
 }
 
 #notificacoesInterface {
   position: absolute;
   background-color: #fff;
-  right: 110px;
-  top: 74px;
+  right: 50px;
+  top: 80px;
   z-index: 2;
+  width: 20%;
 }
 
 #Entrar {
@@ -184,7 +201,10 @@ button {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
   margin-left: 4%;
+
 
 }
 
@@ -213,6 +233,7 @@ button {
 .contact-info img {
   height: 600px;
   flex-shrink: 1;
+  flex-shrink: 1;
 }
 
 .method {
@@ -236,6 +257,7 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
   align-items: center;
   height: 20%;
 
@@ -263,57 +285,24 @@ footer h3 {
   text-transform: uppercase;
   align-items: center;
   text-align: center;
+  font-family: "Oswald", sans-serif;
 }
 
-footer ul {
-  list-style: none;
-  padding: 0;
-}
-
-footer ul li {
-  margin: 5px 0;
-}
-
-footer ul li a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-footer .social-icons {
-  display: flex;
-  justify-content: center;
-
-}
-
-footer .social-icons a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 24px;
+footer img {
+  width: 10%;
 }
 
 footer .copyright {
   width: 100%;
-  font-size: 14px;
+  font-size: 15px;
   color: #ffffff;
   text-align: center;
   margin-bottom: 1%;
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
 }
-
-@media (max-width: 768px) {
-  footer {
-    flex-direction: column;
-  }
-
-  footer .column,
-  footer .logo-section {
-    max-width: 100%;
-  }
-}
-
 
 .book-card {
-  border: 1px solid #ddd;
   border-radius: 5px;
   overflow: hidden;
   transition: transform 0.2s;
@@ -324,16 +313,43 @@ footer .copyright {
   transform: scale(1.03);
 }
 
+.book-header {
+  background-color: #222;
+  padding: 20px;
+}
+
+.book-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0;
+}
+
+.book-header p {
+  font-size: 1.2rem;
+  color: #cccccc;
+}
+
 .book-image {
   width: 100%;
   height: auto;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+}
+
+.btn-primary i {
+  margin-right: 8px;
 }
 
 .book-footer {
   background-color: black;
   color: white;
   padding: 10px;
-  text-align: center;
+  text-align: start;
 }
 
 .stars {
