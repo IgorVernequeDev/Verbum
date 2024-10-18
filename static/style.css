@@ -185,18 +185,13 @@ button:hover {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  align-items: center;
-  justify-content: space-between;
   margin-left: 4%;
-
-
 }
 
 .contact-info h1 {
   font-size: 2rem;
   font-weight: 300;
   font-family: "Oswald", sans-serif;
-
 }
 
 .contact-info p {
