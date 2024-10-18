@@ -1,19 +1,13 @@
 from flask import Flask, render_template, redirect, request, session
 import mysql.connector  
 from flask_cors import CORS
+from db_functions import *
 
 app = Flask(__name__)
 CORS(app)
 app.secret_key = 'verbum'
 
 app.config['DEBUG'] = True
-
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="senai",
-    database="VERBUM"
-)
 
 @app.route('/')
 def index():
@@ -31,19 +25,19 @@ def login():
 @app.route('/livros')
 def livros():
     logado = session.get('logado', False)
-    cursor = db.cursor(dictionary=True)
+    conexao, cursor = conectar_db()
     cursor.execute("SELECT * FROM livros")
     livros = cursor.fetchall()
-    cursor.close() 
+    encerrar_db(cursor, conexao)
     return render_template('livros.html', logado=logado, titulo="Verbum - Livros", livros=livros)
     
 @app.route('/livro/<int:id>')
 def livro(id):
     logado = session.get('logado', False)
-    cursor = db.cursor(dictionary=True)
+    conexao, cursor = conectar_db()
     cursor.execute("SELECT * FROM livros WHERE idLivro = %s", (id,))
     livro = cursor.fetchone()
-    cursor.close() 
+    encerrar_db(cursor, conexao)
     return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro)
 
 @app.route('/contato')
@@ -97,9 +91,9 @@ def logar():
 
 @app.route('/logout')
 def logout():
-    session.pop('logado', None)
+    print(session)
     session.clear()
-    return redirect('/home')
+    return redirect('/')
 
 
 @app.route('/alunos')
