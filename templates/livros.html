@@ -2,10 +2,13 @@
 
 {% block conteudo %}
 
+
+<link rel="stylesheet" href="/static/livroR.css">
 <div class="container mt-5">
   <div class="d-flex m-3">
-    <img src="/static/img/bookicon.png" id="bookicon" class="me-3">
-    <p>Livros</p>
+    <img src="/static/img/bookicon.png " height="30px" id="bookicon" class="me-3">
+  
+    <p><big><big>Livros</big></big></p>
   </div>
   <div class="livros row row-cols-1 row-cols-md-4 g-4">
     {% for livro in livros %}

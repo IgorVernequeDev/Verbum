@@ -292,7 +292,7 @@ footer .copyright {
   border-radius: 5px;
   overflow: hidden;
   transition: transform 0.2s;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
 }
 
 .book-card:hover {
@@ -338,24 +338,19 @@ footer .copyright {
   text-align: start;
 }
 
+
+a {
+  text-decoration: none; 
+}
+
+
 .stars {
   color: yellow;
   font-size: 1.2rem;
-}
-
-.container {
-  background-color: #fff;
-  border-radius: 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-  position: relative;
-  overflow: hidden;
-  width: 768px;
-  max-width: 100%;
-  min-height: 480px;
-  margin-top: 4%;
-  margin-bottom: 4%;
-  flex-direction: column;
-  align-content: space-evenly;
+  margin-bottom: 0; 
+  padding-bottom: 0; 
+  line-height: normal; 
+  
 }
 
 .container h2 {
@@ -429,5 +424,5 @@ footer .copyright {
 
 #Sinopse textarea::placeholder {
   color: #787878;
-
+  
 }
