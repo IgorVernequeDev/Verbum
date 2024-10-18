@@ -48,8 +48,6 @@ main {
 
 input:focus {
   outline: none;
-  /* Remove o contorno padrão */
-  /* Define apenas o contorno branco */
 }
 
 
@@ -71,7 +69,6 @@ nav ul {
   text-align: center;
   align-items: end;
   list-style: none;
-  margin-bottom: -2px;
 }
 
 #notificacoes {
@@ -81,16 +78,11 @@ nav ul {
   border-radius: 100px;
 }
 
-nav ul li {
-  margin: 0 20px;
-
-}
-
 nav ul li a {
   color: rgb(255, 255, 255);
   text-decoration: none;
   font-size: 16px;
-  text-shadow: 0 2px 4px linear-gradient(to right, #255EAF, #21559E, #21549D, #205298, #205198, #0F2749);
+  text-shadow: linear-gradient(to right, #255EAF, #21559E, #21549D, #205298, #205198, #0F2749);
   position: relative;
   font-weight: 400;
 }
