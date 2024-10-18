@@ -91,7 +91,6 @@ def logar():
 
 @app.route('/logout')
 def logout():
-    print(session)
     session.clear()
     return redirect('/')
 
