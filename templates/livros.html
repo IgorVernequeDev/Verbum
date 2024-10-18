@@ -12,7 +12,7 @@
     <div class="col">
       <a href="/livro/{{ livro.idLivro }}">
         <div class="book-card">
-          <img src="/static/img/livros/cortedechamas.png" alt="Livro {{ livro.titulo }}" class="book-image">
+          <img src="/static/img/livros/{{ livro.imagemCapa }}" alt="Livro {{ livro.titulo }}" class="book-image">
           <div class="book-footer">
             <p>{{ livro.titulo }} <br> {{ livro.autor }}</p>
             <p class="stars">{{ livro.avaliacao }}★</p>
