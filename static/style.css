@@ -105,6 +105,11 @@ h1 {
   font-style: normal;
 }
 
+h3 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+}
+
 h5 {
   font-family: "Oswald", sans-serif;
   font-weight: 600;
@@ -119,11 +124,6 @@ h6 {
 p {
   font-family: 'Oswald', sans-serif;
 }
-
-#textoIntroducao {
-  font-size: 26px;
-}
-
 
 .user-icon img {
   background-color: #bbb;
@@ -365,30 +365,34 @@ footer .copyright {
 
 /* Estilizando os selects */
 select {
-  background-color: #eee; 
-  color: #504f4f; 
+  background-color: #eee;
+  color: #504f4f;
   font-weight: 500;
-  font-family: "Oswald", sans-serif; 
-  font-size: 16px; 
-  padding: 5px; 
+  font-family: "Oswald", sans-serif;
+  font-size: 16px;
+  padding: 5px;
   border: none;
-  border-radius: 5px; 
+  border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 select:focus {
-  outline: none; /* Remove o contorno padrão do navegador */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.8); /* Adiciona um destaque ao focar */
+  outline: none;
+  /* Remove o contorno padrão do navegador */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  /* Adiciona um destaque ao focar */
 }
 
 /* Opcional: Estilo para as opções dentro do select */
 option {
-  background-color: #eee; /* Cor de fundo das opções */
-  color: #504f4f; /* Cor do texto das opções */
+  background-color: #eee;
+  /* Cor de fundo das opções */
+  color: #504f4f;
+  /* Cor do texto das opções */
 }
 
 
-.Subir{
+.Subir {
   height: 10%;
   width: 50%;
   background: linear-gradient(to right, #709fe0, #023884);

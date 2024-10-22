@@ -12,8 +12,9 @@
         </div>
         <div class="col-md-9">
             <div class="d-flex justify-content-between align-items-center">
-                <button class="btn btn-primary" id="reservaLivro" onclick="reservarLivro()"><img src="/static/img/" alt="">RESERVAR</button>
-                <p class="stars">{{ livro.avaliacao }}★</p>
+                <button class="btn btn-primary" id="reservaLivro" onclick="reservarLivro()"><img src="/static/img/"
+                        alt="">RESERVAR</button>
+                <p class="stars">★</p>
             </div>
 
             <h5 class="mt-4">DESCRIÇÃO</h5>
@@ -23,9 +24,11 @@
                 <div class="row mt-4 book-details">
                     <div class="col-md-6">
                         <h5>EDITORA:</h5>
-                        <p>
-                        <p>{{ editora.nomeEditora }}</p>
-                        </p>
+                        <p>{{ livro.nomeEditora }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>AUTOR:</h5>
+                        <p>{{ livro.nomeAutor }}</p>
                     </div>
                     <div class="col-md-6">
                         <h5>NÚMERO DE PÁGINAS:</h5>
@@ -33,7 +36,8 @@
                     </div>
                 </div>
             </div>
-            
+
+
         </div>
     </div>
 </div>

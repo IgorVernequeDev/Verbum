@@ -15,14 +15,14 @@ CREATE TABLE Editora (
 );
 
 -- Tabela de Livros
-CREATE TABLE Livro (
+CREATE TABLE Livros (
   idLivro INT PRIMARY KEY AUTO_INCREMENT,
   idAutor INT NOT NULL,
   idEditora INT NOT NULL,
   imagemCapa VARCHAR(255),
   titulo VARCHAR(255) NOT NULL, 
   descricao text not null,
-  anoPublicacao YEAR NOT NULL,
+  anoPublicacao INT NOT NULL,
   quantidade INT NOT NULL,
   numero_paginas INT NOT NULL,
   genero VARCHAR(50) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE Emprestimo (
   idUsuario INT NOT NULL,
   dataEmprestimo DATE NOT NULL,
   dataDevolucao DATE,
-  FOREIGN KEY (idLivro) REFERENCES Livro(idLivro),
+  FOREIGN KEY (idLivro) REFERENCES Livros(idLivro),
   FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE Reserva (
   status ENUM('em_espera', 'reservado', 'cancelado') NOT NULL DEFAULT 'em_espera',
   dataReserva DATE NOT NULL,
   posicaoEspera INT NOT NULL,
-  FOREIGN KEY (idLivro) REFERENCES Livro(idLivro),
+  FOREIGN KEY (idLivro) REFERENCES Livros(idLivro),
   FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
 );
 
@@ -83,7 +83,7 @@ AFTER UPDATE ON Emprestimo
 FOR EACH ROW
 BEGIN
   IF NEW.dataDevolucao IS NOT NULL AND OLD.dataDevolucao IS NULL THEN
-    UPDATE Livro
+    UPDATE Livros
     SET quantidade = quantidade + 1
     WHERE idLivro = NEW.idLivro;
   END IF;

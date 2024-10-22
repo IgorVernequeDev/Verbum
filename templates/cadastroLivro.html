@@ -12,8 +12,31 @@
         <h2 class="titulos mb-2">Descrição</h2>
         <textarea id="descricao" name="descricao" class="text-start ps-2 pt-2" placeholder="Insira um resumo do livro..."></textarea>
 
+        <h2 class="titulos mb-2">Autor</h2>
+        <select name="autor" id="autor" required>
+          {% if not autores %}
+          <option value="" disabled selected>Não há autores cadastrados!</option>
+          {% else %}
+          <option value="" disabled selected>Selecione um autor</option>
+          {% for autor in autores %}
+          <option value="{{ autor['idAutor'] }}">{{autor['nomeAutor']}}</option>
+          {% endfor %}
+          {% endif %}
+        </select>
+        <button onclick="window.location.href='/cadautor'">Novo autor</button>
+
         <h2 class="titulos mb-2">Editora</h2>
-        <input id="editora" type="text" name="editora" placeholder="Insira a editora...">
+        <select name="editora" id="editora" required>
+          {% if not editoras %}
+          <option value="" disabled selected>Não há editoras cadastradas!</option>
+          {% else %}
+          <option value="" disabled selected>Selecione uma editora</option>
+          {% for editora in editoras %}
+          <option value="{{ editora['idEditora'] }}">{{editora['nomeEditora']}}</option>
+          {% endfor %}
+          {% endif %}
+        </select>
+        <button onclick="window.location.href='/cadeditora'">Nova editora</button>
 
         <h2 class="titulos mb-2" for="imagemCapa">Selecione a imagem da capa:</h2>
         <input class="selecionar" type="file" name="imagemCapa" id="imagemCapa">

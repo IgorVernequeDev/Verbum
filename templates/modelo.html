@@ -22,49 +22,53 @@
 
 <body class="d-flex flex-column">
   <header class="p-4">
-      <div class="d-flex">
-        <div class="logo-container w-75 d-flex justify-content-start align-items-center">
-          <img src="/static/img/verbumbook.png" class="w-25" alt="Verbum Logo">
+    <div class="d-flex">
+      <div class="logo-container w-75 d-flex justify-content-start align-items-center">
+        <img src="/static/img/verbumbook.png" class="w-25" alt="Verbum Logo">
+      </div>
+      <div class="d-flex justify-content-around w-25 align-items-center">
+        <div class="d-flex search-container">
+          <input type="text" placeholder="Título, Autor, Palavra Chave...">
+          <i class="bi bi-search"></i>
         </div>
-        <div class="d-flex justify-content-around w-25 align-items-center">
-          <div class="d-flex search-container">
-            <input type="text" placeholder="Título, Autor, Palavra Chave...">
-            <i class="bi bi-search"></i>
-          </div>
-            <div class="dropdown text-end">
-              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="/static/img/user.png" alt="mdo" width="32" height="32" class="rounded-circle">
-              </a>
-              <ul class="dropdown-menu text-small text-white" id="usuarioInterface">
-                <li><a class="dropdown-item" href="#">Informações Pessoais</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Reservas de livros</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="/logout">Sair</a></li>
-              </ul>
-            </div>
-            <div class="dropdown text-end">
-              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="/static/img/notificacoes.png" alt="mdo" width="32" height="32" class="rounded-circle">
-              </a>
-              <ul class="dropdown-menu text-small">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
-              </ul>
-            </div>
-              <a href="#"><button class="px-3">Login</button></a>
-          </div>
+        {% if logado %}
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <img src="/static/img/user.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small text-white" id="usuarioInterface">
+            <li><a class="dropdown-item" href="#">Informações Pessoais</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Reservas de livros</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="/logout">Sair</a></li>
+          </ul>
+        </div>
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <img src="/static/img/notificacoes.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a class="dropdown-item" href="#">New project...</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+          </ul>
+        </div>
+        {% endif %}
+        {% if not logado %}
+        <a href="/login"><button class="px-3">LOGIN</button></a>
+        {% endif %}
+      </div>
 
     </div>
   </header>

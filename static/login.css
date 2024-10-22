@@ -112,6 +112,10 @@ body {
     z-index: 1;
 }
 
+ button:hover {
+    transform: scale(1.05);
+ }
+
 .container.active .sign-up {
     transform: translateX(100%);
     opacity: 1;

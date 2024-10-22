@@ -1,0 +1,27 @@
+{% extends 'modelo.html' %}
+
+{% block conteudo %}
+
+<form action="/cadautor" method="POST">
+    <div class="container" id="container">
+        <div class="d-flex ms-4">
+            <div class="flex-column w-50 ">
+                <label for="">Cadastre um novo autor</label>
+                <input type="text" name="autor">
+            </div>
+        </div>
+        <button type="submit">Enviar</button>
+    </div>
+
+    <div>
+        {% if not autores %}
+        <p>Não há autores cadastrados!</p>
+        {% else %}
+        {% for autor in autores %}
+        <p>{{autor['nomeAutor']}}</p>
+        {% endfor %}
+        {% endif %}
+    </div>
+</form>
+
+{% endblock %}
