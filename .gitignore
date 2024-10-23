@@ -20,3 +20,6 @@ yarn-error.log*
 # Ignorar arquivos de sistema (macOS e Windows)
 .DS_Store
 Thumbs.db
+
+db_functions.py
+__pycache__/
