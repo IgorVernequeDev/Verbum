@@ -400,13 +400,14 @@ a {
 
 #container {
   background-color: #fff;
+  padding: 2%;  
   border-radius: 30px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
   width: 50%;
   max-width: 100%;
-  min-height: 480px;
+  min-height: 100%;
   margin-top: 4%;
   margin-bottom: 4%;
   flex-direction: column;
@@ -445,7 +446,7 @@ option {
 
 
 .Subir {
-  height: 10%;
+  height: 6vh;
   width: 50%;
   background: linear-gradient(to right, #709fe0, #023884);
   color: #ffffff;
@@ -529,4 +530,18 @@ option {
 
 #descricao textarea::placeholder {
   color: #787878;
+}
+
+.cadastra {
+  width: 40%;
+  background: linear-gradient(to right, #709fe0, #023884);
+  color: white;
+  border: none;
+  padding: 1%;
+  border-radius: 5px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 100;
+  font-size: 20px;
+  text-decoration: none;
+  margin: 0 auto;
 }
