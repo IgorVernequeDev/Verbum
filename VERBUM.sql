@@ -3,13 +3,13 @@ CREATE DATABASE verbum;
 USE verbum;
 
 -- Tabela Autor
-CREATE TABLE Autor (
+CREATE TABLE Autores (
 	idAutor INT PRIMARY KEY AUTO_INCREMENT,
     nomeAutor VARCHAR(100) NOT NULL
 );
 
 -- Tabela Editora
-CREATE TABLE Editora (
+CREATE TABLE Editoras (
 	idEditora INT PRIMARY KEY AUTO_INCREMENT,
     nomeEditora VARCHAR(100) NOT NULL
 );
@@ -26,49 +26,48 @@ CREATE TABLE Livros (
   quantidade INT NOT NULL,
   numero_paginas INT NOT NULL,
   genero VARCHAR(50) NOT NULL,
-  FOREIGN KEY (idAutor) REFERENCES Autor(idAutor),
-  FOREIGN KEY (idEditora) REFERENCES Editora(idEditora)
+  FOREIGN KEY (idAutor) REFERENCES Autores(idAutor),
+  FOREIGN KEY (idEditora) REFERENCES Editoras(idEditora)
 );
 
 -- Tabela de Usuários
-CREATE TABLE Usuario (
+CREATE TABLE Usuarios (
   idUsuario INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
+  serie VARCHAR(50) NOT NULL,
   senha VARCHAR(255) NOT NULL
 );
 
 -- Tabela de Empréstimos
-CREATE TABLE Emprestimo (
+CREATE TABLE Emprestimos (
   idEmprestimo INT PRIMARY KEY AUTO_INCREMENT,
   idLivro INT NOT NULL,
   idUsuario INT NOT NULL,
   dataEmprestimo DATE NOT NULL,
   dataDevolucao DATE,
   FOREIGN KEY (idLivro) REFERENCES Livros(idLivro),
-  FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
+  FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario)
 );
 
 -- Tabela de Reservas 
-CREATE TABLE Reserva (
-  idReserva INT PRIMARY KEY AUTO_INCREMENT,
-  idLivro INT NOT NULL,
-  idUsuario INT NOT NULL,
-  status ENUM('em_espera', 'reservado', 'cancelado') NOT NULL DEFAULT 'em_espera',
-  dataReserva DATE NOT NULL,
-  posicaoEspera INT NOT NULL,
-  FOREIGN KEY (idLivro) REFERENCES Livros(idLivro),
-  FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
+CREATE TABLE reservas (
+    idReserva INT AUTO_INCREMENT PRIMARY KEY,
+    idLivro INT,
+    idUsuario INT,
+    posicaoEspera INT,
+    dataReserva DATETIME,
+    FOREIGN KEY (idLivro) REFERENCES livros(idLivro),
+    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
 );
 
--- Trigger para atualizar a quantidade de livros ao fazer empréstimos
 DELIMITER //
 
 CREATE TRIGGER atualiza_quantidade
-AFTER INSERT ON Emprestimo
+AFTER INSERT ON Emprestimos
 FOR EACH ROW 
 BEGIN
-  UPDATE Livro 
+  UPDATE Livro
   SET quantidade = quantidade - 1 
   WHERE idLivro = NEW.idLivro;
   update reserva 
@@ -79,7 +78,7 @@ END//
 
 -- Trigger para atualizar a quantidade de livros ao fazer devoluções
 CREATE TRIGGER atualizar_quantidade_livros_devolucao
-AFTER UPDATE ON Emprestimo
+AFTER UPDATE ON Emprestimos
 FOR EACH ROW
 BEGIN
   IF NEW.dataDevolucao IS NOT NULL AND OLD.dataDevolucao IS NULL THEN
