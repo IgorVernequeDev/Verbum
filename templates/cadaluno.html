@@ -1,0 +1,38 @@
+{% extends 'modelo.html' %}
+{% block conteudo %}
+
+<form action="/cadaluno" method="POST" enctype="multipart/form-data">
+    <div class="container" id="container">
+        <div class="d-flex ms-4">
+            <div class="flex-column w-50 ">
+                
+                <h2 class="titulos mb-2">Nome</h2>
+                <input type="text" id="nome" name="nome" placeholder="Insira o nome do aluno..." />
+                
+                <h2 class="titulos mb-2">Email</h2>
+                <input type="text" id="email" name="email" placeholder="Insira um email válido..." />
+            </div>
+
+            <div class="flex-column w-50 ms-5">
+
+                <h2 class="titulos mb-2">Senha</h2>
+                <input type="password" id="senha" name="senha" placeholder="Insira a senha.." />
+
+                <h2 class="titulos mb-2">Confirmar senha</h2>
+                <input type="password" id="confirmasenha" name="confirmasenha"
+                    placeholder="Digite a senha novamente..." />
+
+                <p>{{ msg }}</p>
+
+                <button class="Subir" type="submit">
+                    <img src="/static/img/baixar.png" alt="baixar"
+                        style="margin-right: 10px; height: 20px;">SUBIR</button>
+
+
+            </div>
+
+        </div>
+    </div>
+</form>
+
+{% endblock %}

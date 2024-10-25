@@ -43,12 +43,12 @@ def adm():
 @app.route('/listaespera')
 def listadeespera():
     logado = session.get('logado', True)
-    return render_template('adm_listadeespera.html', logado=logado, titulo="Verbum ADM - Lista de espera")
+    return render_template('listaespera.html', logado=logado, titulo="Verbum ADM - Lista de espera")
 
 @app.route('/alunos')
 def alunos():
     logado = session.get('logado', True)
-    return render_template('alunos.html', logado=logado)
+    return render_template('alunos.html', logado=logado,titulo="Verbum ADM - Alunos")
 
 @app.route('/redirecionar')
 def redirecionar():
@@ -67,3 +67,8 @@ def redirecionar():
 def informacoespessoais():
     logado = session.get('logado', True)
     return render_template('informacoespessoais.html', logado=logado, titulo="Verbum - Informações Pessoais")
+
+@app.route('/cadastraraluno')
+def cadastraraluno():
+    logado = session.get('logado', True)
+    return render_template('cadaluno.html', logado=logado, titulo="Verbum - Cadastro de aluno")

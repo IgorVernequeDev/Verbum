@@ -48,19 +48,43 @@ def cadastrarlivro():
 
 @app.route('/login', methods=['POST'])
 def logar():
+    # Obtendo os dados do formulário
     email = request.form['email']
     senha = request.form['senha']
 
-    if email == 'admin@gmail.com' and senha == '123':
-        session['logado'] = True
-        session['nivelUsuario'] = 'admin'
-        return redirect('/adm')
-    elif email == 'aluno@gmail.com' and senha == '123':
-        session['logado'] = True
-        session['nivelUsuario'] = 'usuario'
-        return redirect('/home')
+    # Conectar ao banco de dados
+    conexao, cursor = conectar_db()
+
+    # Consulta para verificar se o usuário existe no banco de dados
+    query = "SELECT idUsuario, nome, email, senha FROM usuario WHERE email = %s"
+    cursor.execute(query, (email,))  # Passando o valor do email como parâmetro
+    usuario = cursor.fetchone()
+
+    # Fechar a conexão e cursor
+    cursor.close()
+    conexao.close()
+
+    if usuario:
+        idUsuario = usuario['idUsuario']
+        nome = usuario['nome']
+        email_db = usuario['email']
+        senha_db = usuario['senha']
+
+        if senha == senha_db:
+            session['logado'] = True
+            session['idUsuario'] = idUsuario
+            session['nome'] = nome
+
+            if email == 'admin@gmail.com' and senha == '123':
+                session['nivelUsuario'] = 'admin'
+                return redirect('/adm')
+            else:
+                session['nivelUsuario'] = 'usuario'
+                return redirect('/home')
+        else:
+            return render_template("login.html", msg="Senha incorreta!")
     else:
-        return render_template("login.html", msg="Usuário/Senha estão incorretos!")
+        return render_template("login.html", msg="Usuário não encontrado!")
 
 @app.route('/cadlivro', methods=['POST'])
 def cadlivro():
@@ -88,6 +112,26 @@ def cadlivro():
     
     conexao.commit()
     conexao.close()
+
+    return render_template('adm_index.html')
+
+@app.route('/cadaluno', methods=['POST'])
+def cadaluno():
+    conexao, cursor = conectar_db()
+
+    nome = request.form['nome']
+    nome = nome.title()
+    email = request.form['email']
+    senha = request.form['senha']
+    confirmasenha = request.form['confirmasenha']
+
+    if senha == confirmasenha:
+        cursor.execute('INSERT INTO usuario (nome, email, senha) VALUES (%s, %s, %s)', (nome, email, senha))
+        conexao.commit()
+        conexao.close()
+
+    else:
+        return render_template("cadaluno.html", msg="As senhas não se coincidem!")
 
     return render_template('adm_index.html')
 
