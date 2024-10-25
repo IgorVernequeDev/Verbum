@@ -7,7 +7,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  min-height: 100vh;
+  min-height: 100vh !important;
 }
 
 header {
@@ -253,13 +253,16 @@ button:hover {
 .main-background {
   background-image: url('/static/img/background.jpg');
   background-position: center;
-  display: flex;
   background-size: cover;
   align-items: center;
-  min-height: 64vh;
+  display: flex;
+  flex-direction: column; /* Organize os elementos verticalmente */
+  padding: 20px; /* Adicione padding para espaçamento */
 }
 
-.contact-methods {
+
+
+.contact-methods8 {
   flex: 1;
 }
 
@@ -411,6 +414,7 @@ a {
   margin-bottom: 4%;
   flex-direction: column;
   align-content: center;
+  
 }
 
 .titulos {
@@ -431,6 +435,7 @@ select {
   border: none;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-right: 10px;
 }
 
 select:focus {
@@ -460,7 +465,7 @@ option {
   margin-top: 10%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center;  
 }
 
 #modal-bg {
@@ -483,6 +488,7 @@ option {
 #buttonsAdm img {
   width: 50%;
 }
+
 
 #buttonsAdm h4 {
   font-weight: 600;
