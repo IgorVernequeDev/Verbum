@@ -40,6 +40,11 @@
               <img src="/static/img/user.png" alt="mdo" width="32" height="32" class="rounded-circle">
             </a>
             <ul class="dropdown-menu text-small text-white text-center" id="usuarioInterface">
+              {% if logado %}
+              <li>
+                <p>Aluno: {{ usuario.nomeUsuario }}</p>
+              </li>
+              {% endif %}
               <a href="#"><li>Informações Pessoais</li></a>
               <li>
                 <hr class="dropdown-divider">
@@ -56,14 +61,14 @@
               aria-expanded="false">
               <img src="/static/img/notificacoes.png" alt="mdo" width="32" height="32" class="rounded-circle">
             </a>
-            <ul class="dropdown-menu text-small" id="usuarioInterface">
-              <li><a class="dropdown-item" href="#">New project...</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Profile</a></li>
+            <ul class="dropdown-menu text-small text-white text-center" id="usuarioInterface">
+              <li><a href="#">New project...</a></li>
+              <li><a href="#">Settings</a></li>
+              <li><a href="#">Profile</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
+              <li><a href="#">Sign out</a></li>
             </ul>
           </div>
           {% endif %}

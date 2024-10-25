@@ -1,5 +1,6 @@
 function reservarLivro() {
     const botaoReservar = document.getElementById('reservaLivro');
+    const idLivro = "{{ livro.idLivro }}";
 
     if (botaoReservar.textContent === 'RESERVAR') {
         botaoReservar.textContent = 'RESERVADO';
@@ -8,6 +9,24 @@ function reservarLivro() {
         if (confirmacao) {
             botaoReservar.textContent = 'RESERVAR';
         }
+    
+        fetch(`/reservar/${idLivro}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Você foi adicionado à lista de espera!');
+            } else if (data.error) {
+                alert(data.error);
+            }
+        })
+        .catch(error => {
+            alert('Erro ao reservar o livro: ' + error);
+        });
     }
 }
 

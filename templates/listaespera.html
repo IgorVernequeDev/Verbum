@@ -4,39 +4,28 @@
 <div class="container mt-5 mb-5" style="font-size: 20px;">  
     <div class="d-flex align-items-center">
         <i class="bi bi-card-checklist"></i>
-        <p style="margin:10px;">Lista de Espera</p>
+        <p style="margin:10px;">Lista de Espera para o Livro {{livro.titulo }}</p>
     </div>
     
     <table class="table table-bordered">
         <thead>
-            <tr>
-                <th>Nome do Aluno</th>
-                <th>RM</th>
+            <tr style="background-color: #255EAF;">
+                <th>Posição</th>
+                <th>Nome</th>
                 <th>Série</th>
+                <th>Data da Reserva</th>
             </tr>
         </thead>
         <tbody>
+            {% for usuario in lista_espera %}
             <tr>
-                <td>Maria Luísa Marcondes Nunes</td>
-                <td>1234</td>
-                <td>3ª Ensino Médio</td>
+                <td>{{ usuarios.posicaoEspera }}</td>
+                <td>{{ usuarios.nome }}</td>
+                <td>{{ usuarios.serie }}</td>
+                <td>{{ usuarios.dataReserva }}</td>
             </tr>
-            <tr>
-                <td>Davi Gabriel Carvalho Nunes Silva</td>
-                <td>7674</td>
-                <td>3ª Ensino Médio</td>
-            </tr>
-            <tr>
-                <td>Igor de Almeida Verneque</td>
-                <td>3456</td>
-                <td>3ª Ensino Médio</td>
-            </tr>
-            <tr>
-                <td>Luiz Henrique Fernandes Yamasaki</td>
-                <td>7654</td>
-                <td>3ª Ensino Médio</td>
-            </tr>
-        </tbody>
+            {% endfor %}
+        </tbody>        
     </table>
 </div> 
 {% endblock %}

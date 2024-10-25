@@ -9,7 +9,8 @@
 <div class="container">
     <div class="row my-5">
         <div class="col-md-3 d-flex align-items-center">
-            <img src="/static/img/livros/{{ livro.imagemCapa }}" id="imagemLivro" alt="Don Quijote" class="img-fluid w-75 mb-5">
+            <img src="/static/img/livros/{{ livro.imagemCapa }}" id="imagemLivro" alt="Don Quijote"
+                class="img-fluid w-75 mb-5">
         </div>
         <div class="col-md-9">
             <div class="d-flex justify-content-between align-items-center">
@@ -52,14 +53,16 @@
                     <h4 class="mt-2">EDITAR</h4>
                 </div>
                 <div class="d-flex flex-column text-center" id="buttonsAdm">
-                    <button id="reservaLivro" class="px-5 py-2 fs-3" data-id="{{ livro.idLivro }}" onclick="confirmarExclusao(this)">
+                    <button id="reservaLivro" class="px-5 py-2 fs-3" data-id="{{ livro.idLivro }}"
+                        onclick="confirmarExclusao(this)">
                         <img src="/static/img/delete.png" alt="">
                     </button>
                     <h4 class="mt-2">EXCLUIR</h4>
                 </div>
                 <div class="d-flex justify-content-end">
                     <div class="text-center">
-                        <a href="/listaespera"><img src="/static/img/listaespera.jpg" id="listaEspera" alt=""></a>
+                        <a href="/listaespera/{{ livro.idLivro }}">
+                            <img src="/static/img/listaespera.jpg" id="listaEspera" alt=""></a>
                         <h4 class="mt-2 fs-6">LISTA DE ESPERA</h4>
                     </div>
                 </div>

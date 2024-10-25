@@ -376,8 +376,8 @@ footer .copyright {
   overflow: hidden;
   transition: transform 0.2s;
   background-color: white;
-  border-left: 5px solid #2f7ae2;
-  border-bottom: 5px solid #2f7ae2;
+  border-left: 4px solid #255EAF;
+  border-bottom: 4px solid #255EAF;
 }
 
 .book-card:hover {
