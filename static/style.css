@@ -94,6 +94,7 @@ nav ul li a {
   text-shadow: linear-gradient(to right, #255EAF, #21559E, #21549D, #205298, #205198, #0F2749);
   position: relative;
   font-weight: 400;
+  top: 19px;
 }
 
 nav ul li a:hover {
@@ -149,6 +150,7 @@ h6 {
 
 p {
   font-family: 'Oswald', sans-serif;
+  font-size: 1.5rem;
 }
 
 .user-icon img {
