@@ -48,21 +48,21 @@ def cadastrarlivro():
 
 @app.route('/login', methods=['POST'])
 def logar():
-    # Obtendo os dados do formulário
     email = request.form['email']
     senha = request.form['senha']
 
-    # Conectar ao banco de dados
     conexao, cursor = conectar_db()
 
-    # Consulta para verificar se o usuário existe no banco de dados
     query = "SELECT idUsuario, nome, email, senha FROM usuario WHERE email = %s"
-    cursor.execute(query, (email,))  # Passando o valor do email como parâmetro
+    cursor.execute(query, (email,))
     usuario = cursor.fetchone()
 
-    # Fechar a conexão e cursor
     cursor.close()
     conexao.close()
+
+    if email == 'admin@gmail.com' and senha == '123':
+                session['nivelUsuario'] = 'admin'
+                return redirect('/adm')
 
     if usuario:
         idUsuario = usuario['idUsuario']
@@ -74,15 +74,11 @@ def logar():
             session['logado'] = True
             session['idUsuario'] = idUsuario
             session['nome'] = nome
+            return redirect('/home')
 
-            if email == 'admin@gmail.com' and senha == '123':
-                session['nivelUsuario'] = 'admin'
-                return redirect('/adm')
-            else:
-                session['nivelUsuario'] = 'usuario'
-                return redirect('/home')
         else:
-            return render_template("login.html", msg="Senha incorreta!")
+            session['nivelUsuario'] = 'usuario'
+            return redirect('/home')
     else:
         return render_template("login.html", msg="Usuário não encontrado!")
 
