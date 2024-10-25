@@ -61,7 +61,6 @@ input:focus {
   outline: none;
 }
 
-
 input::placeholder {
   color: white;
   opacity: 0.8;
@@ -86,6 +85,8 @@ nav ul {
   border-radius: 100px;
 }
 
+
+
 nav ul li a {
   color: rgb(255, 255, 255);
   text-decoration: none;
@@ -95,12 +96,24 @@ nav ul li a {
   position: relative;
   font-weight: 400;
   top: 19px;
+  border-bottom: 2px solid transparent;
+
 }
 
 nav ul li a:hover {
-  text-decoration: underline;
-  text-decoration-color: #255EAF;
-  text-underline-position: under;
+  z-index: 4;
+}
+
+nav ul li a:hover::after {
+  content: '';
+  display: block;
+  height: 4px; 
+  width: 170%; 
+  background-color: #255EAF; 
+  position: absolute;
+  left: -30%; 
+  bottom: -3px; 
+  transition: width 0.3s;
 }
 
 ul {
@@ -159,10 +172,11 @@ p {
 }
 
 button {
-  color: white;
+  color: rgb(0, 0, 0);
   border: none;
   font-family: "Oswald", sans-serif;
   text-decoration: none;
+  color: white;
 }
 
 .table tbody td {
@@ -342,7 +356,6 @@ footer .column {
   margin-top: 4%;
   margin-right: 10%;
   text-align: center;
-
 }
 
 footer h3 {
@@ -447,7 +460,6 @@ a {
   margin-bottom: 4%;
   flex-direction: column;
   align-content: center;
-  
 }
 
 .titulos {
