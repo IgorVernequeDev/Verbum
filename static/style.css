@@ -163,6 +163,25 @@ button {
   text-decoration: none;
 }
 
+.table tbody td {
+  background-color: #e0e7ea;
+  color: rgb(0, 0, 0);
+}
+
+.table {
+  border-color: #255eaf;
+}
+
+.table th {
+  background-color: #255eaf;
+  color: white;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border-color: #255eaf;
+}
+
 .dropdown-divider {
   border-color: white;
   margin: 0;
@@ -204,6 +223,18 @@ button {
   color: white;
   font-family: "Oswald", sans-serif;
   font-weight: 300;
+}
+
+#cadAluno {
+  background-color: #255EAF;
+  border-radius: 5px;
+  color: white;
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+}
+
+#cadAluno img {
+  width: 20%;
 }
 
 #Entrar {
