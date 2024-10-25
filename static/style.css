@@ -49,6 +49,10 @@ main {
   color: white;
 }
 
+#logo {
+  width: 15%;
+}
+
 .alunos {
   font-weight: 300;
 }
@@ -98,6 +102,23 @@ nav ul li a:hover {
   text-underline-position: under;
 }
 
+ul {
+  border-radius: 0;
+}
+
+ul a {
+  color: white;
+}
+
+ul a li {
+  padding: 5%;
+}
+
+ul a li:hover {
+  background-color: white;
+  color: black;
+}
+
 h1 {
   font-family: "Oswald", sans-serif;
   font-optical-sizing: auto;
@@ -108,6 +129,11 @@ h1 {
 h3 {
   font-family: "Oswald", sans-serif;
   font-weight: 300;
+}
+
+h4 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
 }
 
 h5 {
@@ -139,10 +165,7 @@ button {
 
 .dropdown-divider {
   border-color: white;
-}
-
-.dropdown-item {
-  color: white;
+  margin: 0;
 }
 
 #usuarioInterface {
@@ -152,13 +175,35 @@ button {
   z-index: 2;
 }
 
-#notificacoesInterface {
-  position: absolute;
-  background-color: #fff;
-  right: 50px;
-  top: 80px;
-  z-index: 2;
-  width: 20%;
+#bookicon {
+  width: 3%;
+}
+
+#adm button {
+  background: linear-gradient(to right, #709fe0, #023884);
+  font-family: "Oswald", sans-serif;
+  font-weight: 100;
+  border-radius: 10px;
+}
+
+#adm img {
+  width: 10%;
+}
+
+#tituloLivro {
+  font-weight: 200;
+}
+
+#autorLivro {
+  font-weight: 300;
+}
+
+#reservaLivro {
+  background-color: #255EAF;
+  border-radius: 5px;
+  color: white;
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
 }
 
 #Entrar {
@@ -203,6 +248,15 @@ button:hover {
 .title-cont {
   position: relative;
   top: -105px;
+}
+
+.main-background {
+  background-image: url('/static/img/background.jpg');
+  background-position: center;
+  display: flex;
+  background-size: cover;
+  align-items: center;
+  min-height: 64vh;
 }
 
 .contact-methods {
@@ -288,6 +342,8 @@ footer .copyright {
   overflow: hidden;
   transition: transform 0.2s;
   background-color: white;
+  border-left: 5px solid #2f7ae2;
+  border-bottom: 5px solid #2f7ae2;
 }
 
 .book-card:hover {
@@ -338,7 +394,9 @@ footer .copyright {
   font-size: 1.2rem;
 }
 
-/* Cadastro de livros */
+a {
+  text-decoration: none;
+}
 
 #container {
   background-color: #fff;
@@ -363,7 +421,6 @@ footer .copyright {
   padding: 0;
 }
 
-/* Estilizando os selects */
 select {
   background-color: #eee;
   color: #504f4f;
@@ -378,17 +435,12 @@ select {
 
 select:focus {
   outline: none;
-  /* Remove o contorno padrão do navegador */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-  /* Adiciona um destaque ao focar */
 }
 
-/* Opcional: Estilo para as opções dentro do select */
 option {
   background-color: #eee;
-  /* Cor de fundo das opções */
   color: #504f4f;
-  /* Cor do texto das opções */
 }
 
 
@@ -411,10 +463,30 @@ option {
   align-items: center;
 }
 
+#modal-bg {
+  display: none;
+}
+
+#listaEspera {
+  width: 20%;
+}
+
+#imagemLivro {
+  border-radius: 10px;
+}
 
 .Subir.hidden {
   background-color: transparent;
   border-color: #fff;
+}
+
+#buttonsAdm img {
+  width: 50%;
+}
+
+#buttonsAdm h4 {
+  font-weight: 600;
+  font-family: "Oswald", sans-serif;
 }
 
 #container form {
@@ -441,12 +513,6 @@ option {
   color: #504f4f;
   font-weight: 800;
   font-family: "Oswald", sans-serif;
-}
-
-.form-container {
-  position: absolute;
-  top: 0;
-  height: 100%;
 }
 
 #descricao {

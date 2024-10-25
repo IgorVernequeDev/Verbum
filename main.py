@@ -1,27 +1,7 @@
-from flask import Flask, render_template, redirect, request, session
-from flask_cors import CORS
 from db_functions import conectar_db, encerrar_db
-import uuid
+from routes import *
 from mysql.connector import Error
-
-app = Flask(__name__)
-CORS(app)
-app.secret_key = 'verbum'
-
-app.config['DEBUG'] = True
-
-@app.route('/')
-def index():
-    return render_template('index.html', titulo="Verbum - Reserva de livros")
-
-@app.route('/home')
-def home():
-    logado = session.get('logado', True)
-    return render_template('index.html', logado=logado, titulo="Verbum - Home")
-
-@app.route('/login')
-def login():
-    return render_template('login.html', titulo="Verbum - Login")
+import uuid
 
 @app.route('/livros') 
 def livros():
@@ -47,27 +27,6 @@ def livro(id):
     encerrar_db(cursor, conexao)
     return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro)
 
-
-@app.route('/contato')
-def contato():
-    logado = session.get('logado', False)
-    return render_template('contato.html', logado=logado, titulo="Verbum - Contato")
-
-@app.route('/livrosReservados')
-def livrosReservados():
-    logado = session.get('logado', False)
-    return render_template('livrosReservados.html', logado=logado, titulo="Verbum - Livros reservados")
-
-@app.route('/modelo')
-def modelo():
-    logado = session.get('logado', True)
-    return render_template('modelo.html', logado=logado)
-
-@app.route('/adm')
-def adm():
-    logado = session.get('logado', True)
-    return render_template('adm_index.html', logado=logado, titulo="Verbum ADM - Home ")
-
 @app.route('/cadastrarlivro')
 def cadastrarlivro():
     logado = session.get('logado', True)
@@ -78,7 +37,7 @@ def cadastrarlivro():
         cursor.execute("SELECT * from autor")
         autores = cursor.fetchall()
 
-        return render_template('cadastrolivro.html', editoras=editoras, autores=autores,logado=logado, titulo="Verbum ADM - Cadastro de livros")
+        return render_template('cadlivro.html', editoras=editoras, autores=autores,logado=logado, titulo="Verbum ADM - Cadastro de livros")
     except Exception as erro:
         return f"Erro {erro}"
     except Error as erro:
@@ -87,21 +46,6 @@ def cadastrarlivro():
     finally:
         encerrar_db(cursor, conexao)
 
-@app.route('/adm_listadeespera')
-def listadeespera():
-    logado = session.get('logado', True)
-    return render_template('adm_listadeespera.html', logado=logado, titulo="Verbum ADM - Lista de espera")
-
-@app.route('/alunos')
-def alunos():
-    logado = session.get('logado', True)
-    return render_template('alunos.html', logado=logado)
-
-@app.route('/informacoespessoais')
-def informacoespessoais():
-    logado = session.get('logado', True)
-    return render_template('informacoespessoais.html', logado=logado, titulo="Verbum - Informações Pessoais")
-
 @app.route('/login', methods=['POST'])
 def logar():
     email = request.form['email']
@@ -109,9 +53,11 @@ def logar():
 
     if email == 'admin@gmail.com' and senha == '123':
         session['logado'] = True
+        session['nivelUsuario'] = 'admin'
         return redirect('/adm')
     elif email == 'aluno@gmail.com' and senha == '123':
         session['logado'] = True
+        session['nivelUsuario'] = 'usuario'
         return redirect('/home')
     else:
         return render_template("login.html", msg="Usuário/Senha estão incorretos!")
@@ -202,7 +148,88 @@ def cadeditora():
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
+            
+@app.route('/editar/<int:id>', methods=['GET', 'POST'])
+def editar(id):
+    if request.method == 'GET':
+        try:
+            conexao, cursor = conectar_db()
+            
+            cursor.execute("""
+                SELECT livros.*, autor.nomeAutor, editora.nomeEditora
+                FROM livros
+                JOIN autor ON livros.idAutor = autor.idAutor
+                JOIN editora ON livros.idEditora = editora.idEditora
+                WHERE livros.idLivro = %s
+            """, (id,))
+            
+            livro = cursor.fetchone()
+            
+            cursor.execute("SELECT * FROM autor")
+            autores = cursor.fetchall()
 
+            cursor.execute("SELECT * FROM editora")
+            editoras = cursor.fetchall()
+            
+            return render_template('editarlivro.html', livro=livro, autores=autores, editoras=editoras)
+        except Exception as erro:
+            return f"Erro {erro}"
+        finally:
+            encerrar_db(cursor, conexao)
+
+    elif request.method == 'POST':
+        titulo = request.form['titulo']
+        descricao = request.form['descricao']
+        numero_paginas = request.form['numero_paginas']
+        genero = request.form['genero']
+        idEditora = request.form['editora']
+        anoPublicacao = request.form['anoPublicacao']
+        quantidade = request.form['quantidade']
+        idAutor = request.form['autor']
+
+        imagemCapa = request.files.get('imagemCapa') 
+        try:
+            conexao, cursor = conectar_db()
+
+            if imagemCapa:
+                id_foto = str(uuid.uuid4().hex)
+                filename = id_foto + titulo + '.png'
+                imagemCapa.save("static/img/livros/" + filename)
+                
+                cursor.execute("""
+                    UPDATE livros
+                    SET idAutor = %s, idEditora = %s, titulo = %s, descricao = %s, numero_paginas = %s, genero = %s, anoPublicacao = %s, quantidade = %s, imagemCapa = %s
+                    WHERE idLivro = %s
+                """, (idAutor, idEditora, titulo, descricao, numero_paginas, genero, anoPublicacao, quantidade, filename, id))
+            else:
+                cursor.execute("""
+                    UPDATE livros
+                    SET idAutor = %s, idEditora = %s, titulo = %s, descricao = %s, numero_paginas = %s, genero = %s, anoPublicacao = %s, quantidade = %s
+                    WHERE idLivro = %s
+                """, (idAutor, idEditora, titulo, descricao, numero_paginas, genero, anoPublicacao, quantidade, id))
+                
+            conexao.commit()
+
+            return redirect('/livros')
+        except Exception as erro:
+            return f"Erro {erro}"
+        finally:
+            encerrar_db(cursor, conexao)
+            
+@app.route('/excluir/<int:id>', methods=['GET', 'POST'])
+def excluir(id):
+    try:
+        conexao, cursor = conectar_db()
+
+        cursor.execute("DELETE FROM livros WHERE idLivro = %s", (id,))
+        conexao.commit()
+
+        return redirect('/livros')
+    except Exception as erro:
+        return f"Erro ao tentar excluir o livro: {erro}"
+    finally:
+        encerrar_db(cursor, conexao)
+    
 @app.route('/logout')
 def logout():
     session.clear()

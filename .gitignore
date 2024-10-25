@@ -23,3 +23,6 @@ Thumbs.db
 
 db_functions.py
 __pycache__/
+
+config.py
+__pycache__/

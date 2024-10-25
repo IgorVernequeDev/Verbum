@@ -1,0 +1,67 @@
+{% extends 'modelo.html' %}
+{% block conteudo %}
+
+<form action="/editar/{{ livro.idLivro }}" method="POST" enctype="multipart/form-data">
+  <div class="container" id="container">
+    <div class="d-flex ms-4">
+      <div class="flex-column w-50 ">
+
+        <h2 class="titulos mb-2">Titulo</h2>
+        <input type="text" id="titulo" name="titulo" value="{{ livro.titulo }}" />
+
+        <h2 class="titulos mb-2">Descrição</h2>
+        <textarea id="descricao" name="descricao" class="text-start ps-2 pt-2">{{ livro.descricao }}</textarea>
+
+        <h2 class="titulos mb-2">Autor</h2>
+        <select class="form-control" id="autor" name="autor">
+          {% for autor in autores %}
+          <option value="{{ autor.idAutor }}" {% if autor.idAutor==livro.idAutor %} selected {% endif %}>{{
+            autor.nomeAutor }}</option>
+          {% endfor %}
+        </select>
+
+        <button onclick="window.location.href='/cadautor'">Novo autor</button>
+
+        <h2 class="titulos mb-2">Editora</h2>
+        <select class="form-control" id="editora" name="editora">
+          {% for editora in editoras %}
+          <option value="{{ editora.idEditora }}" {% if editora.idEditora==livro.idEditora %} selected {% endif %}>{{
+            editora.nomeEditora }}</option>
+          {% endfor %}
+        </select>
+        <button onclick="window.location.href='/cadeditora'">Nova editora</button>
+
+        <h2 class="titulos mb-2" for="imagemCapa">Selecione a imagem da capa:</h2>
+        <input class="selecionar form-control" type="file" name="imagemCapa" id="imagemCapa" value="{{ livro.imagemCapa }}" accept="image/jpeg,image/png">
+
+      </div>
+
+      <div class="flex-column w-50 ms-5">
+
+        <h2 class="titulos mb-2">Número de páginas</h2>
+        <input type="number" id="numero_paginas" name="numero_paginas" value="{{ livro.numero_paginas }}" />
+
+        <h2 class="titulos mb-2">Ano de publicação</h2>
+        <input type="number" id="anoPublicacao" name="anoPublicacao" value="{{ livro.anoPublicacao }}" />
+
+        <h2 class="titulos mb-2">Quantidade disponível</h2>
+        <input type="number" id="quantidade" name="quantidade" value="{{ livro.quantidade }}" />
+
+        <h2 class="titulos mb-2">Gênero</h2>
+        <select class="ls-custom-select col-md-8" id="genero" name="genero">
+          <option value="Ação">Ação</option>
+          <option value="Romance">Romance</option>
+          <option value="Comédia">Comédia</option>
+        </select>
+
+        <button class="Subir" type="submit">
+          <img src="/static/img/baixar.png" alt="baixar" style="margin-right: 10px; height: 20px;">SUBIR</button>
+
+
+      </div>
+
+    </div>
+  </div>
+</form>
+
+{% endblock %}

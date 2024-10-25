@@ -3,11 +3,14 @@
 {% block conteudo %}
 
 <div class="container mt-5">
-  <div class="d-flex m-3">
-    <img src="/static/img/bookicon.png" id="bookicon" class="me-3">
-    <p>Livros</p>
+  <div class="m-3 w-100">
+    <div class="d-flex align-items-center">
+      <img src="/static/img/bookicon.png" id="bookicon" class="me-3">
+      <p class="m-0">Livros</p>
+    </div>
   </div>
-  <div class="livros row row-cols-1 row-cols-md-4 g-4">
+
+  <div class="livros row row-cols-1 row-cols-md-4 g-4 mb-5">
     {% for livro in livros %}
     <div class="col">
       <a href="/livro/{{ livro.idLivro }}">
@@ -15,7 +18,7 @@
           <img src="/static/img/livros/{{ livro.imagemCapa }}" alt="Livro {{ livro.titulo }}" class="book-image">
           <div class="book-footer">
             <p>{{ livro.titulo }} <br> {{ livro.autor }}</p>
-            <p class="stars">{{ livro.avaliacao }}★</p>
+            <p class="stars">{{ livro.avaliacao }}★★★★★</p>
           </div>
         </div>
       </a>
