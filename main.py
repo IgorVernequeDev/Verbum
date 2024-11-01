@@ -14,7 +14,6 @@ def livros():
     encerrar_db(cursor, conexao)
     return render_template('livros.html', logado=logado, titulo="Verbum - Livros", livros=livros)
 
-
 @app.route('/livro/<int:id>')
 def livro(id):
     logado = session.get('logado', False)
@@ -33,16 +32,12 @@ def livro(id):
 @app.route('/home')
 def home():
     logado = session.get('logado', True)
-    id_usuario = session.get('id_usuario')
 
-    conexao, cursor = conectar_db()
-
-    cursor.execute("SELECT * FROM usuarios WHERE idUsuario = %s", (id_usuario,))
-    usuario = cursor.fetchone()
+    conexao, cursor = conectar_db() 
 
     encerrar_db(cursor, conexao)
 
-    return render_template('index.html', logado=logado, titulo="Verbum - Home", usuario=usuario)
+    return render_template('index.html', logado=logado, titulo="Verbum - Home")
 
 @app.route('/cadastrarlivro')
 def cadastrarlivro():
@@ -218,6 +213,10 @@ def cadeditora():
         finally:
             encerrar_db(cursor, conexao)
 
+@app.route('/infpessoais')
+def infpessoais():
+    return render_template("infpessoais.html")
+
 
 @app.route('/listaespera/<int:id>')
 def listaespera(id):
@@ -389,4 +388,4 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)

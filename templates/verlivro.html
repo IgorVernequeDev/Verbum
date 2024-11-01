@@ -46,6 +46,7 @@
                     </div>
                 </div>
             </div>
+            {% if session['nivelUsuario'] == 'admin' %}
             <div class="w-100 d-flex justify-content-between mt-5">
                 <div class="d-flex flex-column text-center" id="buttonsAdm">
                     <a href="/editar/{{ livro.idLivro }}"><button id="reservaLivro" class="px-5 py-2 fs-3"><img
@@ -67,6 +68,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>

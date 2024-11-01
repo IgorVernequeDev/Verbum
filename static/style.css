@@ -22,6 +22,20 @@ header button {
   border-radius: 10px;
 }
 
+#logo {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  #logo {
+    width: 100%;
+  }
+}
+
+.icons img {
+  width: 5vh;
+}
+
 main {
   margin-bottom: 0;
   padding-bottom: 0;
@@ -49,8 +63,8 @@ main {
   color: white;
 }
 
-#logo {
-  width: 15%;
+.dropdown-toggle::after {
+  display: none;
 }
 
 .alunos {
@@ -358,6 +372,16 @@ footer .column {
   text-align: center;
 }
 
+#logoFooter {
+  width: 80%;
+}
+
+@media (max-width: 768px) {
+  #logoFooter {
+    width: 40%;
+  }
+}
+
 footer h3 {
   font-size: 14px;
   text-transform: uppercase;
@@ -367,7 +391,7 @@ footer h3 {
 }
 
 footer img {
-  width: 10%;
+  width: 70%;
 }
 
 footer a {
