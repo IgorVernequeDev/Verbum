@@ -4,31 +4,8 @@ from routes import *
 from mysql.connector import Error
 import uuid
 from flask import Flask, render_template, request, redirect, session, jsonify
-from wtforms import Form, StringField, IntegerField, FileField, SelectField, ValidationError
-from wtforms.validators import DataRequired, Length, NumberRange, Optional
-from werkzeug.utils import secure_filename
-from datetime import date
 from flask import jsonify
 
-UPLOAD_FOLDER = 'static/img/livros'  # Certifique-se de que esta pasta exista
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'} # Define os tipos de arquivo permitidos
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-    
-class CadLivroForm(Form):
-    titulo = StringField('Título', validators=[DataRequired(), Length(min=3, max=100)])
-    descricao = StringField('Descrição', validators=[DataRequired(), Length(min=10, max=500)])
-    numero_paginas = IntegerField('Número de Páginas', validators=[DataRequired(), NumberRange(min=1, max=1000)])
-    genero = StringField('Gênero', validators=[DataRequired(), Length(min=3, max=50)])  # Permite gêneros personalizados
-    imagemCapa = FileField('Imagem de Capa', validators=[DataRequired()])
-    editora = StringField('Editora', validators=[DataRequired(), Length(min=3, max=100)]) # Permite editoras personalizadas
-    anoPublicacao = IntegerField('Ano de Publicação', validators=[DataRequired(), NumberRange(min=1900, max=date.today().year)]) # Ano atual + 1
-    quantidade = IntegerField('Quantidade', validators=[DataRequired(), NumberRange(min=1, max=1000)])
-    autor = StringField('Autor', validators=[DataRequired(), Length(min=3, max=100)]) # Permite autores personalizados
 
 @app.route('/livros')
 def livros():
@@ -126,18 +103,19 @@ def logar():
 def cadlivro():
     conexao, cursor = conectar_db()
 
-    form = CadLivroForm(request.form)
-    if request.method == 'POST' and form.validate():
-        titulo = form.titulo.data.title()
-        descricao = form.descricao.data.title()
-        numero_paginas = form.numero_paginas.data
-        genero = form.genero.data.title()
-        imagemCapa = form.imagemCapa.data
-        editora = form.editora.data.title()
-        anoPublicacao = form.anoPublicacao.data
-        quantidade = form.quantidade.data
-        autor = form.autor.data.title()
-        
+    titulo = request.form['titulo']
+    titulo = titulo.title()
+    descricao = request.form['descricao']
+    descricao = descricao.title()
+    numero_paginas = request.form['numero_paginas']
+    genero = request.form['genero']
+    genero = genero.title()
+    imagemCapa = request.files['imagemCapa']
+    anoPublicacao = request.form['anoPublicacao']
+    quantidade = request.form['quantidade']
+    idAutor = request.form['autor']
+    idEditora = request.form['editora']
+
     id_foto = str(uuid.uuid4().hex)
     filename = id_foto + titulo + '.png'
 
@@ -219,7 +197,6 @@ def cadautor():
             autores = cursor.fetchall()
             return render_template('/cadautor', autores=autores)
 
-            return redirect('/cadastrarlivro')
 
         except Exception as erro:
             return f"Erro {erro}"
@@ -246,20 +223,6 @@ def cadeditora():
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
-    else:
-        # código para exibir a lista de editoras
-        try:
-            conexao, cursor = conectar_db()
-            cursor.execute("SELECT * from editoras")
-            editoras = cursor.fetchall()
-            return render_template("cadeditora.html", editoras=editoras)
-        except Exception as erro:
-            return f"Erro {erro}"
-        except Error as erro:
-            return f"Erro BD {erro}"
-        finally:
-            encerrar_db(cursor, conexao)
-
 
     if request.method == 'POST':
         editora = request.form['editora']
@@ -275,6 +238,20 @@ def cadeditora():
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
+    else:
+        # código para exibir a lista de editoras
+        try:
+            conexao, cursor = conectar_db()
+            cursor.execute("SELECT * from editoras")
+            editoras = cursor.fetchall()
+            return render_template("cadeditora.html", editoras=editoras)
+        except Exception as erro:
+            return f"Erro {erro}"
+        except Error as erro:
+            return f"Erro BD {erro}"
+        finally:
+            encerrar_db(cursor, conexao)
+
 
 @app.route('/infpessoais')
 def infpessoais():
