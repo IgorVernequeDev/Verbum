@@ -13,6 +13,7 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
@@ -21,67 +22,70 @@
 </head>
 
 <body class="d-flex flex-column">
-  <header class="p-4">
-    <div class="d-flex">
-      <div class="logo-container w-75 d-flex justify-content-start align-items-center">
-        <img src="/static/img/verbumbook.png" id="logo" alt="Verbum Logo">
-      </div>
-      <div class="d-flex justify-content-around w-25 align-items-center">
-        <div class="d-flex search-container">
-          <input type="text" placeholder="Título, Autor, Palavra Chave...">
-          <i class="bi bi-search"></i>
-        </div>
-        {% if logado %}
-        <div class="dropdown text-end">
-          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <img src="/static/img/user.png" alt="mdo" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu text-small text-white text-center" id="usuarioInterface">
-            <a href="#"><li>Informações Pessoais</li></a>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <a href="#"><li>Reservas de livros</li></a>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <a href="/logout"><li>Sair</li></a>
-          </ul>
-        </div>
-        <div class="dropdown text-end">
-          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <img src="/static/img/notificacoes.png" alt="mdo" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu text-small" id="usuarioInterface">
-            <li><a class="dropdown-item" href="#">New project...</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
-          </ul>
-        </div>
-        {% endif %}
-        {% if not logado %}
-        <a href="/login"><button class="px-3">LOGIN</button></a>
-        {% endif %}
-      </div>
+  
 
-    </div>
-  </header>
-  <nav class="bg-dark">
-    <ul class="d-flex justify-content-around align-items-end">
-      <li><a href="/redirecionar">Home</a></li>
-      <li><a href="/livros">Livros</a></li>
-      <li><a href="/contato">Contato</a></li>
-    </ul>
-  </nav>
-  </header>
+    <header class="p-4">
+      <div class="d-flex justify-content-between">
+        <div class="logo-container d-flex justify-content-start align-items-center">
+          <img src="/static/img/verbumbook.png" id="logo" alt="Verbum Logo">
+        </div>
+        <div class="d-flex align-items-center justify-content-end w-100">
+          <div class="d-flex search-container">
+            <input type="text" placeholder="Título, Autor, Palavra Chave...">
+            <i class="bi bi-search"></i>
+          </div>
+          {% if logado %}
+          <div class="icons d-flex ms-3">
+            <div class="dropdown text-end me-3">
+              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img src="/static/img/user.png" alt="mdo" class="rounded-circle">
+              </a>
+              <ul class="dropdown-menu text-small text-white text-center" id="usuarioInterface">
+                <a href="/infpessoais"><li>Informações Pessoais</li></a>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <a href="#"><li>Reservas de livros</li></a>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <a href="/logout"><li>Sair</li></a>
+              </ul>
+            </div>
+            <div class="dropdown text-end">
+              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img src="/static/img/notificacoes.png" alt="mdo" class="rounded-circle">
+              </a>
+              <ul class="dropdown-menu text-small text-white text-center" id="usuarioInterface">
+                <li><a href="#">New project...</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a href="#">Sign out</a></li>
+              </ul>
+            </div>
+          </div>
+          {% endif %}
+          {% if not logado %}
+          <a href="/login"><button class="px-3 ms-3">LOGIN</button></a>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+    <nav class="bg-dark">
+      <ul class="d-flex justify-content-around w-25 align-items-end">
+        <li><a href="/redirecionar">Home</a></li>
+        <li><a href="/livros">Livros</a></li>
+        <li><a href="/contato">Contato</a></li>
+      </ul>
+    </nav>
 
-  <main class="flex-fill">
+
+  <main class="flex-fill d-flex flex-column">
     {% block conteudo %}
     {% endblock %}
   </main>
@@ -90,20 +94,17 @@
     <div class="row justify-content-around">
       <div class="col-10 col-md-6 col-lg-3 order-last order-lg-first">
         <div class="text-center">
-          <img src="/static/img/logo.png" alt="Logo Verbum" class="w-50">
+          <img src="/static/img/logo.png" alt="Logo Verbum" id="logoFooter">
         </div>
       </div>
       <div class="col-10 col-md-6 col-lg-3">
-        <h3 class="border-bottom border-white border-4">OUTROS</h3>
-        <a href="#">Temas</a><br>
+        <a href="#"><h3 class="border-top border-white border-3 fs-5">Temas</h3></a><br>
       </div>
       <div class="col-10 col-md-6 col-lg-3">
-        <h3 class="border-bottom border-white border-4">DESCOBRIR</h3>
-        <a href="/livros">Livros</a><br>
+        <a href="/livros"><h3 class="border-top border-white border-3 fs-5">Livros</h3></a><br>
       </div>
       <div class="col-10 col-md-6 col-lg-3">
-        <h3 class="border-bottom border-white border-4">AJUDA</h3>
-        <a href="/contato" style="color: white; text-decoration: none;">Contato</a>
+        <a href="/contato"><h3 class="border-top border-white border-3 fs-5">Contato</h3></a><br>
       </div>
     </div>
     <div class="row mt-3">
@@ -113,7 +114,7 @@
     </div>
   </footer>
 
-  <script src="/static/script.js"></script>
 </body>
+<script src="/static/script.js"></script>
 
 </html>

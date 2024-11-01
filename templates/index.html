@@ -23,10 +23,10 @@
   </button>
 </div>
 
-<div class="d-flex text-center">
-  <div class="container m-5">
-    <h1>Seja bem vindo!</h1>
-    <p class="fs-40">Aqui você tem acesso ao nosso acervo completo e pode reservar seus livros preferidos de
+<div class="d-flex text-center align-items-center flex-column">
+  <div class="container mt-5 w-100 text-center">
+    <h3>Seja bem vindo!</h3>
+    <p class="fs-5">Aqui você tem acesso ao nosso acervo completo e pode reservar seus livros preferidos de
       forma rápida e
       fácil. Além disso, é possível acompanhar sua posição na lista de espera para garantir que não perca
       aquela leitura tão desejada. Nossa biblioteca está sempre à disposição para apoiar seu aprendizado e
@@ -34,24 +34,21 @@
   </div>
 
   {% if not logado %}
-  <div class="container m-5">
-    <h1>Já é usuário?</h1>
-    <div class="h-50 align-items-center d-flex justify-content-center">
-      <h3>Faça login aqui</h3>
+  <div class="container mt-1 mb-4 w-100 d-flex">
+    <div class="align-items-center d-flex justify-content-center flex-column w-50">
+      <h3>Não tem conta?</h3>
+      <p class="fs-5">Solicite acesso ao administrador</p>
     </div>
-    <div class="h-50 mb-5 d-flex justify-content-center align-items-start">
+
+    <div class="align-items-center d-flex justify-content-center flex-column w-50">
+      <h3>Já é usuário?</h3>
+      <p class="fs-5">Faça login aqui</p>
       <a style="text-decoration: none; color: #ffff;" href="/login">
         <button id="Entrar" class="p-2 w-100">LOGIN</button>
       </a>
     </div>
-  </div>
-
-  <div class="container m-5">
-    <h1>Não tem conta?</h1>
-    <div class="h-50 d-flex justify-content-center align-items-center">
-      <h3>Solicite acesso ao administrador</h3>
-    </div>
-  </div>
+</div>
+</div>
 </div>
 {% endif %}
 
