@@ -3,12 +3,12 @@ from db_functions import conectar_db, encerrar_db
 from routes import *
 from mysql.connector import Error
 import uuid
-<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, session, jsonify
 from wtforms import Form, StringField, IntegerField, FileField, SelectField, ValidationError
 from wtforms.validators import DataRequired, Length, NumberRange, Optional
 from werkzeug.utils import secure_filename
 from datetime import date
+from flask import jsonify
 
 UPLOAD_FOLDER = 'static/img/livros'  # Certifique-se de que esta pasta exista
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'} # Define os tipos de arquivo permitidos
@@ -29,9 +29,6 @@ class CadLivroForm(Form):
     anoPublicacao = IntegerField('Ano de Publicação', validators=[DataRequired(), NumberRange(min=1900, max=date.today().year)]) # Ano atual + 1
     quantidade = IntegerField('Quantidade', validators=[DataRequired(), NumberRange(min=1, max=1000)])
     autor = StringField('Autor', validators=[DataRequired(), Length(min=3, max=100)]) # Permite autores personalizados
-=======
-from flask import jsonify
->>>>>>> d723fa55ae8c303a38164e94a29804cfe03209c1
 
 @app.route('/livros')
 def livros():
@@ -141,51 +138,10 @@ def cadlivro():
         quantidade = form.quantidade.data
         autor = form.autor.data.title()
         
-
-<<<<<<< HEAD
-        if imagemCapa and allowed_file(imagemCapa.filename):
-            # Gera um nome de arquivo seguro e único
-            id_foto = str(uuid.uuid4().hex)
-            extensao = secure_filename(imagemCapa.filename).rsplit('.', 1)[1].lower()
-            filename = f"{id_foto}_{titulo}.{extensao}"
-
-
-            try:
-                conexao, cursor = conectar_db()
-
-                # Primeiro, insira os dados do autor e da editora e recupere seus IDs
-                cursor.execute("INSERT INTO autor (nome) VALUES (%s) ON DUPLICATE KEY UPDATE idAutor = idAutor", (autor,)) # Evita duplicatas
-                cursor.execute("SELECT idAutor FROM autor WHERE nome = %s", (autor,))
-                idAutor = cursor.fetchone()[0]
-
-                cursor.execute("INSERT INTO editora (nome) VALUES (%s) ON DUPLICATE KEY UPDATE idEditora = idEditora", (editora,)) # Evita duplicatas
-                cursor.execute("SELECT idEditora FROM editora WHERE nome = %s", (editora,))
-                idEditora = cursor.fetchone()[0]
-
-
-                # Agora insira os dados do livro com os IDs corretos
-                cursor.execute('INSERT INTO livros (idAutor, idEditora, titulo, descricao, numero_paginas, genero, imagemCapa, anoPublicacao, quantidade) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)', (idAutor, idEditora, titulo, descricao, numero_paginas, genero, filename, anoPublicacao, quantidade))
-                
-                imagemCapa.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                conexao.commit()
-
-                return render_template('adm_index.html', mensagem="Livro cadastrado com sucesso!") # Mensagem de sucesso
-
-            except Exception as e:
-                print(f"Erro ao cadastrar livro: {e}") # Log para ajudar na depuração
-                conexao.rollback() # Desfaz as alterações em caso de erro
-                return render_template('cad_livro.html', form=form, erro="Erro ao cadastrar livro. Por favor, tente novamente.")
-            finally:
-                 conexao.close()
-
-        else:
-            return render_template('cad_livro.html', form=form, erro = "Tipo de arquivo inválido. Por favor, envie um arquivo de imagem.")
-=======
     id_foto = str(uuid.uuid4().hex)
     filename = id_foto + titulo + '.png'
 
     imagemCapa.save("static/img/livros/" + filename)
->>>>>>> d723fa55ae8c303a38164e94a29804cfe03209c1
 
     cursor.execute('INSERT INTO livros (idAutor, idEditora, titulo, descricao, numero_paginas, genero, imagemCapa, anoPublicacao, quantidade) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)',
                    (idAutor, idEditora, titulo, descricao, numero_paginas, genero, filename, anoPublicacao, quantidade))
@@ -224,8 +180,7 @@ def cadaluno():
 
 @app.route('/cadautor', methods=['GET', 'POST'])
 def cadautor():
-<<<<<<< HEAD
-=======
+
     if request.method == 'GET':
         try:
             conexao, cursor = conectar_db()
@@ -239,7 +194,7 @@ def cadautor():
         finally:
             encerrar_db(cursor, conexao)
 
->>>>>>> d723fa55ae8c303a38164e94a29804cfe03209c1
+
     if request.method == 'POST':
         # código para cadastrar o novo autor
         dados = request.get_json()  # Obtém os dados JSON como um dicionário Python
@@ -248,7 +203,7 @@ def cadautor():
             conexao, cursor = conectar_db()
             cursor.execute("INSERT INTO autores VALUES (null, %s)", (autor,))
             conexao.commit()
-<<<<<<< HEAD
+
             return jsonify({'success': True}), 200
         except Exception as erro:
             return f"Erro {erro}"
@@ -263,9 +218,9 @@ def cadautor():
             cursor.execute("SELECT * from autor")
             autores = cursor.fetchall()
             return render_template('/cadautor', autores=autores)
-=======
+
             return redirect('/cadastrarlivro')
->>>>>>> d723fa55ae8c303a38164e94a29804cfe03209c1
+
         except Exception as erro:
             return f"Erro {erro}"
         except Error as erro:
@@ -273,12 +228,6 @@ def cadautor():
         finally:
             encerrar_db(cursor, conexao)
 
-<<<<<<< HEAD
-@app.route('/teste')
-def teste():
-    return render_template('teste.html')
-=======
->>>>>>> d723fa55ae8c303a38164e94a29804cfe03209c1
 
 @app.route('/cadeditora', methods=['GET', 'POST'])
 def cadeditora():
@@ -310,8 +259,7 @@ def cadeditora():
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
-<<<<<<< HEAD
-=======
+
 
     if request.method == 'POST':
         editora = request.form['editora']
@@ -415,7 +363,7 @@ def reservar(id):
     except Exception as erro:
         return jsonify({"error": str(erro)}), 500
      
->>>>>>> d723fa55ae8c303a38164e94a29804cfe03209c1
+
             
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
