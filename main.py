@@ -4,7 +4,6 @@ from mysql.connector import Error
 import uuid
 from flask import jsonify
 
-
 @app.route('/livros')
 def livros():
     logado = session.get('logado', True)
