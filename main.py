@@ -31,11 +31,6 @@ def livro(id):
 @app.route('/home')
 def home():
     logado = session.get('logado', True)
-
-    conexao, cursor = conectar_db() 
-
-    encerrar_db(cursor, conexao)
-
     return render_template('index.html', logado=logado, titulo="Verbum - Home")
 
 @app.route('/cadastrarlivro')
@@ -56,7 +51,6 @@ def cadastrarlivro():
 
     finally:
         encerrar_db(cursor, conexao)
-
 
 @app.route('/login', methods=['POST'])
 def logar():
@@ -79,7 +73,6 @@ def logar():
     if usuario:
         idUsuario = usuario['idUsuario']
         nome = usuario['nome']
-        email_db = usuario['email']
         senha_db = usuario['senha']
 
         if senha == senha_db:
@@ -107,10 +100,10 @@ def cadlivro():
     genero = request.form['genero']
     genero = genero.title()
     imagemCapa = request.files['imagemCapa']
-    idEditora = request.form['editora']
     anoPublicacao = request.form['anoPublicacao']
     quantidade = request.form['quantidade']
     idAutor = request.form['autor']
+    idEditora = request.form['editora']
 
     id_foto = str(uuid.uuid4().hex)
     filename = id_foto + titulo + '.png'
@@ -124,7 +117,6 @@ def cadlivro():
     conexao.close()
 
     return render_template('adm_index.html')
-
 
 @app.route('/cadaluno', methods=['POST'])
 def cadaluno():
@@ -150,7 +142,6 @@ def cadaluno():
         return render_template("cadaluno.html", msg="As senhas não se coincidem!")
 
     return redirect('/adm')
-
 
 @app.route('/cadautor', methods=['GET', 'POST'])
 def cadautor():
@@ -180,7 +171,6 @@ def cadautor():
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
-
 
 @app.route('/cadeditora', methods=['GET', 'POST'])
 def cadeditora():
@@ -215,7 +205,6 @@ def cadeditora():
 @app.route('/infpessoais')
 def infpessoais():
     return render_template("infpessoais.html")
-
 
 @app.route('/listaespera/<int:id>')
 def listaespera(id):
@@ -299,7 +288,6 @@ def reservar(id):
     except Exception as erro:
         return jsonify({"error": str(erro)}), 500
      
-            
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
     if request.method == 'GET':
