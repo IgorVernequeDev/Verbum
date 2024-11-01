@@ -1,0 +1,31 @@
+{% extends 'modelo.html' %}
+
+{% block conteudo %}
+<div class="container mt-5 mb-5" style="font-size: 20px;">  
+    <div class="d-flex align-items-center">
+        <i class="bi bi-card-checklist"></i>
+        <p style="margin:10px;">Lista de Espera para o Livro {{livro.titulo }}</p>
+    </div>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr style="background-color: #255EAF;">
+                <th>Posição</th>
+                <th>Nome</th>
+                <th>Série</th>
+                <th>Data da Reserva</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in lista_espera %}
+            <tr>
+                <td>{{ usuarios.posicaoEspera }}</td>
+                <td>{{ usuarios.nome }}</td>
+                <td>{{ usuarios.serie }}</td>
+                <td>{{ usuarios.dataReserva }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>        
+    </table>
+</div> 
+{% endblock %}

@@ -11,23 +11,18 @@ app.config['DEBUG'] = True
 def index():
     return render_template('index.html', titulo="Verbum - Reserva de livros")
 
-@app.route('/home')
-def home():
-    logado = session.get('logado', True)
-    return render_template('index.html', logado=logado, titulo="Verbum - Home")
-
 @app.route('/login')
 def login():
     return render_template('login.html', titulo="Verbum - Login")
 
 @app.route('/contato')
 def contato():
-    logado = session.get('logado', False)
+    logado = session.get('logado', True)
     return render_template('contato.html', logado=logado, titulo="Verbum - Contato")
 
 @app.route('/livrosReservados')
 def livrosReservados():
-    logado = session.get('logado', False)
+    logado = session.get('logado', True)
     return render_template('livrosReservados.html', logado=logado, titulo="Verbum - Livros reservados")
 
 @app.route('/modelo')
@@ -40,19 +35,14 @@ def adm():
     logado = session.get('logado', True)
     return render_template('adm_index.html', logado=logado, titulo="Verbum ADM - Home ")
 
-@app.route('/listaespera')
-def listadeespera():
-    logado = session.get('logado', True)
-    return render_template('adm_listadeespera.html', logado=logado, titulo="Verbum ADM - Lista de espera")
-
 @app.route('/alunos')
 def alunos():
     logado = session.get('logado', True)
-    return render_template('alunos.html', logado=logado)
+    return render_template('alunos.html', logado=logado,titulo="Verbum ADM - Alunos")
 
 @app.route('/redirecionar')
 def redirecionar():
-    logado = session.get('logado', False)
+    logado = session.get('logado', True)
     nivel_usuario = session.get('nivelUsuario', 'usuario')
 
     if not logado:
@@ -67,3 +57,8 @@ def redirecionar():
 def informacoespessoais():
     logado = session.get('logado', True)
     return render_template('informacoespessoais.html', logado=logado, titulo="Verbum - Informações Pessoais")
+
+@app.route('/cadastraraluno')
+def cadastraraluno():
+    logado = session.get('logado', True)
+    return render_template('cadaluno.html', logado=logado, titulo="Verbum - Cadastro de aluno")

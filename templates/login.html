@@ -31,8 +31,8 @@
             <form action="/login" method="post">
                 <h1>Entre na sua conta</h1>
                 <span>Use seu E-mail e Senha</span>
-                <input name="email" id="email" type="email" placeholder="Email">
-                <input name="senha" id="senha" type="password" placeholder="Senha">
+                <input name="email" id="email" name="email" type="email" placeholder="Email">
+                <input name="senha" id="senha" name="senha" type="password" placeholder="Senha">
                 <p style="color: red;"id="msg">{{ msg }}</p>
                 <a href="/recuperarsenha">Esqueceu a sua senha?</a>
                 <button type="submit" onclick="entrar()">Entrar</button>
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <script src="/static/login.js"></script>
+    <script src="/static/script.js"></script>
 
 </body>
 

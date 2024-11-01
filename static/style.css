@@ -7,7 +7,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  min-height: 100vh;
+  min-height: 100vh !important;
 }
 
 header {
@@ -20,6 +20,20 @@ header button {
   font-weight: 300;
   padding: 10%;
   border-radius: 10px;
+}
+
+#logo {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  #logo {
+    width: 100%;
+  }
+}
+
+.icons img {
+  width: 5vh;
 }
 
 main {
@@ -49,8 +63,8 @@ main {
   color: white;
 }
 
-#logo {
-  width: 15%;
+.dropdown-toggle::after {
+  display: none;
 }
 
 .alunos {
@@ -60,7 +74,6 @@ main {
 input:focus {
   outline: none;
 }
-
 
 input::placeholder {
   color: white;
@@ -86,6 +99,8 @@ nav ul {
   border-radius: 100px;
 }
 
+
+
 nav ul li a {
   color: rgb(255, 255, 255);
   text-decoration: none;
@@ -94,12 +109,25 @@ nav ul li a {
   text-shadow: linear-gradient(to right, #255EAF, #21559E, #21549D, #205298, #205198, #0F2749);
   position: relative;
   font-weight: 400;
+  top: 19px;
+  border-bottom: 2px solid transparent;
+
 }
 
 nav ul li a:hover {
-  text-decoration: underline;
-  text-decoration-color: #255EAF;
-  text-underline-position: under;
+  z-index: 4;
+}
+
+nav ul li a:hover::after {
+  content: '';
+  display: block;
+  height: 4px; 
+  width: 170%; 
+  background-color: #255EAF; 
+  position: absolute;
+  left: -30%; 
+  bottom: -3px; 
+  transition: width 0.3s;
 }
 
 ul {
@@ -149,6 +177,7 @@ h6 {
 
 p {
   font-family: 'Oswald', sans-serif;
+  font-size: 1.5rem;
 }
 
 .user-icon img {
@@ -157,10 +186,30 @@ p {
 }
 
 button {
-  color: white;
+  color: rgb(0, 0, 0);
   border: none;
   font-family: "Oswald", sans-serif;
   text-decoration: none;
+  color: white;
+}
+
+.table tbody td {
+  background-color: #e0e7ea;
+  color: rgb(0, 0, 0);
+}
+
+.table {
+  border-color: #255eaf;
+}
+
+.table th {
+  background-color: #255eaf;
+  color: white;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border-color: #255eaf;
 }
 
 .dropdown-divider {
@@ -204,6 +253,18 @@ button {
   color: white;
   font-family: "Oswald", sans-serif;
   font-weight: 300;
+}
+
+#cadAluno {
+  background-color: #255EAF;
+  border-radius: 5px;
+  color: white;
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+}
+
+#cadAluno img {
+  width: 20%;
 }
 
 #Entrar {
@@ -253,13 +314,16 @@ button:hover {
 .main-background {
   background-image: url('/static/img/background.jpg');
   background-position: center;
-  display: flex;
   background-size: cover;
   align-items: center;
-  min-height: 64vh;
+  display: flex;
+  flex-direction: column; /* Organize os elementos verticalmente */
+  padding: 20px; /* Adicione padding para espaçamento */
 }
 
-.contact-methods {
+
+
+.contact-methods8 {
   flex: 1;
 }
 
@@ -306,7 +370,16 @@ footer .column {
   margin-top: 4%;
   margin-right: 10%;
   text-align: center;
+}
 
+#logoFooter {
+  width: 80%;
+}
+
+@media (max-width: 768px) {
+  #logoFooter {
+    width: 40%;
+  }
 }
 
 footer h3 {
@@ -318,7 +391,7 @@ footer h3 {
 }
 
 footer img {
-  width: 10%;
+  width: 70%;
 }
 
 footer a {
@@ -342,8 +415,8 @@ footer .copyright {
   overflow: hidden;
   transition: transform 0.2s;
   background-color: white;
-  border-left: 5px solid #2f7ae2;
-  border-bottom: 5px solid #2f7ae2;
+  border-left: 4px solid #255EAF;
+  border-bottom: 4px solid #255EAF;
 }
 
 .book-card:hover {
@@ -432,6 +505,7 @@ select {
   border: none;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-right: 10px;
 }
 
 select:focus {
@@ -461,7 +535,7 @@ option {
   margin-top: 10%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center;  
 }
 
 #modal-bg {
@@ -484,6 +558,7 @@ option {
 #buttonsAdm img {
   width: 50%;
 }
+
 
 #buttonsAdm h4 {
   font-weight: 600;
