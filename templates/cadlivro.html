@@ -84,7 +84,6 @@
   </div>
 </form>
 <script>
-  // Autor
   const autorSelect = document.getElementById('autor');
   const novoAutorDiv = document.getElementById('novoAutor');
   const cadastrarAutorButton = document.getElementById('cadastrarAutor');
@@ -100,13 +99,12 @@
   cadastrarAutorButton.addEventListener('click', () => {
     const novoNomeAutor = document.querySelector('#novoAutor input').value;
    
-  // Cadastra o autor
   fetch('/cadautor', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ nome: novoNomeAutor }) // Envia o FormData diretamente
+      body: JSON.stringify({ nome: novoNomeAutor })
   })
   .then(response => {
       if (response.ok) {
@@ -118,16 +116,13 @@
       }
   })
   .then(data => {
-       // Adiciona nova opção ao select de autores
        const novaOpcao = document.createElement('option');
         novaOpcao.value = data.id; 
         novaOpcao.text = novoNomeAutor;
         autorSelect.add(novaOpcao, 1);
 
-        // Esconde a div do novo campo de cadastro
         novoAutorDiv.style.display = 'none';
 
-        // Limpa o campo de entrada
         document.querySelector('#novoAutor input').value = '';
   })
   .catch(error => {
@@ -136,7 +131,6 @@
   });
 
 
-  // Editora
   const editoraSelect = document.getElementById('editora');
   const novaEditoraDiv = document.getElementById('novaEditora');
   const cadastrarEditoraButton = document.getElementById('cadastrarEditora');
@@ -149,7 +143,6 @@
     }
   });
 
-  //cadastra editora
   cadastrarEditoraButton.addEventListener('click', () => {
     const novoNomeEditora = document.querySelector('#novaEditora input').value;
 
@@ -168,16 +161,13 @@
       }
     })
     .then(data => {
-      // Adiciona nova opção ao select de editoras
       const novaOpcao = document.createElement('option');
       novaOpcao.value = data.id; 
       novaOpcao.text = novoNomeEditora;
       editoraSelect.add(novaOpcao, 1);
 
-      // Esconde a div do novo campo de cadastro
       novaEditoraDiv.style.display = 'none';
 
-      // Limpa o campo de entrada
       document.querySelector('#novaEditora input').value = '';
     })
     .catch(error => {
