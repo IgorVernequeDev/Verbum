@@ -39,13 +39,6 @@ def livro(id):
     encerrar_db(cursor, conexao)
     return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro)
 
-
-@app.route('/home')
-def home():
-    logado = session.get('logado', True)
-    return render_template('index.html', logado=logado, titulo="Verbum - Home")
-
-
 @app.route('/cadastrarlivro')
 def cadastrarlivro():
     logado = session.get('logado', True)
