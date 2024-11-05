@@ -16,7 +16,6 @@ def livros():
     encerrar_db(cursor, conexao)
     return render_template('livros.html', logado=logado, titulo="Verbum - Livros", livros=livros)
 
-
 @app.route('/livro/<int:id>')
 def livro(id):
     logado = session.get('logado', False)
