@@ -131,8 +131,6 @@ def cadlivro():
 
     return render_template('adm_index.html')
 
-
-
 @app.route('/cadaluno', methods=['POST'])
 def cadaluno():
     conexao, cursor = conectar_db()
@@ -158,8 +156,6 @@ def cadaluno():
 
     return redirect('/adm')
 
-
-
 @app.route('/cadautor', methods=['GET', 'POST'])
 def cadautor():
 
@@ -175,7 +171,6 @@ def cadautor():
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
-
 
     if request.method == 'POST':
         # código para cadastrar o novo autor
@@ -209,8 +204,6 @@ def cadautor():
         finally:
             encerrar_db(cursor, conexao)
 
-
-
 @app.route('/cadeditora', methods=['GET', 'POST'])
 def cadeditora():
     if request.method == 'GET':
@@ -241,8 +234,6 @@ def cadeditora():
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
-
-
 
 @app.route('/listaespera/<int:id>')
 def listaespera(id):
@@ -325,9 +316,7 @@ def reservar(id):
 
     except Exception as erro:
         return jsonify({"error": str(erro)}), 500
-     
-
-            
+              
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
     if request.method == 'GET':
@@ -395,7 +384,6 @@ def editar(id):
         finally:
             encerrar_db(cursor, conexao)
 
-
 @app.route('/excluir/<int:id>', methods=['GET', 'POST'])
 def excluir(id):
     try:
@@ -419,4 +407,3 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
-
