@@ -52,3 +52,8 @@ def redirecionar():
         return redirect('/adm') 
     else:
         return redirect('/home')  
+
+@app.route('/cadastraraluno')
+def cadastraraluno():
+    logado = session.get('logado', True)
+    return render_template('cadaluno.html', logado=logado, titulo="Verbum - Cadastro de aluno")
