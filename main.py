@@ -4,6 +4,13 @@ from mysql.connector import Error
 import uuid
 from flask import jsonify
 
+@app.route('/home')
+def home():
+    logado = session.get('logado', True)
+    conexao, cursor = conectar_db() 
+    encerrar_db(cursor, conexao)
+    return render_template('index.html', logado=logado, titulo="Verbum - Home")
+
 @app.route('/livros')
 def livros():
     logado = session.get('logado', True)

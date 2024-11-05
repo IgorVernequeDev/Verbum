@@ -52,13 +52,3 @@ def redirecionar():
         return redirect('/adm') 
     else:
         return redirect('/home')  
-
-@app.route('/informacoespessoais')
-def informacoespessoais():
-    logado = session.get('logado', True)
-    return render_template('informacoespessoais.html', logado=logado, titulo="Verbum - Informações Pessoais")
-
-@app.route('/cadastraraluno')
-def cadastraraluno():
-    logado = session.get('logado', True)
-    return render_template('cadaluno.html', logado=logado, titulo="Verbum - Cadastro de aluno")
