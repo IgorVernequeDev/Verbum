@@ -1,12 +1,3 @@
-import os
-from db_functions import conectar_db, encerrar_db
-from routes import *
-from mysql.connector import Error
-import uuid
-from flask import Flask, render_template, request, redirect, session, jsonify
-from flask import jsonify
-
-
 @app.route('/livros')
 def livros():
     logado = session.get('logado', True)
@@ -78,8 +69,8 @@ def logar():
     conexao.close()
 
     if email == 'admin@gmail.com' and senha == '123':
-                session['nivelUsuario'] = 'admin'
-                return redirect('/adm')
+        session['nivelUsuario'] = 'admin'
+        return redirect('/adm')
 
     if usuario:
         idUsuario = usuario['idUsuario']
@@ -207,6 +198,7 @@ def cadautor():
             encerrar_db(cursor, conexao)
 
 
+
 @app.route('/cadeditora', methods=['GET', 'POST'])
 def cadeditora():
     if request.method == 'GET':
@@ -239,6 +231,8 @@ def cadeditora():
             encerrar_db(cursor, conexao)
 
 
+
+
 @app.route('/listaespera/<int:id>')
 def listaespera(id):
     logado = session.get('logado', True)
@@ -262,14 +256,12 @@ def listaespera(id):
         cursor.execute(query_espera, (id,))
         lista_espera = cursor.fetchall()
 
-
         encerrar_db(cursor, conexao)
 
         return render_template('listaespera.html', logado=logado, titulo="Verbum - Lista de Espera", lista_espera=lista_espera, livro=livro)
     except Exception as erro:
         return f"Erro ao acessar a lista de espera: {erro}"
 
-from flask import jsonify, request
 
 @app.route('/reservar/<int:id>', methods=['POST'])
 def reservar(id):
@@ -280,7 +272,8 @@ def reservar(id):
 
         conexao, cursor = conectar_db()
 
-        cursor.execute("SELECT quantidade FROM livros WHERE idLivro = %s", (id,))
+        cursor.execute(
+            "SELECT quantidade FROM livros WHERE idLivro = %s", (id,))
         livro = cursor.fetchone()
 
         if not livro:
@@ -288,9 +281,10 @@ def reservar(id):
             return jsonify({"error": "Livro não encontrado."}), 404
 
         quantidade_disponivel = livro['quantidade']
-        
+
         if quantidade_disponivel > 0:
-            cursor.execute("UPDATE livros SET quantidade = quantidade - 1 WHERE idLivro = %s", (id,))
+            cursor.execute(
+                "UPDATE livros SET quantidade = quantidade - 1 WHERE idLivro = %s", (id,))
             conexao.commit()
 
             cursor.execute("""
@@ -320,15 +314,13 @@ def reservar(id):
 
     except Exception as erro:
         return jsonify({"error": str(erro)}), 500
-     
-
-            
+      
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
     if request.method == 'GET':
         try:
             conexao, cursor = conectar_db()
-            
+
             cursor.execute("""
                 SELECT livros.*, autores.nomeAutor, editoras.nomeEditora
                 FROM livros
@@ -336,15 +328,15 @@ def editar(id):
                 JOIN editoras ON livros.idEditora = editoras.idEditora
                 WHERE livros.idLivro = %s
             """, (id,))
-            
+
             livro = cursor.fetchone()
-            
+
             cursor.execute("SELECT * FROM autores")
             autores = cursor.fetchall()
 
             cursor.execute("SELECT * FROM editoras")
             editoras = cursor.fetchall()
-            
+
             return render_template('editarlivro.html', livro=livro, autores=autores, editoras=editoras)
         except Exception as erro:
             return f"Erro {erro}"
@@ -361,7 +353,7 @@ def editar(id):
         quantidade = request.form['quantidade']
         idAutor = request.form['autor']
 
-        imagemCapa = request.files.get('imagemCapa') 
+        imagemCapa = request.files.get('imagemCapa')
         try:
             conexao, cursor = conectar_db()
 
@@ -369,7 +361,7 @@ def editar(id):
                 id_foto = str(uuid.uuid4().hex)
                 filename = id_foto + titulo + '.png'
                 imagemCapa.save("static/img/livros/" + filename)
-                
+
                 cursor.execute("""
                     UPDATE livros
                     SET idAutor = %s, idEditora = %s, titulo = %s, descricao = %s, numero_paginas = %s, genero = %s, anoPublicacao = %s, quantidade = %s, imagemCapa = %s
@@ -381,7 +373,7 @@ def editar(id):
                     SET idAutor = %s, idEditora = %s, titulo = %s, descricao = %s, numero_paginas = %s, genero = %s, anoPublicacao = %s, quantidade = %s
                     WHERE idLivro = %s
                 """, (idAutor, idEditora, titulo, descricao, numero_paginas, genero, anoPublicacao, quantidade, id))
-                
+
             conexao.commit()
 
             return redirect('/livros')
@@ -389,7 +381,8 @@ def editar(id):
             return f"Erro {erro}"
         finally:
             encerrar_db(cursor, conexao)
-            
+
+
 @app.route('/excluir/<int:id>', methods=['GET', 'POST'])
 def excluir(id):
     try:
@@ -403,11 +396,13 @@ def excluir(id):
         return f"Erro ao tentar excluir o livro: {erro}"
     finally:
         encerrar_db(cursor, conexao)
-    
+
+
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect('/')
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
