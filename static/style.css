@@ -570,3 +570,14 @@ option {
 #descricao textarea::placeholder {
   color: #787878;
 }
+
+.curved{
+  background-color: #fff;
+  color: #fff;
+  text-align: center;
+}
+
+.curved p{
+  font-size: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
