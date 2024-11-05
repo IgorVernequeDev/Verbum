@@ -1,3 +1,12 @@
+import os
+from db_functions import conectar_db, encerrar_db
+from routes import *
+from mysql.connector import Error
+import uuid
+from flask import Flask, render_template, request, redirect, session, jsonify
+from flask import jsonify
+
+
 @app.route('/livros')
 def livros():
     logado = session.get('logado', True)
@@ -52,6 +61,7 @@ def cadastrarlivro():
 
     finally:
         encerrar_db(cursor, conexao)
+
 
 
 @app.route('/login', methods=['POST'])
@@ -122,6 +132,7 @@ def cadlivro():
     return render_template('adm_index.html')
 
 
+
 @app.route('/cadaluno', methods=['POST'])
 def cadaluno():
     conexao, cursor = conectar_db()
@@ -146,6 +157,7 @@ def cadaluno():
         return render_template("cadaluno.html", msg="As senhas não se coincidem!")
 
     return redirect('/adm')
+
 
 
 @app.route('/cadautor', methods=['GET', 'POST'])
@@ -232,7 +244,6 @@ def cadeditora():
 
 
 
-
 @app.route('/listaespera/<int:id>')
 def listaespera(id):
     logado = session.get('logado', True)
@@ -314,7 +325,9 @@ def reservar(id):
 
     except Exception as erro:
         return jsonify({"error": str(erro)}), 500
-      
+     
+
+            
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
     if request.method == 'GET':
@@ -406,3 +419,4 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
