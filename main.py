@@ -1,19 +1,3 @@
-from flask import jsonify, request
-from db_functions import conectar_db, encerrar_db
-from routes import *
-from mysql.connector import Error
-import uuid
-from flask import jsonify
-
-
-@app.route('/home')
-def home():
-    logado = session.get('logado', True)
-    conexao, cursor = conectar_db()
-    encerrar_db(cursor, conexao)
-    return render_template('index.html', logado=logado, titulo="Verbum - Home")
-
-
 @app.route('/livros')
 def livros():
     logado = session.get('logado', True)
@@ -22,7 +6,6 @@ def livros():
     livros = cursor.fetchall()
     encerrar_db(cursor, conexao)
     return render_template('livros.html', logado=logado, titulo="Verbum - Livros", livros=livros)
-
 
 @app.route('/livro/<int:id>')
 def livro(id):
@@ -39,9 +22,21 @@ def livro(id):
     encerrar_db(cursor, conexao)
     return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro)
 
+@app.route('/home')
+def home():
+    logado = session.get('logado', True)
+    nome_usuario = session.get('nome', "")
+
+    conexao, cursor = conectar_db() 
+
+    encerrar_db(cursor, conexao)
+
+    return render_template('index.html', logado=logado, nome_usuario=nome_usuario, titulo="Verbum - Home")
+
 @app.route('/cadastrarlivro')
 def cadastrarlivro():
     logado = session.get('logado', True)
+
     try:
         conexao, cursor = conectar_db()
         cursor.execute("SELECT * from editoras")
@@ -80,6 +75,7 @@ def logar():
     if usuario:
         idUsuario = usuario['idUsuario']
         nome = usuario['nome']
+        email_db = usuario['email']
         senha_db = usuario['senha']
 
         if senha == senha_db:
@@ -154,6 +150,7 @@ def cadaluno():
 
 @app.route('/cadautor', methods=['GET', 'POST'])
 def cadautor():
+
     if request.method == 'GET':
         try:
             conexao, cursor = conectar_db()
@@ -167,19 +164,39 @@ def cadautor():
         finally:
             encerrar_db(cursor, conexao)
 
+
     if request.method == 'POST':
-        autor = request.form['autor']
+        # código para cadastrar o novo autor
+        dados = request.get_json()  # Obtém os dados JSON como um dicionário Python
+        autor = dados.get('nome')  # Acessa o valor da chave 'nome'
         try:
             conexao, cursor = conectar_db()
             cursor.execute("INSERT INTO autores VALUES (null, %s)", (autor,))
             conexao.commit()
-            return redirect('/cadastrarlivro')
+
+            return jsonify({'success': True}), 200
         except Exception as erro:
             return f"Erro {erro}"
         except Error as erro:
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
+    else:
+        # código para exibir a lista de autores
+        try:
+            conexao, cursor = conectar_db()
+            cursor.execute("SELECT * from autor")
+            autores = cursor.fetchall()
+            return render_template('/cadautor', autores=autores)
+
+
+        except Exception as erro:
+            return f"Erro {erro}"
+        except Error as erro:
+            return f"Erro BD {erro}"
+        finally:
+            encerrar_db(cursor, conexao)
+
 
 
 @app.route('/cadeditora', methods=['GET', 'POST'])
@@ -198,13 +215,14 @@ def cadeditora():
             encerrar_db(cursor, conexao)
 
     if request.method == 'POST':
-        editora = request.form['editora']
+        # Código para cadastrar a nova editora
+        dados = request.get_json()
+        editora = dados.get('nome_editora')
         try:
             conexao, cursor = conectar_db()
-            cursor.execute(
-                "INSERT INTO editoras VALUES (null, %s)", (editora,))
+            cursor.execute("INSERT INTO editoras VALUES (null, %s)", (editora,))
             conexao.commit()
-            return redirect('/cadastrarlivro')
+            return jsonify({'success': True}), 200
         except Exception as erro:
             return f"Erro {erro}"
         except Error as erro:
@@ -213,9 +231,6 @@ def cadeditora():
             encerrar_db(cursor, conexao)
 
 
-@app.route('/infpessoais')
-def infpessoais():
-    return render_template("infpessoais.html")
 
 
 @app.route('/listaespera/<int:id>')
@@ -299,8 +314,7 @@ def reservar(id):
 
     except Exception as erro:
         return jsonify({"error": str(erro)}), 500
-
-
+      
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
     if request.method == 'GET':
