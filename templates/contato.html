@@ -2,26 +2,37 @@
 
 {% block conteudo %}
 
-<div class="contact-info">
-  <div class="contact-methods">
-    <div class="title-cont">
-      <h1>Contato</h1>
-      <p>Deseja esclarecer alguma dúvida? Possui uma sugestão de livro? As opções de contato são essas:</p>
+<div class="container my-3 justify-content-between mx-3">
+  <div class="row" id="contato">
+    <!-- Coluna de Contato -->
+    <div class="col-lg-6 p-5">
+      <h2 class="fs-1 mb-3">Contato</h2>
+      <p class="fs-5 mb-5">Deseja esclarecer alguma dúvida? Possui uma sugestão de livro? As opções de contato são essas:</p>
+      
+      <!-- E-mail -->
+      <div class="d-flex align-items-center mb-4">
+        <img src="/static/img/letter.png" alt="Email" class="icones_contatos me-3">
+        <p class="mb-0">Sesisp399@gmail.com</p>
+      </div>
+      
+      <!-- Telefone -->
+      <div class="d-flex align-items-center mb-4">
+        <img src="/static/img/telefone.png" alt="Telefone" class="icones_contatos me-3">
+        <p class="mb-0">(15) 3522-1562</p>
+      </div>
+      
+      <!-- Endereço -->
+      <div class="d-flex align-items-center mb-4">
+        <img src="/static/img/local.png" alt="Endereço" class="icones_contatos me-3">
+        <p class="mb-0">Av. Kazumi Yoshimura, 430 - Parque Industrial</p>
+      </div>
     </div>
-    <div class="method">
-      <img src="/static/img/letter.png" alt="Email">
-      <p>Sesisp399@gmail.com</p>
-    </div>
-    <div class="method">
-      <img src="/static/img/telefone.png" alt="Telefone">
-      <p>(15) 3522-1562</p>
-    </div>
-    <div class="method">
-      <img src="/static/img/local.png" alt="Endereço">
-      <p>Av. Kazumi Yoshimura, 430 - Parque Industrial</p>
+
+    <!-- Coluna de Imagem -->
+    <div class="col-lg-6 d-flex align-items-center justify-content-end">
+      <img src="/static/img/contato.png" alt="Contato" class="img-fluid w-100">
     </div>
   </div>
-  <img src="/static/img/contato.png" alt="Contato">
 </div>
 
 {% endblock %}
