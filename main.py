@@ -209,15 +209,12 @@ def cadautor():
 
 @app.route('/cadeditora', methods=['GET', 'POST'])
 def cadeditora():
-    if request.method == 'POST':
-        # código para cadastrar a nova editora
-        dados = request.get_json()  # Obtém os dados JSON como um dicionário Python
-        editora = dados.get('nome_editora')
+    if request.method == 'GET':
         try:
             conexao, cursor = conectar_db()
-            cursor.execute("INSERT INTO editora VALUES (null, %s)", (editora,))
-            conexao.commit()
-            return jsonify({'success': True}), 200
+            cursor.execute("SELECT * from editoras")
+            editoras = cursor.fetchall()
+            return render_template("cadeditora.html", editoras=editoras)
         except Exception as erro:
             return f"Erro {erro}"
         except Error as erro:
@@ -226,26 +223,14 @@ def cadeditora():
             encerrar_db(cursor, conexao)
 
     if request.method == 'POST':
-        editora = request.form['editora']
+        # Código para cadastrar a nova editora
+        dados = request.get_json()
+        editora = dados.get('nome_editora')
         try:
             conexao, cursor = conectar_db()
-            cursor.execute(
-                "INSERT INTO editoras VALUES (null, %s)", (editora,))
+            cursor.execute("INSERT INTO editoras VALUES (null, %s)", (editora,))
             conexao.commit()
-            return redirect('/cadastrarlivro')
-        except Exception as erro:
-            return f"Erro {erro}"
-        except Error as erro:
-            return f"Erro BD {erro}"
-        finally:
-            encerrar_db(cursor, conexao)
-    else:
-        # código para exibir a lista de editoras
-        try:
-            conexao, cursor = conectar_db()
-            cursor.execute("SELECT * from editoras")
-            editoras = cursor.fetchall()
-            return render_template("cadeditora.html", editoras=editoras)
+            return jsonify({'success': True}), 200
         except Exception as erro:
             return f"Erro {erro}"
         except Error as erro:
