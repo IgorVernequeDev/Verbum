@@ -34,12 +34,13 @@ def livro(id):
 @app.route('/home')
 def home():
     logado = session.get('logado', True)
+    nome_usuario = session.get('nome', "")
 
     conexao, cursor = conectar_db() 
 
     encerrar_db(cursor, conexao)
 
-    return render_template('index.html', logado=logado, titulo="Verbum - Home")
+    return render_template('index.html', logado=logado, nome_usuario=nome_usuario, titulo="Verbum - Home")
 
 @app.route('/cadastrarlivro')
 def cadastrarlivro():
@@ -251,11 +252,6 @@ def cadeditora():
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
-
-
-@app.route('/infpessoais')
-def infpessoais():
-    return render_template("infpessoais.html")
 
 
 @app.route('/listaespera/<int:id>')
