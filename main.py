@@ -24,6 +24,17 @@ def livro(id):
 
     conexao, cursor = conectar_db()
     
+    cursor.execute("""
+        SELECT livros.*, autores.nomeAutor, editoras.nomeEditora
+        FROM livros
+        JOIN autores ON livros.idAutor = autores.idAutor
+        JOIN editoras ON livros.idEditora = editoras.idEditora
+        WHERE livros.idLivro = %s
+    """, (id,))
+    livro = cursor.fetchone()
+    encerrar_db(cursor, conexao)
+    return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro, verlivro=True)
+    
     try:
         cursor.execute("""
             SELECT livros.*, autores.nomeAutor, editoras.nomeEditora
