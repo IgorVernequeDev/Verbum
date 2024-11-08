@@ -35,23 +35,18 @@ def adm():
     logado = session.get('logado', True)
     return render_template('adm_index.html', logado=logado, titulo="Verbum ADM - Home ")
 
-@app.route('/alunos')
-def alunos():
-    logado = session.get('logado', True)
-    return render_template('alunos.html', logado=logado,titulo="Verbum ADM - Alunos")
-
 @app.route('/redirecionar')
 def redirecionar():
-    logado = session.get('logado', True)
+    logado = session.get('logado', False)
     nivel_usuario = session.get('nivelUsuario', 'usuario')
 
     if not logado:
         return redirect('/')
-
+    
     if nivel_usuario == 'admin':
-        return redirect('/adm') 
+        return redirect('/adm')
     else:
-        return redirect('/home')  
+        return redirect('/home')
 
 @app.route('/cadastraraluno')
 def cadastraraluno():

@@ -99,8 +99,6 @@ nav ul {
   border-radius: 100px;
 }
 
-
-
 nav ul li a {
   color: rgb(255, 255, 255);
   text-decoration: none;
@@ -111,7 +109,6 @@ nav ul li a {
   font-weight: 400;
   top: 19px;
   border-bottom: 2px solid transparent;
-
 }
 
 nav ul li a:hover {

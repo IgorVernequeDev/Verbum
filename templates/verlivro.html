@@ -43,6 +43,7 @@
                     <div>
                         <h5>QUANTIDADE DISPONÍVEL:</h5>
                         <p>{{ livro.quantidade }}</p>
+                        <p>ID do Livro: {{ livro.idLivro }}</p>
                     </div>
                 </div>
             </div>
@@ -60,6 +61,7 @@
                     </button>
                     <h4 class="mt-2">EXCLUIR</h4>
                 </div>
+                {% endif %}
                 <div class="d-flex justify-content-end">
                     <div class="text-center">
                         <a href="/listaespera/{{ livro.idLivro }}">
@@ -68,7 +70,6 @@
                     </div>
                 </div>
             </div>
-            {% endif %}
         </div>
     </div>
 </div>
