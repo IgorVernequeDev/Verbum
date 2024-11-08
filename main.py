@@ -3,9 +3,29 @@ from db_functions import conectar_db, encerrar_db
 from routes import *
 from mysql.connector import Error
 import uuid
-from flask import Flask, render_template, request, redirect, session, jsonify
+from flask import Flask, render_template, request, redirect, session
 from flask import jsonify
 
+@app.before_request
+def usuario_logado():
+    user_id = session.get('idUsuario')
+    
+    if user_id:
+        conexao, cursor = conectar_db()
+        cursor.execute("SELECT nome FROM Usuarios WHERE idUsuario = %s", (user_id,))
+        user = cursor.fetchone()
+        session['nome_usuario'] = user["nome"] if user else None
+        cursor.close()
+        conexao.close()
+    else:
+        session['nome_usuario'] = None
+
+@app.context_processor
+def inject_user():
+    return {
+        'logado': 'idUsuario' in session,
+        'nome_usuario': session.get('nome_usuario')
+    }
 
 @app.route('/livros')
 def livros():
@@ -250,6 +270,33 @@ def cadeditora():
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
+
+@app.route('/livrosreservados')
+def livros_reservados():
+    # Checa se o usuário está logado
+    if 'usuario_id' not in session:
+        return redirect('/login')
+
+    usuario_id = session['usuario_id']
+
+    try:
+        conexao, cursor = conectar_db()
+        # Busque os livros reservados pelo usuário logado
+        cursor.execute("""
+            SELECT livros.id, livros.titulo, livros.autor, livros.avaliacao, livros.imagemCapa
+            FROM livros
+            INNER JOIN reservas ON livros.id = reservas.idLivro
+            WHERE reservas.idUsuario = %s
+        """, (usuario_id,))
+        
+        livros_reservados = cursor.fetchall()
+        return render_template('livrosReservados.html', livros=livros_reservados)
+    
+    except Exception as erro:
+        return f"Erro: {erro}"
+    
+    finally:
+        encerrar_db(cursor, conexao)
 
 @app.route('/listaespera/<int:id>') 
 def listaespera(id):
