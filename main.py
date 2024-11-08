@@ -37,7 +37,7 @@ def livro(id):
     """, (id,))
     livro = cursor.fetchone()
     encerrar_db(cursor, conexao)
-    return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro)
+    return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro, verlivro=True)
 
 @app.route('/cadastrarlivro')
 def cadastrarlivro():

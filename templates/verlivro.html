@@ -1,11 +1,15 @@
 {% extends 'modelo.html' %}
 
+{% block livros %}
+<li class="menu-item"><a href="/redirecionar">Home</a></li>
+<li class="menu-item"><a href="/contato">Contato</a></li>
+{% endblock %}
+
 {% block conteudo %}
 
 <div class="bg-dark p-2">
     <div class="d-flex justify-content-between w-100">
         <h1 id="tituloLivro" class="text-white">{{ livro.titulo }}</h1>
-        <p class="stars">★</p>
     </div>
     <p id="autorLivro" class="mt-1 text-white">{{ livro.nomeAutor }}</p>
 </div>

@@ -81,6 +81,7 @@
       </div>
     </header>
     {% if not livros %}
+    {% if not verlivro %}
     <nav class="bg-dark">
       <ul class="d-flex justify-content-around w-25 align-items-end">
         <li><a href="/redirecionar">Home</a></li>
@@ -88,6 +89,7 @@
         <li><a href="/contato">Contato</a></li>
       </ul>
     </nav>
+    {% endif %}
     {% endif %}
 
   <main class="flex-fill d-flex flex-column">

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
+
+
 * {
   margin: 0;
   padding: 0;
@@ -427,10 +430,7 @@ footer .copyright {
   text-align: start;
 }
 
-.stars {
-  color: yellow;
-  font-size: 1.2rem;
-}
+
 
 a {
   text-decoration: none;
@@ -483,11 +483,12 @@ option {
 }
 
 
+
 .Subir {
   height: 10%;
   width: 50%;
   background: linear-gradient(to right, #709fe0, #023884);
-  color: #ffffff;
+  color: white; 
   font-size: 12px;
   font-family: "Oswald", sans-serif;
   border: none;
@@ -538,6 +539,15 @@ option {
   height: 100%;
 }
 
+.outros-botoes {
+  color: black !important; 
+  font-family: "Oswald", sans-serif; 
+  font-weight: 300;
+  background-color: #ececec; 
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
 #container input {
   background-color: #eee;
   border: none;
@@ -562,9 +572,10 @@ option {
   border: none;
   width: 90%;
   border-radius: 8px;
-  font-weight: 800;
+  font-weight: 400;
   resize: none;
   overflow: hidden;
+  outline: none;
 }
 
 #descricao textarea::placeholder {
