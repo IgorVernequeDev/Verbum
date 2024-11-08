@@ -38,7 +38,7 @@ def livros():
 
 @app.route('/livro/<int:id>')
 def livro(id):
-    logado = session.get('logado', False)
+    logado = session.get('logado', True)
     if not logado:
         return redirect('/login')
 
@@ -382,6 +382,22 @@ def editar(id):
             encerrar_db(cursor, conexao)
 
     elif request.method == 'POST':
+
+        novo_autor = request.form.get('novoAutor')
+        nova_editora = request.form.get('novaEditora')
+
+        if novo_autor:
+            # Cadastra o novo autor
+            cursor.execute("INSERT INTO autores (nomeAutor) VALUES (%s)", (novo_autor,))
+            conexao.commit()
+            id_autor = cursor.lastrowid
+
+        if nova_editora:
+            # Cadastra a nova editora
+            cursor.execute("INSERT INTO editoras (nomeEditora) VALUES (%s)", (nova_editora,))
+            conexao.commit()
+            id_editora = cursor.lastrowid
+
         titulo = request.form['titulo']
         descricao = request.form['descricao']
         numero_paginas = request.form['numero_paginas']
@@ -405,6 +421,7 @@ def editar(id):
                     SET idAutor = %s, idEditora = %s, titulo = %s, descricao = %s, numero_paginas = %s, genero = %s, anoPublicacao = %s, quantidade = %s, imagemCapa = %s
                     WHERE idLivro = %s
                 """, (idAutor, idEditora, titulo, descricao, numero_paginas, genero, anoPublicacao, quantidade, filename, id))
+
             else:
                 cursor.execute("""
                     UPDATE livros
