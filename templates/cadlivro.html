@@ -19,11 +19,11 @@
           {% else %}
           <option value="" disabled selected>Selecione um autor</option>
           {% for autor in autores %}
-          <option value="{{ autor['idAutor'] }}">{{autor['nomeAutor']}}</option>
+          <option value="{{ autor['idAutor'] }}">{{ autor['nomeAutor'] }}</option>
           {% endfor %}
           {% endif %}
-          <option value="novo">Cadastrar novo</option>
-        </select>
+      </select>
+      
 
         <div class="mb-2" id="novoAutor" style="display: none;">
           <input class="mt-2" type="text" name="novoAutor" placeholder="Nome do novo autor">
@@ -77,6 +77,7 @@
     </div>
   </div>
 </form>
+
 <script>
   const autorSelect = document.getElementById('autor');
   const novoAutorDiv = document.getElementById('novoAutor');
@@ -105,13 +106,13 @@
           return response.json();
       } else {
           console.log("Status da resposta:", response.status);
-          console.log("Resposta do servidor:", response.text()); // Exibe o corpo da resposta
+          console.log("Resposta do servidor:", response.text());
           throw new Error('Erro ao cadastrar autor.');
       }
   })
   .then(data => {
        const novaOpcao = document.createElement('option');
-        novaOpcao.value = data.id; 
+        novaOpcao.value = data.id;
         novaOpcao.text = novoNomeAutor;
         autorSelect.add(novaOpcao, 1);
 

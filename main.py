@@ -1,9 +1,9 @@
-from datetime import datetime
 from db_functions import conectar_db, encerrar_db
 from routes import *
 from mysql.connector import Error
 import uuid
 from flask import render_template, request, redirect, session, jsonify
+from datetime import date
 
 @app.route('/livros')
 def livros():
@@ -17,19 +17,7 @@ def livros():
 @app.route('/livro/<int:id>')
 def livro(id):
     logado = session.get('logado', True)
-
     conexao, cursor = conectar_db()
-    
-    cursor.execute("""
-        SELECT livros.*, autores.nomeAutor, editoras.nomeEditora
-        FROM livros
-        JOIN autores ON livros.idAutor = autores.idAutor
-        JOIN editoras ON livros.idEditora = editoras.idEditora
-        WHERE livros.idLivro = %s
-    """, (id,))
-    livro = cursor.fetchone()
-    encerrar_db(cursor, conexao)
-    return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro, verlivro=True)
     
     try:
         cursor.execute("""
@@ -40,13 +28,14 @@ def livro(id):
             WHERE livros.idLivro = %s
         """, (id,))
         livro = cursor.fetchone()
+
+        if livro is None:
+            return render_template('erro.html', mensagem="Livro não encontrado"), 404 
+        
+        return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro, verlivro=True)
+
     finally:
         encerrar_db(cursor, conexao)
-
-    if livro is None:
-        return render_template('erro.html', mensagem="Livro não encontrado"), 404 
-
-    return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro)
 
 @app.route('/home')
 def home():
@@ -113,36 +102,122 @@ def logar():
 
     else:
         return render_template("login.html", msg="Usuário não encontrado!")
+    
+@app.route('/listaespera/<int:id>') 
+def listaespera(id):
+    logado = session.get('logado', True)
+    try:
+        conexao, cursor = conectar_db()
+        
+        cursor.execute("SELECT titulo FROM livros WHERE idLivro = %s", (id,))
+        livro = cursor.fetchone()
+
+        if not livro:
+            return "Livro não encontrado.", 404
+
+        cursor.execute("""
+            SELECT u.nome AS nome, u.serie AS serie, r.dataReserva AS dataReserva
+            FROM reservas r
+            JOIN usuarios u ON r.idUsuario = u.idUsuario
+            WHERE r.idLivro = %s
+            ORDER BY r.dataReserva
+        """, (id,))
+        lista_espera = cursor.fetchall()
+
+        encerrar_db(cursor, conexao)
+
+        return render_template(
+            'listaespera.html',
+            logado=logado,
+            titulo="Verbum - Lista de Espera",
+            livro=livro,
+            lista_espera=lista_espera
+        )
+    except Exception as erro:
+        return f"Erro ao acessar a lista de espera: {erro}"
+    
+def adicionar_a_lista_espera(id_livro, id_usuario):
+    conexao = conectar_db()
+    cursor = conexao.cursor()
+
+    cursor.execute("SELECT MAX(posicaoEspera) FROM ListaEspera WHERE idLivro = %s", (id_livro,))
+    posicao_atual = cursor.fetchone()[0]
+
+    nova_posicao = 0 if posicao_atual is None else posicao_atual + 1
+
+    cursor.execute("""
+        INSERT INTO ListaEspera (idLivro, idUsuario, posicaoEspera, dataReserva)
+        VALUES (%s, %s, %s, %s)
+    """, (id_livro, id_usuario, nova_posicao, date.today()))
+
+    conexao.commit()
+    cursor.close()
+    conexao.close()
+    return jsonify({"success": True, "mensagem": "Reserva adicionada à lista de espera."})
+
+# def enviar_notificacao(id_usuario, mensagem):
+#     conexao = 
+#     cursor = conn.cursor()
+#     cursor.execute("INSERT INTO Notificacoes (idUsuario, mensagem, data) VALUES (%s, %s, %s)", (id_usuario, mensagem, date.today()))
+#     conn.commit()
+#     cursor.close()
+#     conn.close()
+
+# def liberar_livro(id_livro):
+#     conexao = conectar_db()
+#     cursor = conexao.cursor()
+
+#     cursor.execute("SELECT idUsuario FROM ListaEspera WHERE idLivro = %s AND posicaoEspera = 0", (id_livro,))
+#     usuario_id = cursor.fetchone()
+
+#     if usuario_id:
+#         enviar_notificacao(usuario_id, f"O livro '{id_livro}' está disponível para empréstimo.")
+
+#         cursor.execute("DELETE FROM ListaEspera WHERE idLivro = %s AND posicaoEspera = 0", (id_livro,))
+#         conexao.commit()
+
+#         cursor.execute("""
+#             UPDATE ListaEspera
+#             SET posicaoEspera = posicaoEspera - 1
+#             WHERE idLivro = %s
+#         """, (id_livro,))
+#         conexao.commit()
+
+#     cursor.close()
+#     conexao.close()
 
 @app.route('/cadlivro', methods=['POST'])
 def cadlivro():
     conexao, cursor = conectar_db()
 
-    titulo = request.form['titulo']
-    titulo = titulo.title()
-    descricao = request.form['descricao']
-    descricao = descricao.title()
+    titulo = request.form['titulo'].title()
+    descricao = request.form['descricao'].title()
     numero_paginas = request.form['numero_paginas']
-    genero = request.form['genero']
-    genero = genero.title()
+    genero = request.form['genero'].title()
     imagemCapa = request.files['imagemCapa']
     anoPublicacao = request.form['anoPublicacao']
     quantidade = request.form['quantidade']
     idAutor = request.form['autor']
     idEditora = request.form['editora']
 
+    # Valida se idAutor e idEditora são números inteiros válidos
+    if not idAutor.isdigit() or not idEditora.isdigit():
+        # Redireciona ou retorna uma mensagem de erro caso os valores sejam inválidos
+        return "Erro: Autor ou Editora inválidos.", 400
+
     id_foto = str(uuid.uuid4().hex)
     filename = id_foto + titulo + '.png'
-
     imagemCapa.save("static/img/livros/" + filename)
 
-    cursor.execute('INSERT INTO livros (idAutor, idEditora, titulo, descricao, numero_paginas, genero, imagemCapa, anoPublicacao, quantidade) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)',
-                   (idAutor, idEditora, titulo, descricao, numero_paginas, genero, filename, anoPublicacao, quantidade))
+    cursor.execute(
+        'INSERT INTO livros (idAutor, idEditora, titulo, descricao, numero_paginas, genero, imagemCapa, anoPublicacao, quantidade) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)',
+        (idAutor, idEditora, titulo, descricao, numero_paginas, genero, filename, anoPublicacao, quantidade)
+    )
 
     conexao.commit()
     conexao.close()
-
     return render_template('adm_index.html')
+
 
 @app.route('/cadaluno', methods=['POST'])
 def cadaluno():
@@ -244,99 +319,6 @@ def cadeditora():
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
-
-@app.route('/livrosreservados')
-def livros_reservados():
-    # Checa se o usuário está logado
-    if 'usuario_id' not in session:
-        return redirect('/login')
-
-    usuario_id = session['usuario_id']
-
-    try:
-        conexao, cursor = conectar_db()
-        # Busque os livros reservados pelo usuário logado
-        cursor.execute("""
-            SELECT livros.id, livros.titulo, livros.autor, livros.avaliacao, livros.imagemCapa
-            FROM livros
-            INNER JOIN reservas ON livros.id = reservas.idLivro
-            WHERE reservas.idUsuario = %s
-        """, (usuario_id,))
-        
-        livros_reservados = cursor.fetchall()
-        return render_template('livrosReservados.html', livros=livros_reservados)
-    
-    except Exception as erro:
-        return f"Erro: {erro}"
-    
-    finally:
-        encerrar_db(cursor, conexao)
-
-@app.route('/listaespera/<int:id>') 
-def listaespera(id):
-    logado = session.get('logado', True)
-    try:
-        conexao, cursor = conectar_db()
-        
-        cursor.execute("SELECT titulo FROM livros WHERE idLivro = %s", (id,))
-        livro = cursor.fetchone()
-
-        if not livro:
-            return "Livro não encontrado.", 404
-
-        cursor.execute("""
-            SELECT u.nome AS nome, u.serie AS serie, r.dataReserva AS dataReserva
-            FROM reservas r
-            JOIN usuarios u ON r.idUsuario = u.idUsuario
-            WHERE r.idLivro = %s
-            ORDER BY r.dataReserva
-        """, (id,))
-        lista_espera = cursor.fetchall()
-
-        encerrar_db(cursor, conexao)
-
-        return render_template(
-            'listaespera.html',
-            logado=logado,
-            titulo="Verbum - Lista de Espera",
-            livro=livro,
-            lista_espera=lista_espera
-        )
-    except Exception as erro:
-        return f"Erro ao acessar a lista de espera: {erro}"
-
-@app.route('/reservar', methods=['POST'])
-def reservar():
-    data = request.get_json()
-    idLivro = data.get('idLivro')
-    idUsuario = session.get('idUsuario')
-    dataReserva = datetime.now().date()
-
-    if not idLivro:
-        return jsonify({'status': 'error', 'message': 'ID do livro não fornecido.'}), 400
-    
-    if not idUsuario:
-        return jsonify({'status': 'error', 'message': 'ID do usuário não encontrado na sessão.'}), 400
-
-    try:
-        conexao, cursor = conectar_db()
-
-        # Obter a posição na lista de espera
-        cursor.execute("SELECT COUNT(*) + 1 AS posicao FROM reservas WHERE idLivro = %s", (idLivro,))
-        posicao = cursor.fetchone()['posicao']
-
-        # Inserir a reserva no banco de dados
-        cursor.execute("""
-            INSERT INTO reservas (idLivro, idUsuario, dataReserva, posicaoEspera)
-            VALUES (%s, %s, %s, %s)
-        """, (idLivro, idUsuario, dataReserva, posicao))
-
-        conexao.commit()
-        encerrar_db(cursor, conexao)
-        
-        return jsonify({'status': 'success', 'posicao': posicao})
-    except Exception as erro:
-        return jsonify({'status': 'error', 'message': str(erro)})
               
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
