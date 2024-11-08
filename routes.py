@@ -37,7 +37,7 @@ def adm():
 
 @app.route('/redirecionar')
 def redirecionar():
-    logado = session.get('logado', False)
+    logado = session.get('logado', True)
     nivel_usuario = session.get('nivelUsuario', 'usuario')
 
     if not logado:

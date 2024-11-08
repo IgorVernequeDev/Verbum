@@ -23,12 +23,12 @@ header button {
 }
 
 #logo {
-  width: 50%;
+  width: 30%;
 }
 
 @media (max-width: 768px) {
   #logo {
-    width: 100%;
+    width: 50%;
   }
 }
 
@@ -54,13 +54,18 @@ main {
 
 .search-container input {
   border: none;
-  width: 200px;
+  width: 160px;
   background-color: transparent;
-  border: t;
   font-size: 15px;
   font-family: "Oswald", sans-serif;
   font-weight: 100;
   color: white;
+}
+
+@media (max-width: 768px) {
+  .search-container input {
+    width: 150px;
+  }
 }
 
 .dropdown-toggle::after {
@@ -230,6 +235,7 @@ button {
   font-family: "Oswald", sans-serif;
   font-weight: 100;
   border-radius: 10px;
+  width: 20em;
 }
 
 #adm img {
@@ -262,6 +268,11 @@ button {
 
 #cadAluno img {
   width: 20%;
+}
+
+#login {
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
 }
 
 #Entrar {
@@ -470,39 +481,33 @@ a {
 
 #container {
   background-color: #fff;
-  padding: 2%;  
+  padding: 2%;
   border-radius: 30px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-  position: relative;
-  overflow: hidden;
-  width: 50%;
   max-width: 100%;
-  min-height: 100%;
   margin-top: 4%;
   margin-bottom: 4%;
-  flex-direction: column;
-  align-content: center;
 }
 
 .titulos {
   color: #255EAF;
   font-size: 20px;
   font-family: "Oswald", sans-serif;
-  margin: 0;
-  padding: 0;
+  margin-top: 2%;
+}
+
+textarea {
+  resize: none;
 }
 
 select {
   background-color: #eee;
-  color: #504f4f;
-  font-weight: 500;
-  font-family: "Oswald", sans-serif;
-  font-size: 16px;
-  padding: 5px;
   border: none;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  margin-right: 10px;
+  padding: 10px 8px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+  width: 90%;
+  border-radius: 8px;
 }
 
 select:focus {
@@ -515,24 +520,29 @@ option {
   color: #504f4f;
 }
 
-
 .Subir {
-  height: 6vh;
-  width: 50%;
+  height: 50px;
   background: linear-gradient(to right, #709fe0, #023884);
-  color: #ffffff;
-  font-size: 12px;
+  color: #fff;
+  font-size: 16px;
   font-family: "Oswald", sans-serif;
   border: none;
   border-radius: 8px;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  text-align: center;
-  cursor: pointer;
-  margin-top: 10%;
   display: flex;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  #container {
+    max-width: 70%;
+  }
+  
+  .Subir {
+    width: 50%;
+  }
 }
 
 #modal-bg {
