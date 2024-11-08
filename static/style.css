@@ -572,12 +572,29 @@ option {
 }
 
 .curved{
+  background-image: url("../static/Intersect.svg");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
   background-color: #fff;
   color: #fff;
   text-align: center;
+  min-height: 280px;
 }
 
 .curved p{
   font-size: 1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.menu-item {
+  list-style: none; 
+  margin-right: 15px;
+}
+
+.menu-item a {
+  color: white; 
+  font-family: "Oswald", sans-serif; 
+  font-size: 16px; 
 }

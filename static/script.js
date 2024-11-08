@@ -30,3 +30,22 @@ function entrar() {
         alert('Por favor, preencha todos os campos!')
     }
 }
+
+function avaliacao() {
+    const estrela1 = document.getElementById('1')
+    const estrela2 = document.getElementById('2')
+    const estrela3 = document.getElementById('3')
+    const estrela4 = document.getElementById('4')
+    const estrela5 = document.getElementById('5')
+
+    const texto = document.getElementsByTagName('h3')
+
+    if (estrela1) {
+        texto.textContent = '⭐'
+    }
+    if (estrela2) {
+        texto.textContent = '⭐⭐'
+    }
+
+
+}
