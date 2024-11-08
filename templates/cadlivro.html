@@ -13,17 +13,24 @@
         <textarea id="descricao" name="descricao" class="text-start ps-2 pt-2" placeholder="Insira um resumo do livro..."></textarea>
 
         <h2 class="titulos mb-2">Autor</h2>
-        <select name="autor" id="autor" required>
-          {% if not autores %}
-          <option value="" disabled selected>Não há autores cadastrados!</option>
-          {% else %}
-          <option value="" disabled selected>Selecione um autor</option>
-          {% for autor in autores %}
-          <option value="{{ autor['idAutor'] }}">{{autor['nomeAutor']}}</option>
-          {% endfor %}
-          {% endif %}
-        </select>
-        <button class="outros-botoes" onclick="window.location.href='/cadautor'">Novo autor</button>
+        <select class="mb-2" name="autor" id="autor" required>
+          
+            {% if not autores %}
+            <option value="" disabled selected>Não há autores cadastrados!</option>
+            {% else %}
+            <option value="" disabled selected>Selecione um autor</option>
+            {% for autor in autores %}
+            <option value="{{ autor['idAutor'] }}">{{autor['nomeAutor']}}</option>
+            {% endfor %}
+            {% endif %}
+            <option value="novo">Cadastrar novo</option>
+          </select>
+        
+
+        <div class="mb-2" id="novoAutor" style="display: none;">
+          <input class="mt-2" type="text" name="novoAutor" placeholder="Nome do novo autor">
+          <button class="cadastra" type="button" id="cadastrarAutor">Cadastrar</button>
+        </div>
 
         <h2 class="titulos mb-2">Editora</h2>
         <select name="editora" id="editora" required>
@@ -35,10 +42,16 @@
           <option value="{{ editora['idEditora'] }}">{{editora['nomeEditora']}}</option>
           {% endfor %}
           {% endif %}
+          <option value="novo">Cadastrar novo</option>
         </select>
-        <button class="outros-botoes" onclick="window.location.href='/cadeditora'">Nova editora</button>
 
-        <h2 class="titulos mb-2" for="imagemCapa">Selecione a imagem da capa:</h2>
+        <div class="mb-2" id="novaEditora" style="display: none;">
+          <input class="mt-3" type="text" name="novaEditora" placeholder="Nome da nova editora">
+          <button type="button" class="cadastra" id="cadastrarEditora">Cadastrar</button>
+        </div>
+        
+
+        <h2 class="titulos mb-2" style="margin-top: 6%;" for="imagemCapa">Selecione a imagem da capa:</h2>
         <input class="selecionar form-control" accept="image/jpeg,image/png" type="file" name="imagemCapa" id="imagemCapa">
 
       </div>
@@ -70,5 +83,97 @@
     </div>
   </div>
 </form>
+<script>
+  const autorSelect = document.getElementById('autor');
+  const novoAutorDiv = document.getElementById('novoAutor');
+  const cadastrarAutorButton = document.getElementById('cadastrarAutor');
 
+  autorSelect.addEventListener('change', () => {
+    if (autorSelect.value === 'novo') {
+      novoAutorDiv.style.display = 'block';
+    } else {
+      novoAutorDiv.style.display = 'none';
+    }
+  });
+
+  cadastrarAutorButton.addEventListener('click', () => {
+    const novoNomeAutor = document.querySelector('#novoAutor input').value;
+   
+  fetch('/cadautor', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nome: novoNomeAutor })
+  })
+  .then(response => {
+      if (response.ok) {
+          return response.json();
+      } else {
+          console.log("Status da resposta:", response.status);
+          console.log("Resposta do servidor:", response.text()); // Exibe o corpo da resposta
+          throw new Error('Erro ao cadastrar autor.');
+      }
+  })
+  .then(data => {
+       const novaOpcao = document.createElement('option');
+        novaOpcao.value = data.id; 
+        novaOpcao.text = novoNomeAutor;
+        autorSelect.add(novaOpcao, 1);
+
+        novoAutorDiv.style.display = 'none';
+
+        document.querySelector('#novoAutor input').value = '';
+  })
+  .catch(error => {
+      console.error(error);
+  });
+  });
+
+
+  const editoraSelect = document.getElementById('editora');
+  const novaEditoraDiv = document.getElementById('novaEditora');
+  const cadastrarEditoraButton = document.getElementById('cadastrarEditora');
+
+  editoraSelect.addEventListener('change', () => {
+    if (editoraSelect.value === 'novo') {
+      novaEditoraDiv.style.display = 'block';
+    } else {
+      novaEditoraDiv.style.display = 'none';
+    }
+  });
+
+  cadastrarEditoraButton.addEventListener('click', () => {
+    const novoNomeEditora = document.querySelector('#novaEditora input').value;
+
+    fetch('/cadeditora', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nome_editora: novoNomeEditora })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Erro ao cadastrar editora.');
+      }
+    })
+    .then(data => {
+      const novaOpcao = document.createElement('option');
+      novaOpcao.value = data.id; 
+      novaOpcao.text = novoNomeEditora;
+      editoraSelect.add(novaOpcao, 1);
+
+      novaEditoraDiv.style.display = 'none';
+
+      document.querySelector('#novaEditora input').value = '';
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  });
+
+</script>
 {% endblock %}
