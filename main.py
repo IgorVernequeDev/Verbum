@@ -20,6 +20,17 @@ def livro(id):
 
     conexao, cursor = conectar_db()
     
+    cursor.execute("""
+        SELECT livros.*, autores.nomeAutor, editoras.nomeEditora
+        FROM livros
+        JOIN autores ON livros.idAutor = autores.idAutor
+        JOIN editoras ON livros.idEditora = editoras.idEditora
+        WHERE livros.idLivro = %s
+    """, (id,))
+    livro = cursor.fetchone()
+    encerrar_db(cursor, conexao)
+    return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro, verlivro=True)
+    
     try:
         cursor.execute("""
             SELECT livros.*, autores.nomeAutor, editoras.nomeEditora
@@ -233,6 +244,33 @@ def cadeditora():
             return f"Erro BD {erro}"
         finally:
             encerrar_db(cursor, conexao)
+
+@app.route('/livrosreservados')
+def livros_reservados():
+    # Checa se o usuário está logado
+    if 'usuario_id' not in session:
+        return redirect('/login')
+
+    usuario_id = session['usuario_id']
+
+    try:
+        conexao, cursor = conectar_db()
+        # Busque os livros reservados pelo usuário logado
+        cursor.execute("""
+            SELECT livros.id, livros.titulo, livros.autor, livros.avaliacao, livros.imagemCapa
+            FROM livros
+            INNER JOIN reservas ON livros.id = reservas.idLivro
+            WHERE reservas.idUsuario = %s
+        """, (usuario_id,))
+        
+        livros_reservados = cursor.fetchall()
+        return render_template('livrosReservados.html', livros=livros_reservados)
+    
+    except Exception as erro:
+        return f"Erro: {erro}"
+    
+    finally:
+        encerrar_db(cursor, conexao)
 
 @app.route('/listaespera/<int:id>') 
 def listaespera(id):

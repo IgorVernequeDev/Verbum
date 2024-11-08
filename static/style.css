@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
+
+
 * {
   margin: 0;
   padding: 0;
@@ -470,10 +473,7 @@ footer .copyright {
   text-align: start;
 }
 
-.stars {
-  color: yellow;
-  font-size: 1.2rem;
-}
+
 
 a {
   text-decoration: none;
@@ -581,6 +581,15 @@ option {
   height: 100%;
 }
 
+.outros-botoes {
+  color: black !important; 
+  font-family: "Oswald", sans-serif; 
+  font-weight: 300;
+  background-color: #ececec; 
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
 #container input {
   background-color: #eee;
   border: none;
@@ -605,13 +614,42 @@ option {
   border: none;
   width: 90%;
   border-radius: 8px;
-  font-weight: 800;
+  font-weight: 400;
   resize: none;
   overflow: hidden;
+  outline: none;
 }
 
 #descricao textarea::placeholder {
   color: #787878;
+}
+
+.curved{
+  background-image: url("../static/Intersect.svg");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #fff;
+  color: #fff;
+  text-align: center;
+  min-height: 280px;
+}
+
+.curved p{
+  font-size: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.menu-item {
+  list-style: none; 
+  margin-right: 15px;
+}
+
+.menu-item a {
+  color: white; 
+  font-family: "Oswald", sans-serif; 
+  font-size: 16px; 
 }
 
 .cadastra {
