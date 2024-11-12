@@ -2,7 +2,7 @@ CREATE DATABASE verbum;
 
 USE verbum;
 
--- Tabela Autor
+-- Tabela Autorusuario
 CREATE TABLE Autores (
 	idAutor INT PRIMARY KEY AUTO_INCREMENT,
     nomeAutor VARCHAR(100) NOT NULL
