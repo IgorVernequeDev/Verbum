@@ -1,35 +1,31 @@
 function reservarLivro() {
-    const botaoReservar = document.getElementById('reservaLivro');
+    // Passando o idLivro corretamente para o JavaScript
+    const idLivro = {{ livro.idLivro }} ;  // Não precisa de aspas se for um número
+    const idUsuario = session['idUsuario'];  // Também assume que idUsuario é numérico
 
-    if (botaoReservar.textContent === 'RESERVAR') {
-        botaoReservar.innerHTML = `<i class="bi bi-book-half me-2 fs-5"></i>RESERVADO`;
-    } else if (botaoReservar.textContent === 'RESERVADO') {
-        const confirmacao = confirm('Deseja tirar a reserva desse livro?');
-        if (confirmacao) {
-            botaoReservar.innerHTML = `<i class="bi bi-book-half me-2 fs-5"></i>RESERVAR`;
-        }
-    }
-
-    const idLivro = "{{ livro.idLivro }}";
-
-    console.log("ID do Livro:", idLivro);
-
-    fetch('/reservar', {
+    // Enviar a requisição para a rota de reserva
+    fetch(`/reservar/${idLivro}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ idLivro: idLivro })
+        body: JSON.stringify({
+            idUsuario: idUsuario  // Envia o ID do usuário que está reservando
+        })
     })
     .then(response => response.json())
     .then(data => {
-        if (data.status === 'success') {
-            alert(`Reserva realizada com sucesso! Posição na lista de espera: ${data.posicao}`);
+        if (data.success) {
+            alert('Livro reservado com sucesso e adicionado à lista de espera!');
+            window.location.href = `/listaespera/${idLivro}`;  // Redireciona para a lista de espera do livro
         } else {
-            alert(`Erro ao reservar: ${data.message}`);
+            alert('Erro ao reservar o livro.');
         }
     })
-    .catch(error => console.error('Erro:', error));
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Erro ao tentar realizar a reserva.');
+    });
 }
 
 function confirmarExclusao(element) {
@@ -50,23 +46,4 @@ function entrar() {
     if (email == "" || senha == "") {
         alert('Por favor, preencha todos os campos!')
     }
-}
-
-function avaliacao() {
-    const estrela1 = document.getElementById('1')
-    const estrela2 = document.getElementById('2')
-    const estrela3 = document.getElementById('3')
-    const estrela4 = document.getElementById('4')
-    const estrela5 = document.getElementById('5')
-
-    const texto = document.getElementsByTagName('h3')
-
-    if (estrela1) {
-        texto.textContent = '⭐'
-    }
-    if (estrela2) {
-        texto.textContent = '⭐⭐'
-    }
-
-
 }

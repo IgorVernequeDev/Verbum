@@ -42,15 +42,15 @@
           {% if logado %}
           <div class="d-flex icons align-items-center">
             <div class="dropdown text-end me-3">
-              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                {% if session['nivelUsuario'] == 'admin' %}
-                <span class="me-3 ms-3 text-white">Administrador</span>
-                {% else %}
-                <span class="me-3 ms-3 text-white">{{ nome_usuario }}</span>
-                {% endif %}
-                <img src="/static/img/user.png" alt="User Icon" class="rounded-circle">
-              </a>
+                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  {% if session['nivelUsuario'] == 'admin' %}
+                  <span class="me-3 ms-3 text-white">Administrador</span>
+                  {% else %}
+                  <span class="me-3 ms-3 text-white">{{ nome_usuario }}</span>
+                  {% endif %}
+                  <img src="/static/img/user.png" alt="User Icon" class="rounded-circle">
+                </a>
               <ul class="dropdown-menu text-small text-center">
                 <li>
                   <hr class="dropdown-divider">

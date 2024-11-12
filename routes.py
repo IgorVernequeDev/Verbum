@@ -17,13 +17,15 @@ def login():
 
 @app.route('/contato')
 def contato():
+    nome_usuario = session.get('nome', "")
     logado = session.get('logado', True)
-    return render_template('contato.html', logado=logado, titulo="Verbum - Contato")
+    return render_template('contato.html', logado=logado, titulo="Verbum - Contato", nome_usuario=nome_usuario)
 
 @app.route('/livrosReservados')
 def livrosReservados():
+    nome_usuario = session.get('nome', "")
     logado = session.get('logado', True)
-    return render_template('livrosReservados.html', logado=logado, titulo="Verbum - Livros reservados")
+    return render_template('livrosReservados.html', logado=logado, titulo="Verbum - Livros reservados", nome_usuario=nome_usuario)
 
 @app.route('/modelo')
 def modelo():
