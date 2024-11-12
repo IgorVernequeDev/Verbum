@@ -3,29 +3,7 @@ from db_functions import conectar_db, encerrar_db
 from routes import *
 from mysql.connector import Error
 import uuid
-from flask import Flask, render_template, request, redirect, session
-from flask import jsonify
-
-@app.before_request
-def usuario_logado():
-    user_id = session.get('idUsuario')
-    
-    if user_id:
-        conexao, cursor = conectar_db()
-        cursor.execute("SELECT nome FROM Usuarios WHERE idUsuario = %s", (user_id,))
-        user = cursor.fetchone()
-        session['nome_usuario'] = user["nome"] if user else None
-        cursor.close()
-        conexao.close()
-    else:
-        session['nome_usuario'] = None
-
-@app.context_processor
-def inject_user():
-    return {
-        'logado': 'idUsuario' in session,
-        'nome_usuario': session.get('nome_usuario')
-    }
+from flask import render_template, request, redirect, session, jsonify
 
 @app.route('/livros')
 def livros():
@@ -43,6 +21,17 @@ def livro(id):
         return redirect('/login')
 
     conexao, cursor = conectar_db()
+    
+    cursor.execute("""
+        SELECT livros.*, autores.nomeAutor, editoras.nomeEditora
+        FROM livros
+        JOIN autores ON livros.idAutor = autores.idAutor
+        JOIN editoras ON livros.idEditora = editoras.idEditora
+        WHERE livros.idLivro = %s
+    """, (id,))
+    livro = cursor.fetchone()
+    encerrar_db(cursor, conexao)
+    return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro, verlivro=True)
     
     try:
         cursor.execute("""
@@ -92,8 +81,6 @@ def cadastrarlivro():
     finally:
         encerrar_db(cursor, conexao)
 
-
-
 @app.route('/login', methods=['POST'])
 def logar():
     email = request.form['email']
@@ -113,14 +100,14 @@ def logar():
         return redirect('/adm')
 
     if usuario:
-        idUsuario = usuario['idUsuario']  # Obtem o idUsuario do banco
+        idUsuario = usuario['idUsuario']
         nome = usuario['nome']
         email_db = usuario['email']
         senha_db = usuario['senha']
 
         if senha == senha_db:
             session['logado'] = True
-            session['idUsuario'] = idUsuario  # Define o idUsuario na sessão
+            session['idUsuario'] = idUsuario
             session['nome'] = nome
             return redirect('/home')
         else:
