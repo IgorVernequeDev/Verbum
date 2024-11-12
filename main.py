@@ -83,6 +83,7 @@ def cadastrarlivro():
 
 @app.route('/login', methods=['POST'])
 def logar():
+    
     email = request.form['email']
     senha = request.form['senha']
 
@@ -102,13 +103,13 @@ def logar():
     if usuario:
         idUsuario = usuario['idUsuario']
         nome = usuario['nome']
-        email_db = usuario['email']
         senha_db = usuario['senha']
 
         if senha == senha_db:
             session['logado'] = True
             session['idUsuario'] = idUsuario
             session['nome'] = nome
+            session['nivelUsuario'] ='usuario'
             return redirect('/home')
         else:
             return render_template("login.html", msg="Senha incorreta!")

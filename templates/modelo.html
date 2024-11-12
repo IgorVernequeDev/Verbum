@@ -9,10 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="/static/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN6jIeHz" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
@@ -49,32 +46,31 @@
                 {% else %}
                 <span class="me-3 ms-3 text-white">{{ nome_usuario }}</span>
                 {% endif %}
-                <img src="/static/img/user.png" alt="User Icon" class="rounded-circle">
+                <img src="/static/img/user.png" alt="User Icon"  class="rounded-circle">
               </a>
-              <ul class="dropdown-menu text-small text-center">
+              <ul class="dropdown-menu text-small text-center " id="usuarioInterface">
+                <li><a class="dropdown-item" href="/livrosreservados">Reservas de livros</a></li>
                 <li>
-                  <hr class="dropdown-divider">
+                  <hr class="dropdown-divider my-2">
                 </li>
-                <li><a href="/livrosreservados">Reservas de livros</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a href="/logout">Sair</a></li>
+                <li><a class="dropdown-item" href="/logout">Sair</a></li>
               </ul>
             </div>
-
             <div class="dropdown text-end">
               <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="/static/img/notificacoes.png" alt="Notifications Icon" class="rounded-circle">
               </a>
-              <ul class="dropdown-menu text-small text-center">
-                <li class="bg-white text-dark"><img src="/static/img/notificacoesP.png" alt="Icon">SUAS NOTIFICAÇÕES
-                </li>
+              <ul id="notificacoes" class="dropdown-menu">
+                <li class="p-2"><a class="dropdown-item" href="#">LIVRO DISPONÍVEL!</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li class="p-2"><a href="#">LIVRO DISPONÍVEL!</a></li>
+                <li class="p-2"><a class="dropdown-item" href="#">LIVRO DISPONÍVEL!</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li class="p-2"><a class="dropdown-item" href="#">LIVRO DISPONÍVEL!</a></li>
               </ul>
             </div>
           </div>
@@ -130,6 +126,8 @@
   </footer>
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="/static/script.js"></script>
 
 </html>
+

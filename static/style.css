@@ -101,10 +101,10 @@ nav ul {
 }
 
 #notificacoes {
-  cursor: pointer;
-  width: 6%;
-  background-color: #bbb;
-  border-radius: 100px;
+  background: linear-gradient(to right, #255eaf, #023377);
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+  z-index: 1;
 }
 
 nav ul li a {
@@ -145,11 +145,6 @@ ul a {
 
 ul a li {
   padding: 5%;
-}
-
-ul a li:hover {
-  background-color: white;
-  color: black;
 }
 
 h1 {
@@ -222,11 +217,21 @@ button {
   margin: 0;
 }
 
+.dropdown-item {
+  color: white;
+}
+
+.dropdown-item:hover {
+  background: linear-gradient(to right, #255eaf, #023377);
+  color: white;
+
+}
+
 #usuarioInterface {
   background: linear-gradient(to right, #255eaf, #023377);
   font-family: "Oswald", sans-serif;
   font-weight: 300;
-  z-index: 2;
+  z-index: 1;
 }
 
 #bookicon {
@@ -295,6 +300,7 @@ button {
 
 button:hover {
   transform: scale(1.05);
+
 }
 
 .contact-info {
