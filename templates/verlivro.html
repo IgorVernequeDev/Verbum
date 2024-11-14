@@ -20,11 +20,16 @@
                 class="img-fluid w-75 mb-5">
         </div>
         <div class="col-md-9">
+            {% if msg %}
+            <p>{{ msg }}</p>
+            {% endif %}
+            {% if not reserva_ativa %}
+            <!-- COLOCAR if nivel_usuario == 'usuario' -->
             <div class="d-flex justify-content-between align-items-center">
-                <button class="btn btn-primary px-5" id="reservaLivro" onclick="reservarLivro()"><i
-                        class="bi bi-book-half me-2 fs-5"></i>RESERVAR</button>
-                <p class="stars">★</p>
+                <a href="/reservar/{{ livro.idLivro }}"><button class="btn btn-primary px-5" id="reservaLivro" ><i
+                        class="bi bi-book-half me-2 fs-5"></i>RESERVAR</button></a>
             </div>
+            {% endif %}
 
             <h5 class="mt-4">DESCRIÇÃO</h5>
             <p>{{ livro.descricao }}</p>
@@ -50,7 +55,6 @@
                     <div>
                         <h5>QUANTIDADE DISPONÍVEL:</h5>
                         <p>{{ livro.quantidade }}</p>
-                        <p>ID do Livro: {{ livro.idLivro }}</p>
                     </div>
                 </div>
             </div>
@@ -80,5 +84,7 @@
         </div>
     </div>
 </div>
+
+<script src="script.js"></script>
 
 {% endblock %}

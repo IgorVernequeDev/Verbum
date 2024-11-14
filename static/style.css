@@ -359,6 +359,12 @@ button:hover {
   top: -8px;
 }
 
+@media (max-width: 768px) {
+  #imgcontato {
+    width: 40%;
+  }
+}
+
 footer {
   background-color: #333;
   color: #fff;
@@ -394,10 +400,10 @@ footer .column {
 }
 
 footer h3 {
-  font-size: 14px;
-  text-transform: uppercase;
+  font-size: 15px;
   align-items: center;
   text-align: center;
+  font-weight: 500;
   font-family: "Oswald", sans-serif;
 }
 

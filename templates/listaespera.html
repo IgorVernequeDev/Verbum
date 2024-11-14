@@ -1,10 +1,17 @@
 {% extends 'modelo.html' %}
 
 {% block conteudo %}
+
 <div class="container mt-5 mb-5" style="font-size: 20px;">  
     <div class="d-flex align-items-center">
         <i class="bi bi-card-checklist"></i>
         <p style="margin:10px;">Lista de Espera para o Livro {{ livro.titulo }}</p>
+    </div>
+
+    <div id="lista-espera">
+        <h3>Lista de Espera</h3>
+        <ul id="usuarios-espera">
+        </ul>
     </div>
     
     <table class="table table-bordered">
@@ -27,5 +34,44 @@
             {% endfor %}
         </tbody>        
     </table>
-</div> 
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        async function carregarListaEspera(idLivro) {
+            try {
+                const response = await fetch(`/api/lista_espera/${idLivro}`);
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar a lista de espera');
+                }
+    
+                const listaEspera = await response.json();
+    
+                const ul = document.getElementById("usuarios-espera");
+                ul.innerHTML = "";  // Limpar a lista antes de adicionar novos itens
+    
+                listaEspera.forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent = `Usuário: ${item.usuarioNome}, Posição: ${item.posicaoEspera}`;
+                    ul.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar lista de espera:', error);
+            }
+        }
+    
+        // Obtendo os parâmetros da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const idLivro = urlParams.get('idLivro');  // Obtém o valor de 'idLivro' da URL
+        const idUsuario = urlParams.get('idUsuario');  // Obtém o valor de 'idUsuario' da URL
+    
+        if (idLivro) {
+            carregarListaEspera(idLivro);  // Chama a função se idLivro estiver disponível
+        } else {
+            console.error('ID do livro não encontrado.');
+        }
+    });
+    </script>
+    
+
 {% endblock %}
