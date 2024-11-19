@@ -8,7 +8,7 @@ livro = Blueprint('livro', __name__)
 @livro.route('/livros')
 def livros():
     nome_usuario = session.get('nome', "")
-    logado = session.get('logado', True)
+    logado = session.get('logado')
     conexao, cursor = conectar_db()
     cursor.execute("SELECT * FROM livros")
     livros = cursor.fetchall()
