@@ -14,32 +14,22 @@
 
         <h2 class="titulos mb-2">Titulo</h2>
         <input type="text" id="titulo" name="titulo" placeholder="Insira o título..." value="{{ livro.titulo }}" />
-        <input type="text" id="titulo" name="titulo" placeholder="Insira o título..." value="{{ livro.titulo }}" />
 
         <h2 class="titulos mb-2">Descrição</h2>
-        <textarea id="descricao" name="descricao" class="text-start ps-2 pt-2"
-          placeholder="Insira um resumo do livro...">{{ livro.descricao }}</textarea>
         <textarea id="descricao" name="descricao" class="text-start ps-2 pt-2"
           placeholder="Insira um resumo do livro...">{{ livro.descricao }}</textarea>
 
         <h2 class="titulos mb-2">Autor</h2>
         <select class="mb-2" name="autor" id="autor" required>
           {% if not autores %}
-          <option value="" disabled selected>Não há autores cadastrados!</option>
+            <option value="" disabled selected>Não há autores cadastrados!</option>
+            <option value="novo">Cadastrar novo</option>
           {% else %}
-          <option value="" disabled selected>Selecione um autor</option>
-        <select class="mb-2" name="autor" id="autor" required>
-          {% if not autores %}
-          <option value="" disabled selected>Não há autores cadastrados!</option>
-          {% else %}
-          <option value="" disabled selected>Selecione um autor</option>
-          {% for autor in autores %}
-          <option value="{{ autor['idAutor'] }}" {% if autor['idAutor'] == livro['idAutor'] %}selected{% endif %}>{{ autor['nomeAutor'] }}</option>
-          <option value="{{ autor['idAutor'] }}" {% if autor['idAutor'] == livro['idAutor'] %}selected{% endif %}>{{ autor['nomeAutor'] }}</option>
-          {% endfor %}
-          <option value="novo">Cadastrar novo</option>
-          {% endif %}
-          <option value="novo">Cadastrar novo</option>
+            <option value="" disabled selected>Selecione um autor</option>
+            {% for autor in autores %}
+              <option value="{{ autor['idAutor'] }}" {% if autor['idAutor'] == livro['idAutor'] %}selected{% endif %}>{{ autor['nomeAutor'] }}</option>
+            {% endfor %}
+            <option value="novo">Cadastrar novo</option>
           {% endif %}
         </select>
 
@@ -52,21 +42,14 @@
         <h2 class="titulos mb-2">Editora</h2>
         <select name="editora" id="editora" required>
           {% if not editoras %}
-          <option value="" disabled selected>Não há editoras cadastradas!</option>
+            <option value="" disabled selected>Não há editoras cadastradas!</option>
+            <option value="novo">Cadastrar novo</option>
           {% else %}
-          <option value="" disabled selected>Selecione uma editora</option>
-        <select name="editora" id="editora" required>
-          {% if not editoras %}
-          <option value="" disabled selected>Não há editoras cadastradas!</option>
-          {% else %}
-          <option value="" disabled selected>Selecione uma editora</option>
-          {% for editora in editoras %}
-          <option value="{{ editora['idEditora'] }}" {% if editora['idEditora'] == livro['idEditora'] %}selected{% endif %}>{{ editora['nomeEditora'] }}</option>
-          <option value="{{ editora['idEditora'] }}" {% if editora['idEditora'] == livro['idEditora'] %}selected{% endif %}>{{ editora['nomeEditora'] }}</option>
-          {% endfor %}
-          <option value="novo">Cadastrar novo</option>
-          {% endif %}
-          <option value="novo">Cadastrar novo</option>
+            <option value="" disabled selected>Selecione uma editora</option>
+            {% for editora in editoras %}
+              <option value="{{ editora['idEditora'] }}" {% if editora['idEditora'] == livro['idEditora'] %}selected{% endif %}>{{ editora['nomeEditora'] }}</option>
+            {% endfor %}
+            <option value="novo">Cadastrar novo</option>
           {% endif %}
         </select>
 
@@ -91,21 +74,16 @@
         <h2 class="titulos mb-2">Número de páginas</h2>
         <input type="number" id="numero_paginas" name="numero_paginas" placeholder="Insira o número de páginas..."
           value="{{ livro.numero_paginas }}" />
-        <input type="number" id="numero_paginas" name="numero_paginas" placeholder="Insira o número de páginas..."
-          value="{{ livro.numero_paginas }}" />
+    
 
         <h2 class="titulos mb-2">Ano de publicação</h2>
         <input type="number" id="anoPublicacao" name="anoPublicacao" placeholder="Insira o ano de publicação"
           value="{{ livro.anoPublicacao }}" />
-        <input type="number" id="anoPublicacao" name="anoPublicacao" placeholder="Insira o ano de publicação"
-          value="{{ livro.anoPublicacao }}" />
-
+    
         <h2 class="titulos mb-2">Quantidade disponível</h2>
         <input type="number" id="quantidade" name="quantidade" placeholder="Insira a quantidade disponível"
           value="{{ livro.quantidade }}" />
-        <input type="number" id="quantidade" name="quantidade" placeholder="Insira a quantidade disponível"
-          value="{{ livro.quantidade }}" />
-
+      
         <h2 class="titulos mb-2">Gênero</h2>
         <select class="ls-custom-select col-md-8" id="genero" name="genero">
           <option value="Ação" {% if livro.genero == "Ação" %}selected{% endif %}>Ação</option>
