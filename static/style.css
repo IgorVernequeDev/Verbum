@@ -623,13 +623,12 @@ option {
 
 .curved{
   background-image: url("../static/Intersect.svg");
-  background-position: bottom;
+  background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #fff;
   color: #fff;
-  text-align: center;
-  min-height: 200px;
+  min-height: 300px;
 }
 
 .curved p{

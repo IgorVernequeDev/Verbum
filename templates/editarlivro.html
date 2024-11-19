@@ -6,19 +6,25 @@
     <div class="row ms-4">
       <div class="col-12 col-md-6 d-flex flex-column">
 
-        <h2 class="titulos mb-2">Título</h2>
-        <input type="text" id="titulo" name="titulo" placeholder="Insira o título..." value="{{ livro.titulo }}" required />
+        <h2 class="titulos mb-2">Titulo</h2>
+        <input type="text" id="titulo" name="titulo" placeholder="Insira o título..." value="{{ livro.titulo }}" />
 
         <h2 class="titulos mb-2">Descrição</h2>
-        <textarea id="descricao" name="descricao" class="text-start ps-2 pt-2" placeholder="Insira um resumo do livro..." required>{{ livro.descricao }}</textarea>
+        <textarea id="descricao" name="descricao" class="text-start ps-2 pt-2"
+          placeholder="Insira um resumo do livro...">{{ livro.descricao }}</textarea>
 
         <h2 class="titulos mb-2">Autor</h2>
         <select class="mb-2" name="autor" id="autor" required>
-          <option value="" disabled>Selecione um autor</option>
-          {% for autor in autores %}
-          <option value="{{ autor['idAutor'] }}" {% if autor['idAutor'] == livro['idAutor'] %}selected{% endif %}>{{ autor['nomeAutor'] }}</option>
-          {% endfor %}
-          <option value="novo">Cadastrar novo autor</option>
+          {% if not autores %}
+            <option value="" disabled selected>Não há autores cadastrados!</option>
+            <option value="novo">Cadastrar novo</option>
+          {% else %}
+            <option value="" disabled selected>Selecione um autor</option>
+            {% for autor in autores %}
+              <option value="{{ autor['idAutor'] }}" {% if autor['idAutor'] == livro['idAutor'] %}selected{% endif %}>{{ autor['nomeAutor'] }}</option>
+            {% endfor %}
+            <option value="novo">Cadastrar novo</option>
+          {% endif %}
         </select>
 
         <div class="mb-2" id="novoAutor" style="display: none;">
@@ -28,11 +34,16 @@
 
         <h2 class="titulos mb-2">Editora</h2>
         <select name="editora" id="editora" required>
-          <option value="" disabled>Selecione uma editora</option>
-          {% for editora in editoras %}
-          <option value="{{ editora['idEditora'] }}" {% if editora['idEditora'] == livro['idEditora'] %}selected{% endif %}>{{ editora['nomeEditora'] }}</option>
-          {% endfor %}
-          <option value="novo">Cadastrar nova editora</option>
+          {% if not editoras %}
+            <option value="" disabled selected>Não há editoras cadastradas!</option>
+            <option value="novo">Cadastrar novo</option>
+          {% else %}
+            <option value="" disabled selected>Selecione uma editora</option>
+            {% for editora in editoras %}
+              <option value="{{ editora['idEditora'] }}" {% if editora['idEditora'] == livro['idEditora'] %}selected{% endif %}>{{ editora['nomeEditora'] }}</option>
+            {% endfor %}
+            <option value="novo">Cadastrar novo</option>
+          {% endif %}
         </select>
 
         <div class="mb-2" id="novaEditora" style="display: none;">
