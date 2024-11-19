@@ -6,7 +6,8 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    return render_template('index.html', titulo="Verbum - Reserva de livros")
+    logado = session.get('logado', False)
+    return render_template('index.html', titulo="Verbum - Reserva de livros", logado=logado)
 
 @main.route('/login')
 def login():
@@ -25,16 +26,14 @@ def adm():
 
 @main.route('/redirecionar')
 def redirecionar():
-    logado = session.get('logado', True)
-    nivel_usuario = session.get('nivelUsuario', 'usuario')
-
-    if not logado:
-        return redirect('/')
+    nivel_usuario = session.get('admin', 'usuario')
     
     if nivel_usuario == 'admin':
         return redirect('/adm')
-    else:
+    elif nivel_usuario == 'usuario':
         return redirect('/home')
+    else:
+        return redirect('/')
     
 @main.route('/login', methods=['POST'])
 def logar():
@@ -53,23 +52,18 @@ def logar():
     if email == 'admin@gmail.com' and senha == '123':
         session['nivelUsuario'] = 'admin'
         return redirect('/adm')
-
-    if usuario:
+    
+    if senha == senha_db:
         idUsuario = usuario['idUsuario']
         nome = usuario['nome']
         senha_db = usuario['senha']
-
-        if senha == senha_db:
-            session['logado'] = True
-            session['idUsuario'] = idUsuario
-            session['nome'] = nome
-            session['nivelUsuario'] = 'usuario'
-            return redirect('/home')
-        else:
-            return render_template("login.html", msg="Senha incorreta!")
-
+        session['logado'] = True
+        session['idUsuario'] = idUsuario
+        session['nome'] = nome
+        session['nivelUsuario'] = 'usuario'
+        return redirect('/home')
     else:
-        return render_template("login.html", msg="Usuário não encontrado!")
+        return render_template("login.html", msg="Senha incorreta!")
     
 @main.route('/logout')
 def logout():

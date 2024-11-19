@@ -2,26 +2,30 @@
 
 {% block conteudo %}
 
-<div class="contact-info">
-  <div class="contact-methods">
+<div class="contact-info ms-5 d-flex">
+  <div class="contact-methods m-5">
     <div class="title-cont">
       <h1>Contato</h1>
       <p>Deseja esclarecer alguma dúvida? Possui uma sugestão de livro? As opções de contato são essas:</p>
     </div>
-    <div class="method">
-      <img src="/static/img/letter.png" alt="Email">
-      <p>Sesisp399@gmail.com</p>
-    </div>
-    <div class="method">
-      <img src="/static/img/telefone.png" alt="Telefone">
-      <p>(15) 3522-1562</p>
-    </div>
-    <div class="method">
-      <img src="/static/img/local.png" alt="Endereço">
-      <p>Av. Kazumi Yoshimura, 430 - Parque Industrial</p>
+    <div class="methods mt-5">
+      <div class="method d-flex">
+        <img src="/static/img/letter.png" alt="Email">
+        <p class="ms-3">Sesisp399@gmail.com</p>
+      </div>
+      <div class="method d-flex">
+        <img src="/static/img/telefone.png" alt="Telefone">
+        <p class="ms-3">(15) 3522-1562</p>
+      </div>
+      <div class="method d-flex">
+        <img src="/static/img/local.png" alt="Endereço">
+        <p class="ms-3">Av. Kazumi Yoshimura, 430 - Parque Industrial</p>
+      </div>
     </div>
   </div>
-  <img src="/static/img/contato.png" id="imgcontato" alt="Contato">
+  <div class="contact-div">
+    <img class="contact-img" src="/static/img/contato.png" alt="">
+  </div>
 </div>
 
 {% endblock %}

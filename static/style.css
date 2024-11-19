@@ -147,11 +147,6 @@ ul a li {
   padding: 5%;
 }
 
-ul a li:hover {
-  background-color: white;
-  color: black;
-}
-
 h1 {
   font-family: "Oswald", sans-serif;
   font-optical-sizing: auto;
@@ -222,11 +217,15 @@ button {
   margin: 0;
 }
 
-#usuarioInterface {
+#dropdownInterface {
   background: linear-gradient(to right, #255eaf, #023377);
   font-family: "Oswald", sans-serif;
   font-weight: 300;
   z-index: 2;
+}
+
+#dropdownInterface .option:hover {
+  transform: scale(1.15);
 }
 
 #bookicon {
@@ -297,31 +296,6 @@ button:hover {
   transform: scale(1.05);
 }
 
-.contact-info {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-left: 4%;
-}
-
-.contact-info h1 {
-  font-size: 2rem;
-  font-weight: 300;
-  font-family: "Oswald", sans-serif;
-}
-
-.contact-info p {
-  font-size: 1.3rem;
-  font-weight: 300;
-  font-family: "Oswald", sans-serif;
-}
-
-.title-cont {
-  position: relative;
-  top: -105px;
-}
-
 .main-background {
   background-image: url('/static/img/background.jpg');
   background-position: center;
@@ -330,33 +304,6 @@ button:hover {
   display: flex;
   flex-direction: column; /* Organize os elementos verticalmente */
   padding: 20px; /* Adicione padding para espaçamento */
-}
-
-
-
-.contact-methods8 {
-  flex: 1;
-}
-
-.contact-info img {
-  height: 600px;
-  flex-shrink: 1;
-  flex-shrink: 1;
-}
-
-.method {
-  display: flex;
-  align-items: center;
-  position: relative;
-  top: -50px;
-  margin: 2%;
-}
-
-.method img {
-  height: 50px;
-  margin-right: 2%;
-  position: relative;
-  top: -8px;
 }
 
 @media (max-width: 768px) {
@@ -526,6 +473,20 @@ option {
   color: #504f4f;
 }
 
+.title-cont h1, p{
+  font-weight: 300;
+}
+
+.methods img {
+  width: 6%;
+}
+
+.contact-img {
+  width: 40%;
+}
+
+.conta
+
 .Subir {
   height: 50px;
   background: linear-gradient(to right, #709fe0, #023884);
@@ -638,7 +599,7 @@ option {
   background-color: #fff;
   color: #fff;
   text-align: center;
-  min-height: 280px;
+  min-height: 200px;
 }
 
 .curved p{

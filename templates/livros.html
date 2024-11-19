@@ -1,30 +1,28 @@
 {% extends 'modelo.html' %}
 
-{% block livros %}
-<li class="menu-item"><a href="/redirecionar">Home</a></li>
-<li class="menu-item"><a href="/contato">Contato</a></li>
-{% endblock %}
-
 {% block conteudo %}
 
-<div class="curved px-5 pt-3">
-  <h1 class="text-start">Dom Quixote de la Mancha</h1>
-  <h3 class="text-start">Autor</h1>
-</div>
-
 <div class="container mt-5">
-  <div class="ms-5 d-flex align-items-center w-100" style="width: 100%;">
-    <div class="ms-5 d-flex align-items-center">
+  <div class="d-flex align-items-center w-100" style="width: 100%;">
+    <div class="mb-5 d-flex align-items-center">
       <img src="/static/img/bookicon.png" id="bookicon" class="ms-3 ms-lg-0 me-3" style="width: 40px;">
       <p class="m-0">Livros</p>
     </div>
   </div>
 
   <div class="livros row row-cols-1 row-cols-md-4 g-4 mb-5">
+    {% if not livros %}
+    <div class="w-100 d-flex justify-content-center h-100 align-items-center">
+      <p>Não há livros cadastrados!</p>
+    </div>
+    {% endif %}
     {% for livro in livros %}
     <div class="col">
       <a href="/livro/{{ livro.idLivro }}">
         <div class="book-card">
+          {% if not imagemCapa %}
+          <img src="/static/img/bookplaceholder.png">
+          {% endif %}
           <img src="/static/img/livros/{{ livro.imagemCapa }}" alt="Livro {{ livro.titulo }}" class="book-image">
           <div class="book-footer">
             <p>{{ livro.titulo }} <br> {{ livro.autor }}</p>
