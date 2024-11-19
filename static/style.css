@@ -50,9 +50,9 @@ main {
   background-color: #0b60b3;
   display: flex;
   align-items: center;
-  border: 1px solid white;
   padding: 5px 10px;
   border-radius: 5px;
+  border: 1px solid #a4a4a4;;
 }
 
 .search-container input {
@@ -69,10 +69,6 @@ main {
   .search-container input {
     width: 150px;
   }
-}
-
-.dropdown-toggle::after {
-  display: none;
 }
 
 .alunos {
@@ -117,10 +113,6 @@ nav ul li a {
   font-weight: 400;
   top: 19px;
   border-bottom: 2px solid transparent;
-}
-
-nav ul li a:hover {
-  z-index: 4;
 }
 
 nav ul li a:hover::after {
@@ -212,6 +204,15 @@ button {
   border-color: #255eaf;
 }
 
+.option:hover {
+  transform: scale(1.1);
+}
+
+.dropdown-menu {
+  background: linear-gradient(to right, #255eaf, #023377);
+  font-family: "Oswald", sans-serif;
+}
+
 .dropdown-divider {
   border-color: white;
   margin: 0;
@@ -221,10 +222,12 @@ button {
   color: white;
 }
 
-.dropdown-item:hover {
-  background: linear-gradient(to right, #255eaf, #023377);
-  color: white;
+.dropdown-menu a {
+  transform: scale(1.05);
+}
 
+.dropdown-toggle::after {
+  display: none;
 }
 
 #usuarioInterface {
@@ -498,11 +501,6 @@ select {
 select:focus {
   outline: none;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-}
-
-option {
-  background-color: #eee;
-  color: #504f4f;
 }
 
 .title-cont h1, p{

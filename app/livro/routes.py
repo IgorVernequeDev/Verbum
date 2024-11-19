@@ -313,3 +313,26 @@ def livrosreservados():
         return "Erro ao buscar livros reservados."
     finally:
         conexao.close()
+
+@livro.route('/busca', methods=['POST'])
+def busca():
+    logado = session.get('logado', True)
+    nome_usuario = session.get('nome', "")
+    busca = request.form['busca']
+
+    try:
+        conexao, cursor = conectar_db()
+
+        cursor.execute("SELECT * FROM livros WHERE titulo LIKE %s", (f"%{busca}%",))
+        livros_encontrados = cursor.fetchall()
+
+        return render_template('livros.html', 
+                               logado=logado, 
+                               nome_usuario=nome_usuario, 
+                               livros=livros_encontrados
+                               )
+    except Exception as e:
+        print(f"Erro ao realizar a busca: {e}")
+        return "Erro ao realizar a busca. Tente novamente mais tarde."
+    finally:
+        encerrar_db(cursor, conexao)
