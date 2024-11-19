@@ -1,8 +1,5 @@
 from db_functions import *
-from mysql.connector import Error
-import uuid
-from flask import Blueprint, render_template, request, redirect, session, jsonify
-from datetime import date
+from flask import Blueprint, render_template, request, redirect, session
 
 usuario = Blueprint('usuario', __name__)
 

@@ -8,7 +8,7 @@ livro = Blueprint('livro', __name__)
 @livro.route('/livros')
 def livros():
     nome_usuario = session.get('nome', "")
-    logado = session.get('logado')
+    logado = session.get('logado', True)
     conexao, cursor = conectar_db()
     cursor.execute("SELECT * FROM livros")
     livros = cursor.fetchall()
@@ -36,7 +36,7 @@ def verlivro(idLivro):
         if reserva_ativa:
             posicao = verPosicao(idLivro, idUsuario)
             msg= f'Você já está na lista de espera deste livro. Você está na posição {posicao}'
-            return render_template('verlivro.html',  msg=msg, livro=livro, reserva_ativa=reserva_ativa, nome_usuario=nome_usuario)
+            return render_template('verlivro.html',  msg=msg, livro=livro, reserva_ativa=reserva_ativa, nome_usuario=nome_usuario, logado=logado)
 
     return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro, nome_usuario=nome_usuario, verlivro=True)
 
@@ -198,6 +198,9 @@ def excluir(id):
     try:
         conexao, cursor = conectar_db()
 
+        cursor.execute("DELETE FROM listaespera WHERE idLivro = %s", (id,))
+        conexao.commit()
+
         cursor.execute("DELETE FROM livros WHERE idLivro = %s", (id,))
         conexao.commit()
 
@@ -210,6 +213,8 @@ def excluir(id):
 @livro.route('/reservar/<int:idLivro>', methods=['GET'])
 def reservar(idLivro):
     idUsuario = session['idUsuario']
+    logado = session.get('logado', True)
+    nome_usuario = session.get('nome', "")
 
     if not session:
         return redirect('/login')
@@ -227,7 +232,7 @@ def reservar(idLivro):
         if reserva_ativa:
             msg='Você já está na lista de espera deste livro'
             posicao = verPosicao(idLivro, idUsuario)
-            return render_template('verlivro.html',  msg=msg, livro=livro, posicao=posicao)
+            return render_template('verlivro.html',  msg=msg, livro=livro, posicao=posicao, logado=logado, nome_usuario=nome_usuario)
         
         else:
             cursor.execute("""
@@ -240,7 +245,7 @@ def reservar(idLivro):
             msg=f'Parabéns! Você tem uma reserva! Sua posição é: {posicao}'
 
 
-        return render_template('verlivro.html',  msg=msg, posicao=posicao, livro=livro, reserva_ativa=reserva_ativa)
+        return render_template('verlivro.html', msg=msg, posicao=posicao, livro=livro, reserva_ativa=reserva_ativa, logado=logado, nome_usuario=nome_usuario)
     
     except Exception as e:
         print(f"Erro ao realizar reserva: {e}")
@@ -252,6 +257,7 @@ def reservar(idLivro):
 @livro.route('/listaespera/<int:idLivro>')
 def lista_espera(idLivro):
     logado = session.get('logado', True)
+    nome_usuario = session.get('nome', "")
     conexao, cursor = conectar_db()
 
     cursor.execute("SELECT * FROM Livros WHERE idLivro = %s", (idLivro,))
@@ -272,4 +278,38 @@ def lista_espera(idLivro):
 
     conexao.close()
 
-    return render_template('listaespera.html', livro=livro, lista_espera=lista_espera, logado=logado)
+    return render_template('listaespera.html', livro=livro, lista_espera=lista_espera, logado=logado, nome_usuario=nome_usuario)
+
+@livro.route('/livrosreservados')
+def livrosreservados():
+    logado = session.get('logado', True)
+    nome_usuario = session.get('nome', "")
+    idUsuario = session.get('idUsuario')
+
+    if not idUsuario:
+        return redirect('/login')
+
+    conexao, cursor = conectar_db()
+
+    try:
+        cursor.execute("""
+            SELECT l.idLivro, l.titulo, l.imagemCapa, le.dataReserva
+            FROM listaespera le
+            JOIN livros l ON le.idLivro = l.idLivro
+            WHERE le.idUsuario = %s
+            ORDER BY le.dataReserva
+        """, (idUsuario,))
+        livros = cursor.fetchall()
+
+        return render_template(
+            "livrosreservados.html", 
+            nome_usuario=nome_usuario, 
+            logado=logado, 
+            livros=livros,
+            lista_espera=lista_espera
+        )
+    except Exception as e:
+        print(f"Erro ao buscar livros reservados: {e}")
+        return "Erro ao buscar livros reservados."
+    finally:
+        conexao.close()

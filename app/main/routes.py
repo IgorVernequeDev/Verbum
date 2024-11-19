@@ -26,14 +26,15 @@ def adm():
 
 @main.route('/redirecionar')
 def redirecionar():
-    nivel_usuario = session.get('admin', 'usuario')
-    
+    nivel_usuario = session.get('nivelUsuario', None)
+
     if nivel_usuario == 'admin':
         return redirect('/adm')
     elif nivel_usuario == 'usuario':
         return redirect('/home')
     else:
         return redirect('/')
+
     
 @main.route('/login', methods=['POST'])
 def logar():
@@ -53,17 +54,22 @@ def logar():
         session['nivelUsuario'] = 'admin'
         return redirect('/adm')
     
-    if senha == senha_db:
-        idUsuario = usuario['idUsuario']
-        nome = usuario['nome']
+    if usuario:
         senha_db = usuario['senha']
-        session['logado'] = True
-        session['idUsuario'] = idUsuario
-        session['nome'] = nome
-        session['nivelUsuario'] = 'usuario'
-        return redirect('/home')
+
+        if senha == senha_db:
+            idUsuario = usuario['idUsuario']
+            nome = usuario['nome']
+            
+            session['logado'] = True
+            session['idUsuario'] = idUsuario
+            session['nome'] = nome
+            session['nivelUsuario'] = 'usuario'
+            return redirect('/home')
+        else:
+            return render_template("login.html", msg="Senha incorreta!")
     else:
-        return render_template("login.html", msg="Senha incorreta!")
+        return render_template("login.html", msg="Usuário não encontrado!")
     
 @main.route('/logout')
 def logout():
