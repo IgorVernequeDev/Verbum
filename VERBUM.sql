@@ -2,19 +2,16 @@ CREATE DATABASE verbum;
 
 USE verbum;
 
--- Tabela Autorusuario
 CREATE TABLE Autores (
 	idAutor INT PRIMARY KEY AUTO_INCREMENT,
     nomeAutor VARCHAR(100) NOT NULL
 );
 
--- Tabela Editora
 CREATE TABLE Editoras (
 	idEditora INT PRIMARY KEY AUTO_INCREMENT,
     nomeEditora VARCHAR(100) NOT NULL
 );
 
--- Tabela de Livros
 CREATE TABLE Livros (
   idLivro INT PRIMARY KEY AUTO_INCREMENT,
   idAutor INT NOT NULL,
@@ -30,7 +27,6 @@ CREATE TABLE Livros (
   FOREIGN KEY (idEditora) REFERENCES Editoras(idEditora)
 );
 
--- Tabela de Usuários
 CREATE TABLE Usuarios (
   idUsuario INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(255) NOT NULL,
@@ -39,7 +35,6 @@ CREATE TABLE Usuarios (
   senha VARCHAR(255) NOT NULL
 );
 
--- Tabela de Empréstimos
 CREATE TABLE Emprestimos (
   idEmprestimo INT PRIMARY KEY AUTO_INCREMENT,
   idLivro INT NOT NULL,
@@ -50,15 +45,14 @@ CREATE TABLE Emprestimos (
   FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario)
 );
 
--- Tabela de Reservas 
-CREATE TABLE reservas (
-    idReserva INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE ListaEspera (
+    idListaEspera INT AUTO_INCREMENT PRIMARY KEY,
     idLivro INT,
     idUsuario INT,
-    posicaoEspera INT,
     dataReserva DATETIME,
-    FOREIGN KEY (idLivro) REFERENCES livros(idLivro),
-    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
+    status TINYINT default 1,
+    FOREIGN KEY (idLivro) REFERENCES Livros(idLivro),
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario)
 );
 
 DELIMITER //
@@ -76,7 +70,6 @@ BEGIN
   where idLivro = new.idLivro and idUsuario = new.idUsuario;
 END//
 
--- Trigger para atualizar a quantidade de livros ao fazer devoluções
 CREATE TRIGGER atualizar_quantidade_livros_devolucao
 AFTER UPDATE ON Emprestimos
 FOR EACH ROW
