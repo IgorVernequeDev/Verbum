@@ -1,29 +1,25 @@
 {% extends 'modelo.html' %}
 {% block conteudo %}
 
-<form action="/cadlivro" method="POST" enctype="multipart/form-data">
+<form action="/cadlivro" method="POST" enctype="multipart/form-data" onsubmit="return verificarSelecao()">
   <div class="container" id="container">
     <div class="row ms-4">
       <div class="col-12 col-md-6 d-flex flex-column">
 
-        <h2 class="titulos mb-2">Titulo</h2>
-        <input type="text" id="titulo" name="titulo" placeholder="Insira o título..." />
+        <h2 class="titulos mb-2">Título</h2>
+        <input type="text" id="titulo" name="titulo" placeholder="Insira o título..." required />
 
         <h2 class="titulos mb-2">Descrição</h2>
-        <textarea id="descricao" name="descricao" class="text-start ps-2 pt-2" placeholder="Insira um resumo do livro..."></textarea>
+        <textarea id="descricao" name="descricao" class="text-start ps-2 pt-2" placeholder="Insira um resumo do livro..." required></textarea>
 
         <h2 class="titulos mb-2">Autor</h2>
-        <select class="mb-2" name="autor" id="autor" required>
-          {% if not autores %}
-          <option value="" disabled selected>Não há autores cadastrados!</option>
-          {% else %}
-          <option value="" disabled selected>Selecione um autor</option>
-          {% for autor in autores %}
-          <option value="{{ autor['idAutor'] }}">{{autor['nomeAutor']}}</option>
-          {% endfor %}
-          {% endif %}
-          <option value="novo">Cadastrar novo</option>
-        </select>
+          <select class="mb-2" name="autor" id="autor" required>
+            <option value="" disabled selected>Selecione um autor</option>
+            {% for autor in autores %}
+              <option value="{{ autor['idAutor'] }}">{{ autor['nomeAutor'] }}</option>
+            {% endfor %}
+            <option value="novo">Cadastrar novo autor</option>
+          </select>
 
         <div class="mb-2" id="novoAutor" style="display: none;">
           <input class="mt-2" type="text" name="novoAutor" placeholder="Nome do novo autor">
@@ -31,17 +27,13 @@
         </div>
 
         <h2 class="titulos mb-2">Editora</h2>
-        <select name="editora" id="editora" required>
-          {% if not editoras %}
-          <option value="" disabled selected>Não há editoras cadastradas!</option>
-          {% else %}
-          <option value="" disabled selected>Selecione uma editora</option>
-          {% for editora in editoras %}
-          <option value="{{ editora['idEditora'] }}">{{editora['nomeEditora']}}</option>
-          {% endfor %}
-          {% endif %}
-          <option value="novo">Cadastrar novo</option>
-        </select>
+          <select name="editora" id="editora" required>
+            <option value="" disabled selected>Selecione uma editora</option>
+            {% for editora in editoras %}
+              <option value="{{ editora['idEditora'] }}">{{ editora['nomeEditora'] }}</option>
+            {% endfor %}
+            <option value="novo">Cadastrar nova editora</option>
+          </select>
 
         <div class="mb-2" id="novaEditora" style="display: none;">
           <input class="mt-3" type="text" name="novaEditora" placeholder="Nome da nova editora">
@@ -49,34 +41,35 @@
         </div>
 
         <h2 class="titulos mb-2 mt-4">Selecione a imagem da capa:</h2>
-        <input class="selecionar form-control" accept="image/jpeg,image/png" type="file" name="imagemCapa" id="imagemCapa">
+        <input class="selecionar form-control" accept="image/jpeg,image/png" type="file" name="imagemCapa" id="imagemCapa" required>
       </div>
 
       <div class="col-12 col-md-6 d-flex flex-column">
 
         <h2 class="titulos mb-2">Número de páginas</h2>
-        <input type="number" id="numero_paginas" name="numero_paginas" placeholder="Insira o número de páginas..." />
+        <input type="number" id="numero_paginas" name="numero_paginas" placeholder="Insira o número de páginas..." required />
 
         <h2 class="titulos mb-2">Ano de publicação</h2>
-        <input type="number" id="anoPublicacao" name="anoPublicacao" placeholder="Insira o ano de publicação" />
+        <input type="number" id="anoPublicacao" name="anoPublicacao" placeholder="Insira o ano de publicação" required />
 
         <h2 class="titulos mb-2">Quantidade disponível</h2>
-        <input type="number" id="quantidade" name="quantidade" placeholder="Insira a quantidade disponível" />
+        <input type="number" id="quantidade" name="quantidade" placeholder="Insira a quantidade disponível" required />
 
         <h2 class="titulos mb-2">Gênero</h2>
-        <select class="ls-custom-select col-md-8" id="genero" name="genero">
+        <select class="ls-custom-select col-md-8" id="genero" name="genero" required>
           <option value="Ação">Ação</option>
           <option value="Romance">Romance</option>
           <option value="Comédia">Comédia</option>
         </select>
 
         <button class="Subir mt-4" type="submit">
-          <img src="/static/img/baixar.png" alt="baixar" style="margin-right: 10px; height: 20px;">SUBIR
+          <img src="/static/img/baixar.png" alt="baixar" style="margin-right: 10px; height: 20px;">Cadastrar Livro
         </button>
       </div>
     </div>
   </div>
 </form>
+
 <script>
   const autorSelect = document.getElementById('autor');
   const novoAutorDiv = document.getElementById('novoAutor');
@@ -92,38 +85,36 @@
 
   cadastrarAutorButton.addEventListener('click', () => {
     const novoNomeAutor = document.querySelector('#novoAutor input').value;
-   
-  fetch('/cadautor', {
+
+    fetch('/cadautor', {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({ nome: novoNomeAutor })
-  })
-  .then(response => {
-      if (response.ok) {
-          return response.json();
-      } else {
-          console.log("Status da resposta:", response.status);
-          console.log("Resposta do servidor:", response.text()); // Exibe o corpo da resposta
-          throw new Error('Erro ao cadastrar autor.');
+    })
+    .then(async response => {
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText);
       }
-  })
-  .then(data => {
-       const novaOpcao = document.createElement('option');
-        novaOpcao.value = data.id; 
-        novaOpcao.text = novoNomeAutor;
-        autorSelect.add(novaOpcao, 1);
+      return response.json();
+    })
+    .then(data => {
+      // Adiciona o novo autor na lista de opções
+      const novaOpcao = document.createElement('option');
+      novaOpcao.value = data.id;
+      novaOpcao.text = novoNomeAutor;
+      autorSelect.add(novaOpcao, 1);
 
-        novoAutorDiv.style.display = 'none';
+      // Seleciona o novo autor automaticamente após cadastro
+      autorSelect.value = data.id;
 
-        document.querySelector('#novoAutor input').value = '';
-  })
-  .catch(error => {
-      console.error(error);
+      novoAutorDiv.style.display = 'none';
+      document.querySelector('#novoAutor input').value = '';
+    })
+    .catch(error => alert(`Erro ao cadastrar o autor: ${error.message}`));
   });
-  });
-
 
   const editoraSelect = document.getElementById('editora');
   const novaEditoraDiv = document.getElementById('novaEditora');
@@ -147,28 +138,38 @@
       },
       body: JSON.stringify({ nome_editora: novoNomeEditora })
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Erro ao cadastrar editora.');
+    .then(async response => {
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText);
       }
+      return response.json();
     })
     .then(data => {
+      // Adiciona a nova editora na lista de opções
       const novaOpcao = document.createElement('option');
-      novaOpcao.value = data.id; 
+      novaOpcao.value = data.id;
       novaOpcao.text = novoNomeEditora;
       editoraSelect.add(novaOpcao, 1);
 
-      novaEditoraDiv.style.display = 'none';
+      // Seleciona a nova editora automaticamente após cadastro
+      editoraSelect.value = data.id;
 
+      novaEditoraDiv.style.display = 'none';
       document.querySelector('#novaEditora input').value = '';
     })
-    .catch(error => {
-      console.error(error);
-    });
+    .catch(error => alert(`Erro ao cadastrar a editora: ${error.message}`));
   });
 
+  function verificarSelecao() {
+    const autor = document.getElementById('autor').value;
+    const editora = document.getElementById('editora').value;
+    if (autor === "novo" || editora === "novo") {
+      alert("Por favor, cadastre o novo autor ou editora antes de enviar o formulário.");
+      return false;
+    } 
+    return true;
+  }
 </script>
 
 {% endblock %}
