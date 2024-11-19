@@ -101,10 +101,10 @@ nav ul {
 }
 
 #notificacoes {
-  cursor: pointer;
-  width: 6%;
-  background-color: #bbb;
-  border-radius: 100px;
+  background: linear-gradient(to right, #255eaf, #023377);
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+  z-index: 1;
 }
 
 nav ul li a {
@@ -217,15 +217,21 @@ button {
   margin: 0;
 }
 
-#dropdownInterface {
+.dropdown-item {
+  color: white;
+}
+
+.dropdown-item:hover {
+  background: linear-gradient(to right, #255eaf, #023377);
+  color: white;
+
+}
+
+#usuarioInterface {
   background: linear-gradient(to right, #255eaf, #023377);
   font-family: "Oswald", sans-serif;
   font-weight: 300;
-  z-index: 2;
-}
-
-#dropdownInterface .option:hover {
-  transform: scale(1.15);
+  z-index: 1;
 }
 
 #bookicon {
@@ -294,6 +300,32 @@ button {
 
 button:hover {
   transform: scale(1.05);
+
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 4%;
+}
+
+.contact-info h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  font-family: "Oswald", sans-serif;
+}
+
+.contact-info p {
+  font-size: 1.3rem;
+  font-weight: 300;
+  font-family: "Oswald", sans-serif;
+}
+
+.title-cont {
+  position: relative;
+  top: -105px;
 }
 
 .main-background {
@@ -485,8 +517,6 @@ option {
   width: 40%;
 }
 
-.conta
-
 .Subir {
   height: 50px;
   background: linear-gradient(to right, #709fe0, #023884);
@@ -593,13 +623,12 @@ option {
 
 .curved{
   background-image: url("../static/Intersect.svg");
-  background-position: bottom;
+  background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #fff;
   color: #fff;
-  text-align: center;
-  min-height: 200px;
+  min-height: 300px;
 }
 
 .curved p{
