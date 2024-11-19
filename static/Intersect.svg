@@ -1,3 +1,43 @@
-<svg width="1366" height="291" viewBox="0 0 1366 291" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M1322.8 291C1207.8 290.978 1030.84 273.965 759.243 219.063C270.495 120.266 76.7296 148.679 3.18522 176.335C2.19693 176.707 1.12932 176.966 0 177.12V0H1366V290.134C1352.8 290.692 1338.57 290.997 1323.24 291C1323.1 291 1322.95 291 1322.8 291Z" fill="#2E2E2E"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1366"
+   height="200"
+   viewBox="0 0 1366 200"
+   fill="none"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="Intersect.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.58960075"
+     inkscape:cx="606.34251"
+     inkscape:cy="100.91575"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     fill-rule="evenodd"
+     clip-rule="evenodd"
+     d="m 1323.357,198.71435 c -115,-0.0225 -291.96,-17.46822 -563.55697,-73.76643 C 271.05203,23.638416 77.286634,52.773987 3.7422531,81.133306 c -0.98829,0.381461 -2.0559,0.647047 -3.18522004,0.804964 l 1e-7,-88.3134944 L 1366.7819,-6.4520876 1366.557,197.82633 c -13.2,0.57219 -27.43,0.88494 -42.76,0.88802 z"
+     fill="#2e2e2e"
+     id="path1"
+     sodipodi:nodetypes="sccccccss"
+     style="stroke-width:1.01264" />
 </svg>
