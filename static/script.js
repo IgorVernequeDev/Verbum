@@ -1,10 +1,9 @@
 function reservarLivro() {
     const botaoReservar = document.getElementById('reservaLivro');
-    const idLivro = "{{ livro.idLivro }}"; // Verifique se está sendo renderizado corretamente no HTML.
+    const idLivro = "{{ livro.idLivro }}";
 
     console.log("ID do Livro:", idLivro);
 
-    // Alteração do texto do botão
     if (botaoReservar.textContent.trim() === 'RESERVAR') {
         botaoReservar.innerHTML = `<i class="bi bi-book-half me-2 fs-5"></i>RESERVADO`;
     } else if (botaoReservar.textContent.trim() === 'RESERVADO') {
