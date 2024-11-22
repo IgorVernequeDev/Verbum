@@ -19,10 +19,12 @@
             <p>{{ msg }}</p>
             {% endif %}
             {% if not reserva_ativa %}
+            {% if session['nivelUsuario'] == 'usuario' %}
             <div class="d-flex justify-content-between align-items-center">
                 <a href="/reservar/{{ livro.idLivro }}"><button class="btn btn-primary px-5" id="reservaLivro"><i
                             class="bi bi-book-half me-2 fs-5"></i>RESERVAR</button></a>
             </div>
+            {% endif %}
             {% endif %}
 
             <h5 class="mt-4">DESCRIÇÃO</h5>

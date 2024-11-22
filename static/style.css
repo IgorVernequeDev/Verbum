@@ -89,10 +89,6 @@ nav {
 }
 
 nav ul {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: end;
   list-style: none;
 }
 
@@ -117,6 +113,7 @@ nav ul li a {
 
 nav ul li a:hover::after {
   content: '';
+  z-index: 4;
   display: block;
   height: 4px; 
   width: 170%; 
@@ -230,6 +227,11 @@ button {
   display: none;
 }
 
+span {
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+}
+
 #usuarioInterface {
   background: linear-gradient(to right, #255eaf, #023377);
   font-family: "Oswald", sans-serif;
@@ -324,11 +326,6 @@ button:hover {
   font-size: 1.3rem;
   font-weight: 300;
   font-family: "Oswald", sans-serif;
-}
-
-.title-cont {
-  position: relative;
-  top: -105px;
 }
 
 .main-background {
