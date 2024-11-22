@@ -2,22 +2,29 @@ from db_functions import *
 from mysql.connector import Error
 import uuid
 from flask import Blueprint, render_template, request, redirect, session, jsonify
+import pytz
 
 livro = Blueprint('livro', __name__)
 
 @livro.route('/livros')
 def livros():
     nome_usuario = session.get('nome', "")
-    logado = session.get('logado', True)
+    logado = session.get('logado', False)
+    nivel_usuario = session.get('nivelUsuario', None)
+
+    if nivel_usuario == 'admin' or nivel_usuario == 'usuario':
+        logado = session.get('logado', True)
+
     conexao, cursor = conectar_db()
     cursor.execute("SELECT * FROM livros")
     livros = cursor.fetchall()
     encerrar_db(cursor, conexao)
+
     return render_template('livros.html', logado=logado, titulo="Verbum - Livros", livros=livros, nome_usuario=nome_usuario)
 
 @livro.route('/livro/<int:idLivro>')
 def verlivro(idLivro):
-    nivel_usuario = session.get('nivelUsuario', 'usuario')
+    nivel_usuario = session.get('nivelUsuario', None)
     nome_usuario = session.get('nome', "")
     logado = session.get('logado', True)
 
@@ -301,12 +308,25 @@ def livrosreservados():
         """, (idUsuario,))
         livros = cursor.fetchall()
 
+        # Fuso horário de Brasília
+        fuso_brasilia = pytz.timezone('America/Sao_Paulo')
+
+        for livro in livros:
+            data_reserva = livro['dataReserva']  # Data do banco
+            if data_reserva:
+                # Garantir que a data está em UTC
+                data_utc = pytz.utc.localize(data_reserva)
+                # Converter de UTC para o horário de Brasília
+                data_brasilia = data_utc.astimezone(fuso_brasilia)
+
+                # Formatar no formato brasileiro dia/mês/ano
+                livro['dataReserva'] = data_brasilia.strftime("%d/%m/%Y %H:%M")
+
         return render_template(
             "livrosreservados.html", 
             nome_usuario=nome_usuario, 
             logado=logado, 
-            livros=livros,
-            lista_espera=lista_espera
+            livros=livros
         )
     except Exception as e:
         print(f"Erro ao buscar livros reservados: {e}")

@@ -15,9 +15,14 @@ def login():
 
 @main.route('/contato')
 def contato():
+    logado = session.get('logado', False)
+    nivel_usuario = session.get('nivelUsuario', None)
     nome_usuario = session.get('nome', "")
-    logado = session.get('logado', True)
-    return render_template('contato.html', logado=logado, titulo="Verbum - Contato", nome_usuario=nome_usuario)
+
+    if nivel_usuario == 'admin':
+        logado = session.get('logado', True)
+
+    return render_template('contato.html', logado=logado, titulo="Verbum - Contato", nome_usuario=nome_usuario, nivel_usuario=nivel_usuario)
 
 @main.route('/adm')
 def adm():

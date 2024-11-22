@@ -32,9 +32,8 @@
 
         <div
           class="col-12 col-md-8 d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-end">
-
           <form role="search" action="/busca" method="post">
-            <div class="search-container d-flex align-items-center me-3 mb-3 mb-md-0">
+            <div class="search-container d-flex align-items-center mb-3 mb-md-0">
               <input class="Pesquisa" name="busca" id="Pesquisa" type="text" placeholder="Digite o título do livro...">
               <button class="btn text-white" type="submit" style="border-color: #a4a4a4;">Buscar<i
                   class=" bi bi-search ms-2"></i></button>
@@ -46,11 +45,10 @@
             <div class="dropdown text-end me-3">
               <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                {% if session['nivelUsuario'] == 'admin' %}
-                <span class="me-3 ms-3 text-white">Administrador</span>
-                {% else %}
-                <span class="me-3 ms-3 text-white">{{ nome_usuario }}</span>
+                {% if session['nivelUsuario'] == 'usuario' %}
+                <span class="text-white ms-3 me-2">{{ nome_usuario }}</span>
                 {% endif %}
+                {% if session['nivelUsuario'] == 'usuario' %}
                 <img src="/static/img/user.png" alt="User Icon" class="rounded-circle">
               </a>
               <ul class="dropdown-menu text-small text-center" id="dropdownInterface">
@@ -83,8 +81,9 @@
               </ul>
             </div>
           </div>
+          {% endif %}
           {% else %}
-          <a href="/login"><button class="btn text-white ms-1" id="login">LOGIN</button></a>
+          <a href="/login"><button class="btn text-white ms-3" id="login">LOGIN</button></a>
           {% endif %}
         </div>
       </div>
@@ -92,7 +91,7 @@
   </header>
 
   <nav class="bg-dark">
-    <ul class="d-flex justify-content-around w-100 align-items-end">
+    <ul class="align-items-end d-flex justify-content-around w-100">
       <li><a href="/redirecionar">Home</a></li>
       <li><a href="/livros">Livros</a></li>
       <li><a href="/contato">Contato</a></li>
