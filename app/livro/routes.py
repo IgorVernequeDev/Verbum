@@ -25,7 +25,7 @@ def livros():
 def verlivro(idLivro):
     nivel_usuario = session.get('nivelUsuario', None)
     nome_usuario = session.get('nome', "")
-    logado = session.get('logado', True)
+    logado = session.get('logado', False)
 
     livro = buscarLivro(idLivro)
     conexao, cursor = conectar_db()
@@ -43,6 +43,8 @@ def verlivro(idLivro):
             posicao = verPosicao(idLivro, idUsuario)
             msg= f'Posição da lista de espera: {posicao}'
             return render_template('verlivro.html',  msg=msg, livro=livro, reserva_ativa=reserva_ativa, nome_usuario=nome_usuario, logado=logado)
+    else:
+        logado = session.get('logado', True)
 
     return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro, nome_usuario=nome_usuario, verlivro=True)
 
@@ -216,6 +218,8 @@ def excluir(id):
     finally:
         encerrar_db(cursor, conexao)
 
+from flask import flash, redirect, render_template
+
 @livro.route('/reservar/<int:idLivro>', methods=['GET'])
 def reservar(idLivro):
     idUsuario = session['idUsuario']
@@ -236,9 +240,10 @@ def reservar(idLivro):
         reserva_ativa = cursor.fetchone()
 
         if reserva_ativa:
-            msg='Você já está na lista de espera deste livro'
+            msg = 'Você já está na lista de espera deste livro'
+            flash(msg)  # Armazena a mensagem para ser exibida na próxima renderização
             posicao = verPosicao(idLivro, idUsuario)
-            return render_template('verlivro.html',  msg=msg, livro=livro, posicao=posicao, logado=logado, nome_usuario=nome_usuario)
+            return redirect(f'/livro/{idLivro}')  # Não passe parâmetros diretamente no redirect
         
         else:
             cursor.execute("""
@@ -248,15 +253,16 @@ def reservar(idLivro):
             conexao.commit()
             posicao = verPosicao(idLivro, idUsuario)
             reserva_ativa = True
-            msg=f'Parabéns! Você tem uma reserva! Sua posição é: {posicao}'
+            msg = f'Parabéns! Você tem uma reserva! Sua posição é: {posicao}'
+            flash(msg)
 
-
-        return render_template('verlivro.html', msg=msg, posicao=posicao, livro=livro, reserva_ativa=reserva_ativa, logado=logado, nome_usuario=nome_usuario)
+        return redirect(f'/livro/{idLivro}')
     
     except Exception as e:
         print(f"Erro ao realizar reserva: {e}")
         conexao.rollback()
-        return "Erro ao realizar a reserva, tente novamente mais tarde."
+        flash("Erro ao realizar a reserva, tente novamente mais tarde.")
+        return redirect(f'/livro/{idLivro}')
     finally:
         conexao.close()
 
@@ -333,8 +339,7 @@ def cancelareserva(idLivro):
         """, (idLivro, idUsuario))
         conexao.commit()
 
-        msg = "Reserva cancelada com sucesso!"
-        return redirect('/livrosreservados')
+        return redirect(f'/livro/{idLivro}')
     
     except Exception as e:
         print(f"Erro ao cancelar reserva: {e}")
@@ -351,7 +356,7 @@ def busca():
     try:
         conexao, cursor = conectar_db()
 
-        cursor.execute("SELECT * FROM livros WHERE titulo LIKE %s", (f"%{busca}%",))
+        cursor.execute("SELECT * FROM livros WHERE titulo LIKE %s", (f"{busca}%",))
         livros_encontrados = cursor.fetchall()
 
         return render_template('livros.html', 
