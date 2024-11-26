@@ -13,6 +13,7 @@
         </ul>
     </div>
     
+    {% if listaespera and lista_espera|length > 0 %}
     <table class="table table-bordered">
         <thead>
             <tr style="background-color: #255EAF;">
@@ -25,7 +26,7 @@
         <tbody>
             {% for usuario in lista_espera %}
             <tr>
-                <td>{{ loop.index }}</td> <!-- Exibe a posição na lista -->
+                <td>{{ loop.index }}</td>
                 <td>{{ usuario.nome }}</td>
                 <td>{{ usuario.serie }}</td>
                 <td>{{ usuario.dataReserva }}</td>
@@ -33,6 +34,11 @@
             {% endfor %}
         </tbody>        
     </table>
+    {% else %}
+    <div class="d-flex justify-content-center">
+        <p>Nenhum usuário está na lista de espera para este livro.</p>
+    </div>
+    {% endif %}
 </div>
 
 <script>
