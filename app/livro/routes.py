@@ -2,7 +2,6 @@ from db_functions import *
 from mysql.connector import Error
 import uuid
 from flask import Blueprint, render_template, request, redirect, session, jsonify
-import pytz
 
 livro = Blueprint('livro', __name__)
 
@@ -42,7 +41,7 @@ def verlivro(idLivro):
 
         if reserva_ativa:
             posicao = verPosicao(idLivro, idUsuario)
-            msg= f'Você já está na lista de espera deste livro. Você está na posição {posicao}'
+            msg= f'Posição da lista de espera: {posicao}'
             return render_template('verlivro.html',  msg=msg, livro=livro, reserva_ativa=reserva_ativa, nome_usuario=nome_usuario, logado=logado)
 
     return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro, nome_usuario=nome_usuario, verlivro=True)
@@ -282,6 +281,7 @@ def lista_espera(idLivro):
         ORDER BY r.dataReserva
     """, (idLivro,))
     lista_espera = cursor.fetchall()
+    lista_espera = lista_espera or []
 
     conexao.close()
 
@@ -308,20 +308,6 @@ def livrosreservados():
         """, (idUsuario,))
         livros = cursor.fetchall()
 
-        # Fuso horário de Brasília
-        fuso_brasilia = pytz.timezone('America/Sao_Paulo')
-
-        for livro in livros:
-            data_reserva = livro['dataReserva']  # Data do banco
-            if data_reserva:
-                # Garantir que a data está em UTC
-                data_utc = pytz.utc.localize(data_reserva)
-                # Converter de UTC para o horário de Brasília
-                data_brasilia = data_utc.astimezone(fuso_brasilia)
-
-                # Formatar no formato brasileiro dia/mês/ano
-                livro['dataReserva'] = data_brasilia.strftime("%d/%m/%Y %H:%M")
-
         return render_template(
             "livrosreservados.html", 
             nome_usuario=nome_usuario, 
@@ -331,6 +317,28 @@ def livrosreservados():
     except Exception as e:
         print(f"Erro ao buscar livros reservados: {e}")
         return "Erro ao buscar livros reservados."
+    finally:
+        conexao.close()
+
+@livro.route('/cancelareserva/<int:idLivro>', methods=['POST', 'GET'])
+def cancelareserva(idLivro):
+    idUsuario = session.get('idUsuario')
+
+    try:
+        conexao, cursor = conectar_db()
+
+        cursor.execute("""
+            DELETE FROM listaespera 
+            WHERE idLivro = %s AND idUsuario = %s AND status = 1
+        """, (idLivro, idUsuario))
+        conexao.commit()
+
+        msg = "Reserva cancelada com sucesso!"
+        return redirect('/livrosreservados')
+    
+    except Exception as e:
+        print(f"Erro ao cancelar reserva: {e}")
+        return "Erro ao cancelar a reserva, tente novamente mais tarde."
     finally:
         conexao.close()
 
