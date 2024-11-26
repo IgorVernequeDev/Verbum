@@ -1,5 +1,5 @@
 from db_functions import *
-from flask import Blueprint, render_template, redirect, session, request
+from flask import Blueprint, render_template, redirect, session, request, jsonify
 
 main = Blueprint('main', __name__)
 
@@ -75,7 +75,7 @@ def logar():
             return render_template("login.html", msg="Senha incorreta!")
     else:
         return render_template("login.html", msg="Usuário não encontrado!")
-    
+
 @main.route('/logout')
 def logout():
     session.clear()
