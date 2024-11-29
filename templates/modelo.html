@@ -85,8 +85,10 @@
           {% else %}
           <a href="/login"><button class="btn text-white ms-3" id="login">LOGIN</button></a>
           {% endif %}
+          {% if logado %}
           {% if session['nivelUsuario'] == 'admin' %}
           <a href="/logout"><button class="btn text-white ms-4" id="login" onclick="logout()">Sair</button></a>
+          {% endif %}
           {% endif %}
         </div>
       </div>
@@ -97,7 +99,6 @@
     <ul class="align-items-end d-flex justify-content-around w-100">
       <li><a href="/redirecionar">Home</a></li>
       <li><a href="/livros">Livros</a></li>
-      <li><a href="/contato">Contato</a></li>
     </ul>
   </nav>
 

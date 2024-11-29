@@ -54,31 +54,3 @@ CREATE TABLE ListaEspera (
     FOREIGN KEY (idLivro) REFERENCES Livros(idLivro),
     FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario)
 );
-
-DELIMITER //
-
-CREATE TRIGGER atualiza_quantidade
-AFTER INSERT ON Emprestimos
-FOR EACH ROW 
-BEGIN
-  UPDATE Livro
-  SET quantidade = quantidade - 1 
-  WHERE idLivro = NEW.idLivro;
-  update reserva 
-  set status = 'reservado', 
-  posicaoespera = 0
-  where idLivro = new.idLivro and idUsuario = new.idUsuario;
-END//
-
-CREATE TRIGGER atualizar_quantidade_livros_devolucao
-AFTER UPDATE ON Emprestimos
-FOR EACH ROW
-BEGIN
-  IF NEW.dataDevolucao IS NOT NULL AND OLD.dataDevolucao IS NULL THEN
-    UPDATE Livros
-    SET quantidade = quantidade + 1
-    WHERE idLivro = NEW.idLivro;
-  END IF;
-END//
-
-DELIMITER ;
