@@ -1,7 +1,7 @@
 from db_functions import *
 from mysql.connector import Error
 import uuid
-from flask import Blueprint, render_template, request, redirect, session, jsonify
+from flask import Blueprint, render_template, request, redirect, session, jsonify, flash
 
 livro = Blueprint('livro', __name__)
 
@@ -218,18 +218,12 @@ def excluir(id):
     finally:
         encerrar_db(cursor, conexao)
 
-from flask import flash, redirect, render_template
-
 @livro.route('/reservar/<int:idLivro>', methods=['GET'])
 def reservar(idLivro):
     idUsuario = session['idUsuario']
-    logado = session.get('logado', True)
-    nome_usuario = session.get('nome', "")
 
     if not session:
         return redirect('/login')
-    
-    livro = buscarLivro(idLivro)
 
     try:
         conexao, cursor = conectar_db()
@@ -241,9 +235,9 @@ def reservar(idLivro):
 
         if reserva_ativa:
             msg = 'Você já está na lista de espera deste livro'
-            flash(msg)  # Armazena a mensagem para ser exibida na próxima renderização
+            flash(msg)
             posicao = verPosicao(idLivro, idUsuario)
-            return redirect(f'/livro/{idLivro}')  # Não passe parâmetros diretamente no redirect
+            return redirect(f'/livro/{idLivro}')
         
         else:
             cursor.execute("""
