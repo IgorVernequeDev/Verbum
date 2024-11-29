@@ -61,13 +61,12 @@ CREATE TRIGGER atualiza_quantidade
 AFTER INSERT ON Emprestimos
 FOR EACH ROW 
 BEGIN
-  UPDATE Livro
+  UPDATE Livros
   SET quantidade = quantidade - 1 
   WHERE idLivro = NEW.idLivro;
-  update reserva 
-  set status = 'reservado', 
-  posicaoespera = 0
-  where idLivro = new.idLivro and idUsuario = new.idUsuario;
+  UPDATE ListaEspera
+  SET status = 'reservado'
+  WHERE idLivro = NEW.idLivro AND idUsuario = NEW.idUsuario;
 END//
 
 CREATE TRIGGER atualizar_quantidade_livros_devolucao
@@ -82,3 +81,16 @@ BEGIN
 END//
 
 DELIMITER ;
+
+-- Criação da VIEW para formatar a Lista de Espera
+CREATE VIEW ListaEsperaDetalhada AS
+SELECT 
+    le.idListaEspera,
+    le.idLivro,
+    l.titulo AS tituloLivro,
+    le.idUsuario,
+    u.nome AS nomeUsuario,
+    DATE_FORMAT(CAST(le.dataReserva AS DATETIME), '%d/%m/%Y %H:%i:%s') AS dataReservaFormatada
+FROM ListaEspera le
+JOIN Livros l ON le.idLivro = l.idLivro
+JOIN Usuarios u ON le.idUsuario = u.idUsuario;
