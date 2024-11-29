@@ -1,25 +1,31 @@
 from db_functions import *
 from mysql.connector import Error
 import uuid
-from flask import Blueprint, render_template, request, redirect, session, jsonify
+from flask import Blueprint, render_template, request, redirect, session, jsonify, flash
 
 livro = Blueprint('livro', __name__)
 
 @livro.route('/livros')
 def livros():
     nome_usuario = session.get('nome', "")
-    logado = session.get('logado', True)
+    logado = session.get('logado', False)
+    nivel_usuario = session.get('nivelUsuario', None)
+
+    if nivel_usuario == 'admin' or nivel_usuario == 'usuario':
+        logado = session.get('logado', True)
+
     conexao, cursor = conectar_db()
     cursor.execute("SELECT * FROM livros")
     livros = cursor.fetchall()
     encerrar_db(cursor, conexao)
+
     return render_template('livros.html', logado=logado, titulo="Verbum - Livros", livros=livros, nome_usuario=nome_usuario)
 
 @livro.route('/livro/<int:idLivro>')
 def verlivro(idLivro):
-    nivel_usuario = session.get('nivelUsuario', 'usuario')
+    nivel_usuario = session.get('nivelUsuario', None)
     nome_usuario = session.get('nome', "")
-    logado = session.get('logado', True)
+    logado = session.get('logado', False)
 
     livro = buscarLivro(idLivro)
     conexao, cursor = conectar_db()
@@ -35,8 +41,10 @@ def verlivro(idLivro):
 
         if reserva_ativa:
             posicao = verPosicao(idLivro, idUsuario)
-            msg= f'Você já está na lista de espera deste livro. Você está na posição {posicao}'
+            msg= f'Posição da lista de espera: {posicao}'
             return render_template('verlivro.html',  msg=msg, livro=livro, reserva_ativa=reserva_ativa, nome_usuario=nome_usuario, logado=logado)
+    else:
+        logado = session.get('logado', True)
 
     return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro, nome_usuario=nome_usuario, verlivro=True)
 
@@ -213,13 +221,9 @@ def excluir(id):
 @livro.route('/reservar/<int:idLivro>', methods=['GET'])
 def reservar(idLivro):
     idUsuario = session['idUsuario']
-    logado = session.get('logado', True)
-    nome_usuario = session.get('nome', "")
 
     if not session:
         return redirect('/login')
-    
-    livro = buscarLivro(idLivro)
 
     try:
         conexao, cursor = conectar_db()
@@ -230,9 +234,10 @@ def reservar(idLivro):
         reserva_ativa = cursor.fetchone()
 
         if reserva_ativa:
-            msg='Você já está na lista de espera deste livro'
+            msg = 'Você já está na lista de espera deste livro'
+            flash(msg)
             posicao = verPosicao(idLivro, idUsuario)
-            return render_template('verlivro.html',  msg=msg, livro=livro, posicao=posicao, logado=logado, nome_usuario=nome_usuario)
+            return redirect(f'/livro/{idLivro}')
         
         else:
             cursor.execute("""
@@ -242,15 +247,16 @@ def reservar(idLivro):
             conexao.commit()
             posicao = verPosicao(idLivro, idUsuario)
             reserva_ativa = True
-            msg=f'Parabéns! Você tem uma reserva! Sua posição é: {posicao}'
+            msg = f'Parabéns! Você tem uma reserva! Sua posição é: {posicao}'
+            flash(msg)
 
-
-        return render_template('verlivro.html', msg=msg, posicao=posicao, livro=livro, reserva_ativa=reserva_ativa, logado=logado, nome_usuario=nome_usuario)
+        return redirect(f'/livro/{idLivro}')
     
     except Exception as e:
         print(f"Erro ao realizar reserva: {e}")
         conexao.rollback()
-        return "Erro ao realizar a reserva, tente novamente mais tarde."
+        flash("Erro ao realizar a reserva, tente novamente mais tarde.")
+        return redirect(f'/livro/{idLivro}')
     finally:
         conexao.close()
 
@@ -275,6 +281,7 @@ def lista_espera(idLivro):
         ORDER BY r.dataReserva
     """, (idLivro,))
     lista_espera = cursor.fetchall()
+    lista_espera = lista_espera or []
 
     conexao.close()
 
@@ -305,12 +312,32 @@ def livrosreservados():
             "livrosreservados.html", 
             nome_usuario=nome_usuario, 
             logado=logado, 
-            livros=livros,
-            lista_espera=lista_espera
+            livros=livros
         )
     except Exception as e:
         print(f"Erro ao buscar livros reservados: {e}")
         return "Erro ao buscar livros reservados."
+    finally:
+        conexao.close()
+
+@livro.route('/cancelareserva/<int:idLivro>', methods=['POST', 'GET'])
+def cancelareserva(idLivro):
+    idUsuario = session.get('idUsuario')
+
+    try:
+        conexao, cursor = conectar_db()
+
+        cursor.execute("""
+            DELETE FROM listaespera 
+            WHERE idLivro = %s AND idUsuario = %s AND status = 1
+        """, (idLivro, idUsuario))
+        conexao.commit()
+
+        return redirect(f'/livro/{idLivro}')
+    
+    except Exception as e:
+        print(f"Erro ao cancelar reserva: {e}")
+        return "Erro ao cancelar a reserva, tente novamente mais tarde."
     finally:
         conexao.close()
 
@@ -323,7 +350,7 @@ def busca():
     try:
         conexao, cursor = conectar_db()
 
-        cursor.execute("SELECT * FROM livros WHERE titulo LIKE %s", (f"%{busca}%",))
+        cursor.execute("SELECT * FROM livros WHERE titulo LIKE %s", (f"{busca}%",))
         livros_encontrados = cursor.fetchall()
 
         return render_template('livros.html', 

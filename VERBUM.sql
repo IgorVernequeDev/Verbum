@@ -94,3 +94,4 @@ SELECT
 FROM ListaEspera le
 JOIN Livros l ON le.idLivro = l.idLivro
 JOIN Usuarios u ON le.idUsuario = u.idUsuario;
+

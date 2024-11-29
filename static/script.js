@@ -51,23 +51,9 @@ function entrar() {
     }
 }
 
-function avaliacao() {
-    const texto = document.getElementsByTagName('h3')[0];  // Supondo que há um único h3 a ser atualizado.
-
-    // Alterando o texto com base nas estrelas selecionadas
-    if (document.getElementById('1').checked) {
-        texto.textContent = '⭐';
-    }
-    if (document.getElementById('2').checked) {
-        texto.textContent = '⭐⭐';
-    }
-    if (document.getElementById('3').checked) {
-        texto.textContent = '⭐⭐⭐';
-    }
-    if (document.getElementById('4').checked) {
-        texto.textContent = '⭐⭐⭐⭐';
-    }
-    if (document.getElementById('5').checked) {
-        texto.textContent = '⭐⭐⭐⭐⭐';
+function logout() {
+    const confirmarLogout = confirm('Você tem certeza que deseja sair?')
+    if (confirmarLogout) {
+        window.location.href = '/'
     }
 }

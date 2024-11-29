@@ -89,10 +89,6 @@ nav {
 }
 
 nav ul {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: end;
   list-style: none;
 }
 
@@ -117,6 +113,7 @@ nav ul li a {
 
 nav ul li a:hover::after {
   content: '';
+  z-index: 4;
   display: block;
   height: 4px; 
   width: 170%; 
@@ -230,6 +227,11 @@ button {
   display: none;
 }
 
+span {
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+}
+
 #usuarioInterface {
   background: linear-gradient(to right, #255eaf, #023377);
   font-family: "Oswald", sans-serif;
@@ -326,11 +328,6 @@ button:hover {
   font-family: "Oswald", sans-serif;
 }
 
-.title-cont {
-  position: relative;
-  top: -105px;
-}
-
 .main-background {
   background-image: url('/static/img/background.jpg');
   background-position: center;
@@ -372,7 +369,7 @@ footer .column {
 }
 
 #logoFooter {
-  width: 80%;
+  width: 70%;
 }
 
 @media (max-width: 768px) {
@@ -618,22 +615,6 @@ select:focus {
 #descricao textarea::placeholder {
   color: #787878;
 }
-
-.curved{
-  background-image: url("../static/Intersect.svg");
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: #fff;
-  color: #fff;
-  min-height: 300px;
-}
-
-.curved p{
-  font-size: 1rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 
 .menu-item {
   list-style: none; 

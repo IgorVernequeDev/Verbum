@@ -2,83 +2,96 @@
 
 {% block conteudo %}
 
-<div class="bg-dark p-2">
-    <div class="d-flex justify-content-between w-100">
-        <h1 id="tituloLivro" class="text-white">{{ livro.titulo }}</h1>
-    </div>
-    <p id="autorLivro" class="mt-1 text-white">{{ livro.nomeAutor }}</p>
-</div>
 <div class="container">
     <div class="row my-5">
-        <div class="col-md-3 d-flex align-items-center">
-            <img src="/static/img/livros/{{ livro.imagemCapa }}" id="imagemLivro" alt="{{ livro.titulo }}"
-                class="img-fluid w-75 mb-5" onerror="this.src = '/static/img/bookplaceholder.png'">
+        <div class="col-12 text-center">
+            <h1 class="display-5 fs-1">{{ livro.titulo }}</h1>
+            <p class="fs-4 text-muted">por {{ livro.nomeAutor }}</p>
         </div>
-        <div class="col-md-9">
-            {% if msg %}
-            <p>{{ msg }}</p>
-            {% endif %}
-            {% if not reserva_ativa %}
-            <div class="d-flex justify-content-between align-items-center">
-                <a href="/reservar/{{ livro.idLivro }}"><button class="btn btn-primary px-5" id="reservaLivro"><i
-                            class="bi bi-book-half me-2 fs-5"></i>RESERVAR</button></a>
-            </div>
-            {% endif %}
 
-            <h5 class="mt-4">DESCRIÇÃO</h5>
-            <p>{{ livro.descricao }}</p>
-
-            <div class="w-100 d-flex justify-content-end mt-5">
-                <div class="d-flex justify-content-between w-100 text-center">
-                    <div>
-                        <h5>EDITORA:</h5>
-                        <p>{{ livro.nomeEditora }}</p>
-                    </div>
-                    <div>
-                        <h5>NÚMERO DE PÁGINAS:</h5>
-                        <p>{{ livro.numero_paginas }}</p>
-                    </div>
-                    <div>
-                        <h5>ANO DE PUBLICAÇÃO:</h5>
-                        <p>{{ livro.anoPublicacao }}</p>
-                    </div>
-                    <div>
-                        <h5>GÊNERO:</h5>
-                        <p>{{ livro.genero }}</p>
-                    </div>
-                    <div>
-                        <h5>QUANTIDADE DISPONÍVEL:</h5>
-                        <p>{{ livro.quantidade }}</p>
-                    </div>
+        <div class="col-md-4 text-center mb-4">
+            <img src="/static/img/livros/{{ livro.imagemCapa }}" id="imagemLivro" alt="{{ livro.titulo }}"
+                class="img-fluid rounded shadow-sm w-50" onerror="this.src = '/static/img/bookplaceholder.png'">
+        </div>
+        <div class="col-md-8">
+            <h6>Descrição:</h6>
+            <p class="text-justify text-break fs-5">{{ livro.descricao }}</p>
+            <hr>
+            <div class="row text-center">
+                <div class="col">
+                    <h6>EDITORA</h6>
+                    <p>{{ livro.nomeEditora }}</p>
                 </div>
-            </div>
-            {% if session['nivelUsuario'] == 'admin' %}
-            <div class="w-100 d-flex justify-content-between mt-5">
-                <div class="d-flex flex-column text-center" id="buttonsAdm">
-                    <a href="/editar/{{ livro.idLivro }}"><button id="reservaLivro" class="px-5 py-2 fs-3"><img
-                                src="/static/img/edit.png" alt=""></button></a>
-                    <h4 class="mt-2">EDITAR</h4>
+                <div class="col">
+                    <h6>NÚMERO DE PÁGINAS</h6>
+                    <p>{{ livro.numero_paginas }}</p>
                 </div>
-                <div class="d-flex flex-column text-center" id="buttonsAdm">
-                    <button id="reservaLivro" class="px-5 py-2 fs-3" data-id="{{ livro.idLivro }}"
-                        onclick="confirmarExclusao(this)">
-                        <img src="/static/img/delete.png" alt="">
-                    </button>
-                    <h4 class="mt-2">EXCLUIR</h4>
+                <div class="col">
+                    <h6>ANO DE PUBLICAÇÃO</h6>
+                    <p>{{ livro.anoPublicacao }}</p>
                 </div>
-                {% endif %}
-                <div class="d-flex justify-content-end">
-                    <div class="text-center">
-                        <a href="/listaespera/{{ livro.idLivro }}">
-                            <img src="/static/img/listaespera.jpg" id="listaEspera" alt=""></a>
-                        <h4 class="mt-2 fs-6">LISTA DE ESPERA</h4>
-                    </div>
+                <div class="col">
+                    <h6>GÊNERO</h6>
+                    <p>{{ livro.genero }}</p>
+                </div>
+                <div class="col">
+                    <h6>DISPONIBILIDADE</h6>
+                    <p>{{ livro.quantidade }} unidades</p>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="/static/script.js"></script>
+    <div class="row mt-3 mb-3">
+        <div class="col text-center d-flex justify-content-around">
+            {% if not reserva_ativa and session['nivelUsuario'] == 'usuario' %}
+            <div>
+                <a href="/reservar/{{ livro.idLivro }}" class="btn btn-primary" id="reservaLivro">
+                    <i class="bi bi-book-half"></i>Reservar
+                </a>
+            </div>
+            {% elif reserva_ativa %}
+            <div class="d-flex flex-column">
+                <a href="/cancelareserva/{{ livro.idLivro }}" class="btn btn-primary" id="reservaLivro">
+                    <i class="bi bi-book-half"></i>Cancelar Reserva
+                </a>
+                <p class="mt-2">{{ msg }}</p>
+            </div>
+            {% endif %}
 
-{% endblock %}
+            {% if session['nivelUsuario'] == 'usuario' %}
+            <div class="text-center">
+                <a href="/listaespera/{{ livro.idLivro }}">
+                    <img src="/static/img/listaespera.jpg" id="listaEspera" alt=""></a>
+                <h4 class="fs-6">LISTA DE ESPERA</h4>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    {% if session['nivelUsuario'] == 'admin' %}
+    <div class="d-flex justify-content-around">
+        <div class="d-flex flex-column text-center" id="buttonsAdm">
+            <a href="/editar/{{ livro.idLivro }}"><button id="reservaLivro" class="px-5 py-2 fs-3"><img
+                        src="/static/img/edit.png" alt=""></button></a>
+            <h4>EDITAR</h4>
+        </div>
+        <div class="d-flex flex-column text-center" id="buttonsAdm">
+            <button id="reservaLivro" class="px-5 py-2 fs-3" data-id="{{ livro.idLivro }}"
+                onclick="confirmarExclusao(this)">
+                <img src="/static/img/delete.png" alt="">
+            </button>
+            <h4>EXCLUIR</h4>
+        </div>
+        <div class="text-center">
+            <a href="/listaespera/{{ livro.idLivro }}">
+                <img src="/static/img/listaespera.jpg" id="listaEspera" alt=""></a>
+            <h4 class="fs-6">LISTA DE ESPERA</h4>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="/static/script.js"></script>
+
+    {% endblock %}
