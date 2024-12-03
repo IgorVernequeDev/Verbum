@@ -52,7 +52,7 @@
             </div>
             {% elif reserva_ativa %}
             <div class="d-flex flex-column">
-                <a href="/cancelareserva/{{ livro.idLivro }}" class="btn btn-primary" id="reservaLivro">
+                <a onclick="cancelarReserva(this)" class="btn btn-primary" id="reservaLivro" data-id="{{ livro.idLivro }}">
                     <i class="bi bi-book-half"></i>Cancelar Reserva
                 </a>
                 <p class="mt-2">{{ msg }}</p>

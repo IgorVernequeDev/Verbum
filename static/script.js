@@ -57,3 +57,11 @@ function logout() {
         window.location.href = '/logout'
     }
 }
+
+function cancelarReserva(element) {
+    const idLivro = element.getAttribute('data-id');
+    const confirmarCancelamento = confirm('Você tem certeza que deseja cancelar sua reserva?')
+    if (confirmarCancelamento) {
+        window.location.href = '/cancelareserva/' + idLivro
+    }
+}
