@@ -14,11 +14,24 @@
           </button>
         </a>
       </div>
+
       <div class="d-flex flex-column align-items-center mb-4 mt-4 w-100" style="max-height: 25em;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="container mt-4">
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="btn" style="opacity: 1;" class="btn-close d-flex justify-content-center align-items-center text-center" data-bs-dismiss="alert" aria-label="Close"><i class="bi bi-x text-white"></i></button>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
         <p class="text-white text-center">Usuários em 1° na lista de espera</p>
-        <div style="overflow-y: auto;">
-          <table class="text-white table table-bordered text-center"
-            style="overflow-y: auto; border-collapse: collapse;">
+        {% if usuarios %}
+        <div id="overflowTable" style="overflow-y: auto; border-radius: 10px;">
+          <table class="text-white table table-bordered text-center">
             <thead>
               <tr style="background-color: #255EAF;">
                 <th class="w-25">Nome</th>
@@ -34,10 +47,8 @@
                 <td class="text-break">{{ usuario['titulo_livro'] }}</td>
                 <td>{{ usuario['serie'] }}</td>
                 <td>
-                  <form action="/emprestimo" method="POST" style="margin: 0;">
-                    <input type="hidden" name="id_livro" value="{{ usuario['id_livro'] }}">
-                    <input type="hidden" name="id_usuario" value="{{ usuario['id_usuario'] }}">
-                    <button class="btn btn-success btn-sm w-100" type="submit">Fazer Empréstimo</button>
+                  <a href="/emprestimo/{{usuario['idListaEspera']}}">
+                    <button class="btn btn-success btn-sm w-100" type="submit">Fazer Empréstimo</button></a>
                   </form>
                 </td>
               </tr>
@@ -45,6 +56,9 @@
             </tbody>
           </table>
         </div>
+        {% else %}
+        <p class="text-white">Não há usuários nas listas de espera!</p>
+        {% endif %}
       </div>
       <div class="col-md-6 d-flex justify-content-center">
         <a href="/cadastraraluno" style="text-decoration: none;">
