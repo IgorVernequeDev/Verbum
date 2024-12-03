@@ -54,6 +54,6 @@ function entrar() {
 function logout() {
     const confirmarLogout = confirm('Você tem certeza que deseja sair?')
     if (confirmarLogout) {
-        window.location.href = '/'
+        window.location.href = '/logout'
     }
 }
