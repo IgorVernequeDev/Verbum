@@ -229,14 +229,17 @@ button {
 }
 /* Configuração geral para centralizar o conteúdo */
 .main-background {
-  flex-wrap: wrap; /* Permite que os itens se reorganizem em telas pequenas */
+  flex-wrap: wrap;
 }
 
-/* Botões de administração */
 #adm {
   flex-direction: row; /* Padrão: lado a lado */
   flex-wrap: wrap; /* Permite quebra de linha em telas menores */
   gap: 1rem; /* Espaçamento entre os elementos */
+}
+
+.admButton {
+  width: 20em;
 }
 
 #adm .col-md-6 {
@@ -265,23 +268,11 @@ button {
   }
 }
 
-/* Botões em telas pequenas */
-@media (max-width: 576px) {
-  #adm {
-    justify-content: center; /* Alinha os botões ao centro em telas muito pequenas */
-  }
-
-  #admButton {
-    flex-direction: column; /* Organiza o conteúdo dos botões em coluna */
-    font-size: 1rem; /* Ajusta o tamanho do texto dos botões */
-  }
-
-  #admButton img {
-    width: 50px; /* Reduz o tamanho das imagens em botões */
-    height: 50px;
-  }
+@media (max-width: 768px) {
+    #admDiv {
+      flex-direction: column;
+    }
 }
-
 
 span {
   font-family: "Oswald", sans-serif;
@@ -310,7 +301,6 @@ span {
   font-family: "Oswald", sans-serif;
   font-weight: 100;
   border-radius: 10px;
-  width: 20em;
 }
 
 #adm img {
@@ -496,7 +486,9 @@ footer .copyright {
   text-align: start;
 }
 
-
+tr {
+  font-size: 15px;
+}
 
 a {
   text-decoration: none;
@@ -504,12 +496,9 @@ a {
 
 #container {
   background-color: #fff;
-  padding: 2%;
   border-radius: 30px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
   max-width: 100%;
-  margin-top: 4%;
-  margin-bottom: 4%;
 }
 
 .titulos {

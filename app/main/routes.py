@@ -1,6 +1,5 @@
 from db_functions import *
 from flask import Blueprint, render_template, redirect, session, request
-from datetime import datetime, timedelta
 
 main = Blueprint('main', __name__)
 
@@ -54,41 +53,6 @@ def adm():
 
     encerrar_db(conexao, cursor)
     return render_template('adm_index.html', logado=logado, titulo="Verbum ADM - Home", usuarios=usuarios)
-
-@main.route('/emprestimo', methods=['POST'])
-def fazer_emprestimo():
-    id_livro = request.form.get('id_livro')
-    id_usuario = request.form.get('id_usuario')
-
-    conexao, cursor = conectar_db()
-
-    try:
-        query = """
-            UPDATE verbum.listaespera 
-            SET status = 0 
-            WHERE idLivro = %s AND idUsuario = %s
-        """
-        cursor.execute(query, (id_livro, id_usuario))
-
-        data_emprestimo = datetime.now()
-        data_devolucao = data_emprestimo + timedelta(days=30)
-        
-        query_inserir = """
-            INSERT INTO Emprestimos (idLivro, idUsuario, dataEmprestimo, dataDevolucao)
-            VALUES (%s, %s, %s, %s)
-        """
-        cursor.execute(query_inserir, (id_livro, id_usuario, data_emprestimo, data_devolucao))
-        
-        conexao.commit()
-        print("Empréstimo realizado com sucesso!", "success")
-
-    except Exception as e:
-        conexao.rollback()
-        print(f"Erro ao processar o empréstimo: {str(e)}", "error")
-    finally:
-        encerrar_db(conexao, cursor)
-
-    return redirect('/adm')
 
 @main.route('/redirecionar')
 def redirecionar():
