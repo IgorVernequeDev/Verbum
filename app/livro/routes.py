@@ -23,9 +23,9 @@ def livros():
 
 @livro.route('/livro/<int:idLivro>')
 def verlivro(idLivro):
+    logado = session.get('logado', False)
     nivel_usuario = session.get('nivelUsuario', None)
     nome_usuario = session.get('nome', "")
-    logado = session.get('logado', False)
 
     livro = buscarLivro(idLivro)
     conexao, cursor = conectar_db()
@@ -43,7 +43,8 @@ def verlivro(idLivro):
             posicao = verPosicao(idLivro, idUsuario)
             msg= f'Posição da lista de espera: {posicao}'
             return render_template('verlivro.html',  msg=msg, livro=livro, reserva_ativa=reserva_ativa, nome_usuario=nome_usuario, logado=logado)
-    else:
+        
+    elif nivel_usuario == 'admin':
         logado = session.get('logado', True)
 
     return render_template('verlivro.html', logado=logado, titulo="Verbum - Livros", livro=livro, nome_usuario=nome_usuario, verlivro=True)
@@ -222,9 +223,6 @@ def excluir(id):
 def reservar(idLivro):
     idUsuario = session['idUsuario']
 
-    if not session:
-        return redirect('/login')
-
     try:
         conexao, cursor = conectar_db()
 
@@ -345,7 +343,11 @@ def cancelareserva(idLivro):
 def busca():
     logado = session.get('logado', True)
     nome_usuario = session.get('nome', "")
+    nivel_usuario = session.get('nivel_usuario', None)
     busca = request.form['busca']
+
+    if nivel_usuario == 'usuario' or nivel_usuario == 'admin':
+        logado = session.get('logado', True)
 
     try:
         conexao, cursor = conectar_db()

@@ -52,7 +52,8 @@ main {
   align-items: center;
   padding: 5px 10px;
   border-radius: 5px;
-  border: 1px solid #a4a4a4;;
+  border: 1px solid #a4a4a4;
+  ;
 }
 
 .search-container input {
@@ -115,12 +116,12 @@ nav ul li a:hover::after {
   content: '';
   z-index: 4;
   display: block;
-  height: 4px; 
-  width: 170%; 
-  background-color: #255EAF; 
+  height: 4px;
+  width: 170%;
+  background-color: #255EAF;
   position: absolute;
-  left: -30%; 
-  bottom: -3px; 
+  left: -30%;
+  bottom: -3px;
   transition: width 0.3s;
 }
 
@@ -226,6 +227,61 @@ button {
 .dropdown-toggle::after {
   display: none;
 }
+/* Configuração geral para centralizar o conteúdo */
+.main-background {
+  flex-wrap: wrap; /* Permite que os itens se reorganizem em telas pequenas */
+}
+
+/* Botões de administração */
+#adm {
+  flex-direction: row; /* Padrão: lado a lado */
+  flex-wrap: wrap; /* Permite quebra de linha em telas menores */
+  gap: 1rem; /* Espaçamento entre os elementos */
+}
+
+#adm .col-md-6 {
+  flex: 1 1 100%; /* Ocupa 100% da largura em telas pequenas */
+  max-width: 100%; /* Limita a largura para não ultrapassar os limites */
+}
+
+/* Tabela de empréstimos */
+@media (max-width: 768px) {
+  .w-50 {
+    width: 100%; /* Tabela ocupa toda a largura da tela */
+    margin-top: 1rem; /* Espaço entre botões e tabela */
+  }
+
+  .table {
+    font-size: 0.9rem; /* Reduz o tamanho da fonte para caber melhor na tela */
+  }
+
+  .table th, 
+  .table td {
+    padding: 0.5rem; /* Ajusta espaçamento das células */
+  }
+
+  .text-break {
+    word-wrap: break-word; /* Permite quebra de palavras para evitar estouros */
+  }
+}
+
+/* Botões em telas pequenas */
+@media (max-width: 576px) {
+  #adm {
+    justify-content: center; /* Alinha os botões ao centro em telas muito pequenas */
+  }
+
+  #admButton {
+    flex-direction: column; /* Organiza o conteúdo dos botões em coluna */
+    font-size: 1rem; /* Ajusta o tamanho do texto dos botões */
+  }
+
+  #admButton img {
+    width: 50px; /* Reduz o tamanho das imagens em botões */
+    height: 50px;
+  }
+}
+
 
 span {
   font-family: "Oswald", sans-serif;
@@ -241,6 +297,12 @@ span {
 
 #bookicon {
   width: 3%;
+}
+
+@media (max-width: 768px) {
+  #bookicon {
+    width: 10%;
+  }
 }
 
 #adm button {
@@ -308,40 +370,16 @@ button:hover {
 
 }
 
-.contact-info {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-left: 4%;
-}
-
-.contact-info h1 {
-  font-size: 2rem;
-  font-weight: 300;
-  font-family: "Oswald", sans-serif;
-}
-
-.contact-info p {
-  font-size: 1.3rem;
-  font-weight: 300;
-  font-family: "Oswald", sans-serif;
-}
-
 .main-background {
   background-image: url('/static/img/background.jpg');
   background-position: center;
   background-size: cover;
   align-items: center;
   display: flex;
-  flex-direction: column; /* Organize os elementos verticalmente */
-  padding: 20px; /* Adicione padding para espaçamento */
-}
-
-@media (max-width: 768px) {
-  #imgcontato {
-    width: 40%;
-  }
+  flex-direction: column;
+  /* Organize os elementos verticalmente */
+  padding: 20px;
+  /* Adicione padding para espaçamento */
 }
 
 footer {
@@ -369,12 +407,12 @@ footer .column {
 }
 
 #logoFooter {
-  width: 70%;
+  width: 5%;
 }
 
 @media (max-width: 768px) {
   #logoFooter {
-    width: 40%;
+    width: 30%;
   }
 }
 
@@ -500,16 +538,13 @@ select:focus {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
 }
 
-.title-cont h1, p{
+.title-cont h1,
+p {
   font-weight: 300;
 }
 
 .methods img {
   width: 6%;
-}
-
-.contact-img {
-  width: 40%;
 }
 
 .Subir {
@@ -531,7 +566,7 @@ select:focus {
   #container {
     max-width: 70%;
   }
-  
+
   .Subir {
     width: 50%;
   }
@@ -574,10 +609,10 @@ select:focus {
 }
 
 .outros-botoes {
-  color: black !important; 
-  font-family: "Oswald", sans-serif; 
+  color: black !important;
+  font-family: "Oswald", sans-serif;
   font-weight: 300;
-  background-color: #ececec; 
+  background-color: #ececec;
   padding: 5px 10px;
   border-radius: 5px;
 }
@@ -617,14 +652,14 @@ select:focus {
 }
 
 .menu-item {
-  list-style: none; 
+  list-style: none;
   margin-right: 15px;
 }
 
 .menu-item a {
-  color: white; 
-  font-family: "Oswald", sans-serif; 
-  font-size: 16px; 
+  color: white;
+  font-family: "Oswald", sans-serif;
+  font-size: 16px;
 }
 
 .cadastra {

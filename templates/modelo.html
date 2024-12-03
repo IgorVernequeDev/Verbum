@@ -36,11 +36,13 @@
           <form role="search" action="/busca" method="post">
             <div class="search-container d-flex align-items-center mb-3 mb-md-0">
               <input class="Pesquisa" name="busca" id="Pesquisa" type="text" placeholder="Digite o título do livro...">
-              <button type="submit"><i type="submit" class=" bi bi-search ms-2"></i></button>
+              <button type="submit" class="btn border-0">
+                <i class="bi bi-search text-white"></i>
+              </button>              
             </div>
           </form>
 
-          {% if logado %}
+          {% if logado == True %}
           <div class="d-flex icons align-items-center">
             <div class="dropdown text-end me-3">
               <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
@@ -58,8 +60,8 @@
                 <li>
                   <hr class="dropdown-divider my-1">
                 </li>
-                <a href="/logout">
-                  <li class="option">Sair</li>
+                <a>
+                  <li onclick="logout()" class="option text-white">Sair</li>
                 </a>
               </ul>
             </div>
@@ -85,9 +87,9 @@
           {% else %}
           <a href="/login"><button class="btn text-white ms-3" id="login">LOGIN</button></a>
           {% endif %}
-          {% if logado %}
+          {% if logado == True %}
           {% if session['nivelUsuario'] == 'admin' %}
-          <a href="/logout"><button class="btn text-white ms-4" id="login" onclick="logout()">Sair</button></a>
+          <a><button class="btn text-white ms-4" id="login" onclick="logout()">Sair</button></a>
           {% endif %}
           {% endif %}
         </div>
@@ -107,31 +109,10 @@
     {% endblock %}
   </main>
 
-  <footer class="container-fluid text-center p-4" style="background-color: #333; color: white;">
-    <div class="row justify-content-around d-flex align-items-end">
-      <div class="col-10 col-md-6 col-lg-3 order-last order-lg-first">
-        <div class="text-center">
-          <img src="/static/img/logo.png" alt="Logo Verbum" id="logoFooter">
-        </div>
-      </div>
-      <div class="col-10 col-md-6 col-lg-3">
-        <a href="#">
-          <h3 class="border-top border-white border-3 fs-5">Temas</h3>
-        </a><br>
-      </div>
-      <div class="col-10 col-md-6 col-lg-3">
-        <a href="/livros">
-          <h3 class="border-top border-white border-3 fs-5">Livros</h3>
-        </a><br>
-      </div>
-      <div class="col-10 col-md-6 col-lg-3">
-        <a href="/contato">
-          <h3 class="border-top border-white border-3 fs-5">Contato</h3>
-        </a><br>
-      </div>
-    </div>
-    <div class="row mt-3">
-      <h3 class="text-white">
+  <footer class="text-center py-4" style="background-color: #333; color: white;">
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <img src="/static/img/logo.png" alt="Logo Verbum" class="ms-4" id="logoFooter">
+      <h3 class="text-white me-4">
         SISTEMA DESENVOLVIDO PELOS ALUNOS: DAVI, MALU, IGOR, LUIZ HENRIQUE
       </h3>
     </div>

@@ -1,7 +1,9 @@
 from db_functions import *
-from flask import Blueprint, render_template, redirect, session, request, jsonify, flash
+from flask import Blueprint, render_template, redirect, session, request
+from datetime import datetime, timedelta
 
 main = Blueprint('main', __name__)
+
 
 @main.route('/')
 def index():
@@ -30,16 +32,16 @@ def adm():
 
     query = """
         SELECT 
-            livros.titulo AS titulo_livro,
+            l.titulo AS titulo_livro,
             a.nome,
             a.serie,
             le.idLivro AS id_livro,
             le.idUsuario AS id_usuario
         FROM listaespera le
-        INNER JOIN Livros ON le.idLivro = livros.idLivro
+        INNER JOIN Livros l ON le.idLivro = l.idLivro
         INNER JOIN Usuarios a ON le.idUsuario = a.idUsuario
         WHERE le.idUsuario = (
-            SELECT le.idUsuario
+            SELECT le1.idUsuario
             FROM listaespera le1
             WHERE le1.idLivro = le.idLivro AND le1.status = 1
             ORDER BY le1.dataReserva ASC
@@ -48,10 +50,10 @@ def adm():
     """
     cursor.execute(query)
     usuarios = cursor.fetchall()
+    usuarios = usuarios or []
 
     encerrar_db(conexao, cursor)
     return render_template('adm_index.html', logado=logado, titulo="Verbum ADM - Home", usuarios=usuarios)
-
 
 @main.route('/emprestimo', methods=['POST'])
 def fazer_emprestimo():
@@ -59,30 +61,33 @@ def fazer_emprestimo():
     id_usuario = request.form.get('id_usuario')
 
     conexao, cursor = conectar_db()
-    
+
     try:
-        cursor.execute("""
-        INSERT INTO Emprestimos (idLivro, idUsuario, dataEmprestimo, dataDevolucao) 
-        VALUES (%s, %s, NOW(), DATE_ADD(NOW(), INTERVAL 30 DAY))
-    """, (id_livro, id_usuario))
-        print("Empréstimo registrado com sucesso.")
-        
-        cursor.execute("""
-            DELETE FROM listaespera
+        query = """
+            UPDATE verbum.listaespera 
+            SET status = 0 
             WHERE idLivro = %s AND idUsuario = %s
-        """, (id_livro, id_usuario))
-        print("Registro removido da lista de espera.")
+        """
+        cursor.execute(query, (id_livro, id_usuario))
+
+        data_emprestimo = datetime.now()
+        data_devolucao = data_emprestimo + timedelta(days=30)
+        
+        query_inserir = """
+            INSERT INTO Emprestimos (idLivro, idUsuario, dataEmprestimo, dataDevolucao)
+            VALUES (%s, %s, %s, %s)
+        """
+        cursor.execute(query_inserir, (id_livro, id_usuario, data_emprestimo, data_devolucao))
         
         conexao.commit()
-        flash("Empréstimo realizado com sucesso!", "success")
+        print("Empréstimo realizado com sucesso!", "success")
+
     except Exception as e:
         conexao.rollback()
-        print(f"Erro ao realizar empréstimo: {str(e)}")
-        flash(f"Erro ao realizar empréstimo: {str(e)}", "danger")
+        print(f"Erro ao processar o empréstimo: {str(e)}", "error")
     finally:
-        cursor.close()
-        conexao.close()
-    
+        encerrar_db(conexao, cursor)
+
     return redirect('/adm')
 
 @main.route('/redirecionar')
@@ -96,6 +101,7 @@ def redirecionar():
     else:
         return redirect('/')
 
+    
 @main.route('/login', methods=['POST'])
 def logar():
     email = request.form['email']
@@ -127,7 +133,7 @@ def logar():
             session['nivelUsuario'] = 'usuario'
             return redirect('/home')
         else:
-            return render_template("login.html", msg="Senha incorreta!")
+            return render_template("login.html", msg="Usuário não encontrado!")
     else:
         return render_template("login.html", msg="Usuário não encontrado!")
 

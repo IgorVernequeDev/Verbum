@@ -2,58 +2,60 @@
 
 {% block conteudo %}
 
-<div class="d-flex flex-grow-1 justify-content-center main-background ">
-  <div class="d-flex text-center g-5" id="adm">
-    <div class="d-flex justify-content-start w-75">
-      <div class="col-md-6 d-flex justify-content-center">
-        <a href="/cadastrarlivro" style="text-decoration: none;">
-          <button class="btn btn-primary btn-lg d-flex flex-column align-items-center justify-content-center">
-            <img src="/static/img/adicionar.png">
-            <span style="font-size: 30px;">ADICIONAR LIVROS</span>
-          </button>
-        </a>
+<div class="d-flex flex-grow-1 justify-content-center main-background">
+    <div class="d-flex justify-content-around w-100 align-items-center g-5" id="adm">
+      <div class="w-100 d-flex text-break align-items-center" style="max-height: 25em;">
+        <div class="col-md-6 d-flex justify-content-center">
+          <a href="/cadastrarlivro" style="text-decoration: none;">
+            <button class="btn btn-primary btn-lg d-flex flex-column align-items-center justify-content-center" id="admButton">
+              <img src="/static/img/adicionar.png">
+              <span style="font-size: 30px;">ADICIONAR LIVROS</span>
+            </button>
+          </a>
+        </div>
+        <div class="d-flex flex-column align-items-center" style="max-height: 25em;">
+          <p class="text-white text-center">Usuários em 1° na lista de espera</p>
+            <div style="overflow-y: auto;">
+              <table class="text-white table table-bordered text-center" style="min-width: 500px; overflow-y: auto; border-collapse: collapse;">
+                <thead>
+                  <tr style="background-color: #255EAF;">
+                    <th class="w-25">Nome</th>
+                    <th class="w-25">Livro</th>
+                    <th class="w-25">Série</th>
+                    <th class="w-25">Ações</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white text-dark">
+                  {% for usuario in usuarios %}
+                  <tr>
+                    <td>{{ usuario['nome'] }}</td>
+                    <td class="text-break">{{ usuario['titulo_livro'] }}</td>
+                    <td>{{ usuario['serie'] }}</td>
+                    <td>
+                      <form action="/emprestimo" method="POST" style="margin: 0;">
+                        <input type="hidden" name="id_livro" value="{{ usuario['id_livro'] }}">
+                        <input type="hidden" name="id_usuario" value="{{ usuario['id_usuario'] }}">
+                        <button class="btn btn-success btn-sm w-100" type="submit">Fazer Empréstimo</button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center">
+          <a href="/cadastraraluno" style="text-decoration: none;">
+            <button class="btn btn-primary btn-lg d-flex flex-column align-items-center justify-content-center" id="admButton">
+              <img src="/static/img/veralunos.png">
+              <span style="font-size: 30px;">CADASTRAR ALUNOS</span>
+            </button>
+          </a>
+        </div>
       </div>
-      <div class="col-md-6 d-flex justify-content-center">
-        <a href="/cadastrarusuario" style="text-decoration: none;">
-          <button class="btn btn-primary btn-lg d-flex flex-column align-items-center justify-content-center">
-            <img src="/static/img/veralunos.png">
-            <span style="font-size: 30px;">CADASTRAR ALUNOS</span>
-          </button>
-        </a>
-      </div>
-    </div>
-    <div class="w-25 d-flex justify-content-end rounded">
-      <table class="text-white table table-bordered" style="border-collapse: collapse;">
-        <thead>
-          <tr style="background-color: #255EAF;">
-            <th>Livro</th>
-            <th>Nome</th>
-            <th>Série</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white text-dark">
-          {% for usuario in usuarios %}
-          <tr>
-            <td>{{ usuario['titulo_livro'] }}</td>
-            <td>{{ usuario['nome'] }}</td>
-            <td>{{ usuario['serie'] }}</td>
-            <td>
-              <form action="/emprestimo" method="POST" style="margin: 0;">
-                <input type="hidden" name="id_livro" value="{{ usuario['id_livro'] }}">
-                <input type="hidden" name="id_usuario" value="{{ usuario['id_usuario'] }}">
-                <button class="btn btn-success btn-sm" type="submit">Fazer Empréstimo</button>
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-
     </div>
   </div>
-</div>
 
-<script src="/static/script.js"></script>
+  <script src="/static/script.js"></script>
 
-{% endblock %}
+  {% endblock %}
