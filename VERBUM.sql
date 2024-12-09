@@ -54,3 +54,44 @@ CREATE TABLE ListaEspera (
     FOREIGN KEY (idLivro) REFERENCES Livros(idLivro),
     FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario)
 );
+
+DELIMITER //
+
+CREATE TRIGGER atualiza_quantidade
+AFTER INSERT ON Emprestimos
+FOR EACH ROW 
+BEGIN
+  UPDATE Livros
+  SET quantidade = quantidade - 1 
+  WHERE idLivro = NEW.idLivro;
+  UPDATE ListaEspera
+  SET status = 'reservado'
+  WHERE idLivro = NEW.idLivro AND idUsuario = NEW.idUsuario;
+END//
+
+CREATE TRIGGER atualizar_quantidade_livros_devolucao
+AFTER UPDATE ON Emprestimos
+FOR EACH ROW
+BEGIN
+  IF NEW.dataDevolucao IS NOT NULL AND OLD.dataDevolucao IS NULL THEN
+    UPDATE Livros
+    SET quantidade = quantidade + 1
+    WHERE idLivro = NEW.idLivro;
+  END IF;
+END//
+
+DELIMITER ;
+
+-- Criação da VIEW para formatar a Lista de Espera
+CREATE VIEW ListaEsperaDetalhada AS
+SELECT 
+    le.idListaEspera,
+    le.idLivro,
+    l.titulo AS tituloLivro,
+    le.idUsuario,
+    u.nome AS nomeUsuario,
+    DATE_FORMAT(CAST(le.dataReserva AS DATETIME), '%d/%m/%Y %H:%i:%s') AS dataReservaFormatada
+FROM ListaEspera le
+JOIN Livros l ON le.idLivro = l.idLivro
+JOIN Usuarios u ON le.idUsuario = u.idUsuario;
+

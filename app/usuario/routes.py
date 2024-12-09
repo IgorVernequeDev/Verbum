@@ -19,7 +19,6 @@ def cadaluno():
     conexao, cursor = conectar_db()
 
     nome = request.form['nome']
-    nome = nome.title()
     email = request.form['email']
     serie = request.form['serie']
     letra = request.form['letra']
@@ -28,16 +27,29 @@ def cadaluno():
 
     serie = serie + ' ' + letra
 
+    
     if senha == confirmasenha:
+        
+        cursor.execute('SELECT * FROM usuarios WHERE email = %s', (email,))
+        user = cursor.fetchone()
+
+        if user:
+            
+            return render_template("cadaluno.html", msg="Este email já está cadastrado!", 
+                                   nome=nome, email=email, serie=serie, letra=letra)
+
+      
         cursor.execute(
-            'INSERT INTO usuarios (nome, email, serie, senha) VALUES (%s, %s, %s, %s)', (nome, email, serie, senha))
+            'INSERT INTO usuarios (nome, email, serie, senha) VALUES (%s, %s, %s, %s)', 
+            (nome, email, serie, senha)
+        )
         conexao.commit()
         conexao.close()
+        return redirect('/adm')
 
     else:
-        return render_template("cadaluno.html", msg="As senhas não se coincidem!")
-
-    return redirect('/adm')
+        return render_template("cadaluno.html", msg="As senhas não se coincidem!", 
+                               nome=nome, email=email, serie=serie, letra=letra)    
 
 @usuario.route('/cadastraraluno')
 def cadastraraluno():
