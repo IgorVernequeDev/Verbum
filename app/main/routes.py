@@ -35,14 +35,15 @@ def adm():
             a.nome,
             a.serie,
             le.idLivro AS id_livro,
-            le.idUsuario AS id_usuario
+            le.idUsuario AS id_usuario,
+            le.idListaEspera
         FROM listaespera le
         INNER JOIN Livros l ON le.idLivro = l.idLivro
         INNER JOIN Usuarios a ON le.idUsuario = a.idUsuario
         WHERE le.idUsuario = (
             SELECT le1.idUsuario
             FROM listaespera le1
-            WHERE le1.idLivro = le.idLivro AND le1.status = 1
+            WHERE le1.idLivro = le.idLivro AND le.status = 1 AND le1.status = 1
             ORDER BY le1.dataReserva ASC
             LIMIT 1
         )

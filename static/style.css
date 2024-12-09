@@ -227,15 +227,29 @@ button {
 .dropdown-toggle::after {
   display: none;
 }
-/* Configuração geral para centralizar o conteúdo */
+
 .main-background {
   flex-wrap: wrap;
 }
 
+#overflowTable::-webkit-scrollbar {
+  width: 12px;
+}
+
+#overflowTable::-webkit-scrollbar-track {
+  background: linear-gradient(to right, #255eaf, #023377);
+}
+
+#overflowTable::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 20px;
+  border: 2px solid black;
+}
+
 #adm {
-  flex-direction: row; /* Padrão: lado a lado */
-  flex-wrap: wrap; /* Permite quebra de linha em telas menores */
-  gap: 1rem; /* Espaçamento entre os elementos */
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .admButton {
@@ -243,28 +257,27 @@ button {
 }
 
 #adm .col-md-6 {
-  flex: 1 1 100%; /* Ocupa 100% da largura em telas pequenas */
-  max-width: 100%; /* Limita a largura para não ultrapassar os limites */
+  flex: 1 1 100%;
+  max-width: 100%;
 }
 
-/* Tabela de empréstimos */
 @media (max-width: 768px) {
   .w-50 {
-    width: 100%; /* Tabela ocupa toda a largura da tela */
-    margin-top: 1rem; /* Espaço entre botões e tabela */
+    width: 100%;
+    margin-top: 1rem;
   }
 
   .table {
-    font-size: 0.9rem; /* Reduz o tamanho da fonte para caber melhor na tela */
+    font-size: 0.9rem;
   }
 
   .table th, 
   .table td {
-    padding: 0.5rem; /* Ajusta espaçamento das células */
+    padding: 0.5rem;
   }
 
   .text-break {
-    word-wrap: break-word; /* Permite quebra de palavras para evitar estouros */
+    word-wrap: break-word;
   }
 }
 
@@ -367,9 +380,7 @@ button:hover {
   align-items: center;
   display: flex;
   flex-direction: column;
-  /* Organize os elementos verticalmente */
   padding: 20px;
-  /* Adicione padding para espaçamento */
 }
 
 footer {

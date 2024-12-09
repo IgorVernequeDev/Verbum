@@ -234,7 +234,7 @@ def reservar(idLivro):
 
         if reserva_ativa:
             msg = 'Você já está na lista de espera deste livro'
-            flash(msg)
+            flash(msg, "success")
             posicao = verPosicao(idLivro, idUsuario)
             return redirect(f'/livro/{idLivro}')
         
@@ -276,7 +276,7 @@ def lista_espera(idLivro):
         SELECT u.nome, u.serie, r.dataReserva
         FROM listaespera r
         JOIN Usuarios u ON r.idUsuario = u.idUsuario
-        WHERE r.idLivro = %s
+        WHERE r.idLivro = %s AND r.status = 1
         ORDER BY r.dataReserva
     """, (idLivro,))
     lista_espera = cursor.fetchall()
@@ -299,9 +299,10 @@ def livrosreservados():
 
     try:
         cursor.execute("""
-            SELECT l.idLivro, l.titulo, l.imagemCapa, le.dataReserva
+            SELECT l.idLivro, l.titulo, l.imagemCapa, le.dataReserva, e.dataDevolucao
             FROM listaespera le
             JOIN livros l ON le.idLivro = l.idLivro
+            LEFT JOIN Emprestimos e ON e.idLivro = l.idLivro AND e.idUsuario = le.idUsuario
             WHERE le.idUsuario = %s
             ORDER BY le.dataReserva
         """, (idUsuario,))
@@ -367,37 +368,41 @@ def busca():
     finally:
         encerrar_db(cursor, conexao)
 
-@livro.route('/emprestimo', methods=['POST'])
-def fazer_emprestimo():
-    id_livro = request.form.get('id_livro')
-    id_usuario = request.form.get('id_usuario')
+from flask import Flask, render_template, redirect, flash, url_for
+from datetime import datetime, timedelta
 
-    conexao, cursor = conectar_db()
-
+@livro.route('/emprestimo/<int:idListaEspera>')
+def fazer_emprestimo(idListaEspera):
     try:
-        query = """
-            UPDATE verbum.listaespera 
-            SET status = 0 
-            WHERE idLivro = %s AND idUsuario = %s
-        """
-        cursor.execute(query, (id_livro, id_usuario))
+        conexao, cursor = conectar_db()
+
+        query = "UPDATE listaespera SET status = 0 WHERE idListaEspera = %s"
+        cursor.execute(query, (idListaEspera,))
+        conexao.commit()
+        
+        query = "SELECT idLivro, idUsuario FROM listaespera WHERE idListaEspera = %s"
+        cursor.execute(query, (idListaEspera,))
+        dados = cursor.fetchone()
 
         data_emprestimo = datetime.now()
         data_devolucao = data_emprestimo + timedelta(days=30)
-        
+        data_emprestimo_f = data_emprestimo.strftime('%Y-%m-%d')
+        data_devolucao_f = data_devolucao.strftime('%Y-%m-%d')
+
         query_inserir = """
             INSERT INTO Emprestimos (idLivro, idUsuario, dataEmprestimo, dataDevolucao)
             VALUES (%s, %s, %s, %s)
         """
-        cursor.execute(query_inserir, (id_livro, id_usuario, data_emprestimo, data_devolucao))
-        
+        cursor.execute(query_inserir, (dados['idLivro'], dados['idUsuario'], data_emprestimo_f, data_devolucao_f))
         conexao.commit()
-        print("Empréstimo realizado com sucesso!", "success")
+
+        flash("Empréstimo realizado com sucesso!", "success")
 
     except Exception as e:
         conexao.rollback()
-        print(f"Erro ao processar o empréstimo: {str(e)}", "error")
+        flash(f"Erro ao processar o empréstimo: {str(e)}", "error")
+
     finally:
         encerrar_db(conexao, cursor)
 
-    return redirect('/adm')
+    return redirect(url_for('main.adm'))

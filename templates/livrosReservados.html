@@ -25,6 +25,11 @@
             <div class="book-footer">
               <p>{{ livro.titulo }}</p>
               <p>Data da reserva: {{ livro.dataReserva }}</p>
+              {% if livro.dataDevolucao %}
+              <p>Data de devolução: {{ livro.dataDevolucao }}</p>
+              {% else %}
+              <p>Data de devolução não definida.</p>
+              {% endif %}
             </div>
           </div>
         </a>
@@ -32,6 +37,6 @@
       {% endfor %}
     </div>
     
-  </div>
+</div>
 
 {% endblock %}
