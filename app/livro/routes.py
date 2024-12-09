@@ -2,6 +2,7 @@ from db_functions import *
 from mysql.connector import Error
 import uuid
 from flask import Blueprint, render_template, request, redirect, session, jsonify, flash
+from datetime import datetime, timedelta
 
 livro = Blueprint('livro', __name__)
 
@@ -365,3 +366,38 @@ def busca():
         return "Erro ao realizar a busca. Tente novamente mais tarde."
     finally:
         encerrar_db(cursor, conexao)
+
+@livro.route('/emprestimo', methods=['POST'])
+def fazer_emprestimo():
+    id_livro = request.form.get('id_livro')
+    id_usuario = request.form.get('id_usuario')
+
+    conexao, cursor = conectar_db()
+
+    try:
+        query = """
+            UPDATE verbum.listaespera 
+            SET status = 0 
+            WHERE idLivro = %s AND idUsuario = %s
+        """
+        cursor.execute(query, (id_livro, id_usuario))
+
+        data_emprestimo = datetime.now()
+        data_devolucao = data_emprestimo + timedelta(days=30)
+        
+        query_inserir = """
+            INSERT INTO Emprestimos (idLivro, idUsuario, dataEmprestimo, dataDevolucao)
+            VALUES (%s, %s, %s, %s)
+        """
+        cursor.execute(query_inserir, (id_livro, id_usuario, data_emprestimo, data_devolucao))
+        
+        conexao.commit()
+        print("Empréstimo realizado com sucesso!", "success")
+
+    except Exception as e:
+        conexao.rollback()
+        print(f"Erro ao processar o empréstimo: {str(e)}", "error")
+    finally:
+        encerrar_db(conexao, cursor)
+
+    return redirect('/adm')

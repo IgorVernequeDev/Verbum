@@ -2,59 +2,59 @@
 
 {% block conteudo %}
 
-<form action="/cadaluno" method="POST" enctype="multipart/form-data">
-    <div class="container" id="container">
-        <div class="d-flex ms-4">
-            <div class="flex-column w-50">
-
-                <h2 class="titulos mb-2">Nome</h2>
-                <input type="text" id="nome" name="nome" placeholder="Insira o nome do aluno..." required maxlength="50" 
-                       value="{{ nome }}" />
-
-                <h2 class="titulos mb-2">Email</h2>
-                <input type="email" id="email" name="email" placeholder="Insira um email válido..." required maxlength="50" 
-                       value="{{ email }}" />
-
-                       <h2 class="titulos mb-2">Série</h2>
-                       <div class="d-flex justify-content-between mt-3">
-                           <select name="serie" class="w-50" id="serie" required>
-                               <option value="" selected disabled>Escolha a série</option>
-                               <option value="6° Ensino Fundamental" {% if '6° Ensino Fundamental' in serie %}selected{% endif %}>6° Ensino Fundamental</option>
-                               <option value="7° Ensino Fundamental" {% if '7° Ensino Fundamental' in serie %}selected{% endif %}>7° Ensino Fundamental</option>
-                               <option value="8° Ensino Fundamental" {% if '8° Ensino Fundamental' in serie %}selected{% endif %}>8° Ensino Fundamental</option>
-                               <option value="9° Ensino Fundamental" {% if '9° Ensino Fundamental' in serie %}selected{% endif %}>9° Ensino Fundamental</option>
-                               <option value="1° Ensino Médio" {% if '1° Ensino Médio' in serie %}selected{% endif %}>1° Ensino Médio</option>
-                               <option value="2° Ensino Médio" {% if '2° Ensino Médio' in serie %}selected{% endif %}>2° Ensino Médio</option>
-                               <option value="3° Ensino Médio" {% if '3° Ensino Médio' in serie %}selected{% endif %}>3° Ensino Médio</option>
-                           </select>
-                    <select name="letra" class="w-25 me-5" id="letra">
-                        <option value="A" {% if letra == "A" %}selected{% endif %}>A</option>
-                        <option value="B" {% if letra == "B" %}selected{% endif %}>B</option>
-                    </select>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 64vh;">
+    <form action="/cadaluno" method="POST" class="w-100" enctype="multipart/form-data">
+        <div class="container p-4" id="container">
+            <div class="d-flex">
+                <div class="flex-column w-50">
+    
+                    <h2 class="titulos mb-2">Nome</h2>
+                    <input type="text" id="nome" name="nome" placeholder="Insira o nome do aluno..." required maxlength="50" />
+    
+                    <h2 class="titulos mb-2">Email</h2>
+                    <input type="email" id="email" name="email" placeholder="Insira um email válido..." required maxlength="50" />
+    
+                    <h2 class="titulos mb-2">Série</h2>
+                    <div class="d-flex justify-content-between mt-3">
+                        <select name="serie" class="w-50" id="serie" required>
+                            <option value="" selected disabled>Escolha a sala</option>
+                            <option value="6° Ensino Fundamental">6° Ensino Fundamental</option>
+                            <option value="7° Ensino Fundamental">7° Ensino Fundamental</option>
+                            <option value="8° Ensino Fundamental">8° Ensino Fundamental</option>
+                            <option value="9° Ensino Fundamental">9° Ensino Fundamental</option>
+                            <option value="1° Ensino Médio">1° Ensino Médio</option>
+                            <option value="2° Ensino Médio">2° Ensino Médio</option>
+                            <option value="3° Ensino Médio">3° Ensino Médio</option>
+                        </select>
+                        <select name="letra" class="w-50" id="letra">
+                            <option value="" selected disabled>Escolha a série</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+    
                 </div>
-
+    
+                <div class="flex-column w-50 ms-5">
+    
+                    <h2 class="titulos mb-2">Senha</h2>
+                    <input type="password" id="senha" name="senha" placeholder="Insira a senha.." required />
+    
+                    <h2 class="titulos mb-2">Confirmar senha</h2>
+                    <input type="password" id="confirmasenha" name="confirmasenha"
+                        placeholder="Digite a senha novamente..." required/>
+    
+                    <p class="text-danger">{{ msg }}</p>
+    
+                    <button class="Subir p-4 mt-5" type="submit">
+                        <img src="/static/img/baixar.png" alt="baixar"
+                            style="margin-right: 10px; height: 20px;">SUBIR</button>
+    
+    
+                </div>
             </div>
-
-            <div class="flex-column w-50 ms-5">
-
-                <h2 class="titulos mb-2">Senha</h2>
-                <input type="password" id="senha" name="senha" placeholder="Insira a senha.." required />
-
-                <h2 class="titulos mb-2">Confirmar senha</h2>
-                <input type="password" id="confirmasenha" name="confirmasenha" placeholder="Digite a senha novamente..." required />
-                
-                <p class="text-danger">
-                    {% if msg %}
-                        {{ msg }}
-                    {% endif %}
-                </p>
-
-                <button class="Subir p-4 mt-5" type="submit">
-                    <img src="/static/img/baixar.png" alt="baixar" style="margin-right: 10px; height: 20px;">SUBIR</button>
-            </div>
-
         </div>
-    </div>
-</form>
+    </form>
+</div>
 
 {% endblock %}

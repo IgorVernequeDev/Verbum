@@ -1,7 +1,7 @@
 {% extends 'modelo.html' %}
 {% block conteudo %}
 
-<form action="/cadlivro" method="POST" enctype="multipart/form-data" onsubmit="return verificarSelecao()">
+<form action="/cadlivro" method="POST" enctype="multipart/form-data" onsubmit="return verificarSelecao()" class="mt-5 mb-5">
   <div class="container" id="container">
     <div class="row ms-4">
       <div class="col-12 col-md-6 d-flex flex-column">
@@ -47,13 +47,13 @@
       <div class="col-12 col-md-6 d-flex flex-column">
 
         <h2 class="titulos mb-2">Número de páginas</h2>
-        <input type="number" id="numero_paginas" name="numero_paginas" min="0" max="10" placeholder="Insira o número de páginas..." required />
+        <input type="number" id="numero_paginas" name="numero_paginas" placeholder="Insira o número de páginas..." required />
 
         <h2 class="titulos mb-2">Ano de publicação</h2>
-        <input type="number" id="anoPublicacao" name="anoPublicacao" placeholder="Insira o ano de publicação" min="0" max="4" required />
+        <input type="number" id="anoPublicacao" name="anoPublicacao" placeholder="Insira o ano de publicação" required />
 
         <h2 class="titulos mb-2">Quantidade disponível</h2>
-        <input type="number" id="quantidade" name="quantidade" placeholder="Insira a quantidade disponível" min="0" max="5" required />
+        <input type="number" id="quantidade" name="quantidade" placeholder="Insira a quantidade disponível"  required />
 
         <h2 class="titulos mb-2">Gênero</h2>
         <select class="ls-custom-select col-md-8" id="genero" name="genero" required>
