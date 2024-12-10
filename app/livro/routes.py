@@ -208,6 +208,9 @@ def excluir(id):
     try:
         conexao, cursor = conectar_db()
 
+        cursor.execute("DELETE FROM emprestimos WHERE idLivro = %s", (id,))
+        conexao.commit()
+
         cursor.execute("DELETE FROM listaespera WHERE idLivro = %s", (id,))
         conexao.commit()
 
@@ -219,6 +222,7 @@ def excluir(id):
         return f"Erro ao tentar excluir o livro: {erro}"
     finally:
         encerrar_db(cursor, conexao)
+
 
 @livro.route('/reservar/<int:idLivro>', methods=['GET'])
 def reservar(idLivro):
