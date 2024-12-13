@@ -1,5 +1,5 @@
 ### Curso Técnico de Desenvolvimento de Sistemas - SENAI Itapeva - SP
-![Imagem de capa](/static/gifs/capaREADME.gif)
+![Imagem de capa](/static/img/verbumbook.png)
 # Verbum
 **Descrição:**
 O Verbum é um sistema desenvolvido para facilitar a gestão de reservas e empréstimos de livros em bibliotecas escolares. O projeto tem como objetivo oferecer uma solução eficiente, intuitiva e responsiva, atendendo tanto administradores quanto usuários interessados em acessar livros.
@@ -17,7 +17,7 @@ Para esta aplicação, estão previstos 2 tipos de usuários: Visitante e Admini
 * Pesquisar livros por palavra-chave.
 * Reservar livros, entrando automaticamente na lista de espera.
 * Visualizar seus livros reservados.
- ![gif funcionalidades do usuário](/static/gifs/FuncionalidadesVisitante.gif)
+ ![gif funcionalidades do usuário](/static/gifs/user.gif)
 ### Funcionalidades do Administrador (ADM)
 * Logar no sistema com e-mail e senha.
 * Cadastrar novos livros e manipular suas informações.
@@ -25,7 +25,7 @@ Para esta aplicação, estão previstos 2 tipos de usuários: Visitante e Admini
 * Pesquisar livros por palavra-chave.
 * Verificar os usuários em 1° na lista de espera.
 * Fazer um empréstimo.
- ![gif usuário vendo eventos](/static/gifs/funcionalidadesADM.gif)
+ ![gif usuário vendo eventos](/static/gifs/admin.gif)
 ## Tecnologias Utilizadas
 #### Front-end:
 ![image](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
