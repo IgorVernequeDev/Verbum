@@ -6,25 +6,25 @@ O Verbum é um sistema desenvolvido para facilitar a gestão de reservas e empr�
 
 Funcionalidades Principais
 
-1. Cadastro e Gestão de Livros
+# Cadastro e Gestão de Livros
 
 Administradores podem cadastrar, editar e excluir livros no sistema.
 
 Campos cadastrados incluem: título, autor, editora, data de publicação, categoria, número de páginas, descrição e capa do livro.
 
-2. Reserva e Lista de Espera
+# Reserva e Lista de Espera
 
 Usuários podem reservar livros diretamente pelo sistema.
 
 Assim que reservado, o usuário é adicionado à lista de espera automaticamente.
 
-3. Interface Intuitiva e Responsiva
+# Interface Intuitiva e Responsiva
 
 Design adaptado para computadores e dispositivos móveis.
 
 Uso de imagens como botões e layout otimizado para melhor experiência do usuário.
 
-4. Gestão de Reservas
+# Gestão de Reservas
 
 Sistema de controle de reservas, permitindo que os administradores acompanhem o status de cada livro e as posições dos usuários na lista de espera.
 
@@ -32,11 +32,11 @@ Tecnologias Utilizadas
 
 Python: Linguagem principal do back-end.
 
-Flask: Framework para criação de aplicações web.
+<img src="https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white">: Framework para criação de aplicações web.
 
-Jinja: Motor de template para renderização dinâmica de páginas.
+<img src="https://img.shields.io/badge/jinja-white.svg?style=for-the-badge&logo=jinja&logoColor=black">: Motor de template para renderização dinâmica de páginas.
 
-MySQL: Banco de dados relacional para armazenamento eficiente das informações.
+<img src="https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white">: Banco de dados relacional para armazenamento eficiente das informações.
 
 HTML/CSS/JavaScript: Tecnologias para o desenvolvimento do front-end responsivo.
 
@@ -80,11 +80,11 @@ email: Endereço de e-mail do usuário (VARCHAR).
 
 Como Executar o Projeto
 
-1. Clone o Repositório
+# Clone o Repositório
 
 git clone https://github.com/seu-usuario/verbum.git
 
-2. Configure o Banco de Dados
+# Configure o Banco de Dados
 
 Certifique-se de que o MySQL está instalado e configurado.
 
@@ -102,11 +102,11 @@ flask run
 
 Acesse o sistema em http://127.0.0.1:5000.
 
-Contribuições
+# Contribuições
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
 
-Agradecimentos
+# Agradecimentos
 
 Este projeto não seria possível sem o apoio dos professores João Paulo Lepinsk e Rafael Ribas de Lima, além dos meus colegas que colaboraram durante o processo de desenvolvimento.
 
